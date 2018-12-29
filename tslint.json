@@ -6,6 +6,9 @@
     "semicolon": {
       "options": "never"
     },
+    "jsx-boolean-value": {
+      "options": "never"
+    },
     "jsx-curly-spacing": {
       "options": "never"
     },
