@@ -8,11 +8,11 @@ class App extends Component {
   public render() {
     return (
       <Fragment>
-        <Grid columns="2" style={styles.container}>
+        <Grid columns="2" style={styles.container} padded="horizontally">
           <Grid.Column width="3">
             <Navigation />
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column width="13">
             <Menubar />
             <Content />
           </Grid.Column>
