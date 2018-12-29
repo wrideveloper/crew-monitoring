@@ -19,7 +19,7 @@
     "jsx-self-close": true,
     "jsx-space-before-trailing-slash": true,
     "jsx-wrap-multiline": true,
-    "jsx-no-lambda": true,
+    "jsx-no-lambda": false,
     "jsx-no-multiline-js": true,
     "jsx-alignment": true
   },
