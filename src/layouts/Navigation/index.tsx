@@ -1,17 +1,16 @@
 import React, { Component } from "react"
+import { Link } from "react-router-dom"
 import { Menu } from "semantic-ui-react"
+import routes from "../../routes"
 import NavHeader from "./NavHeader"
 
 interface IState {
   activeItem: string
 }
 
-const itemsCrew = ["daftar_crew", "divisi", "jabatan"]
-const itemsMiniclass = ["daftar_miniclass", "presensi"]
-
 class Navigation extends Component<{}, IState> {
   public state = {
-    activeItem: itemsCrew[0],
+    activeItem: routes[0].label,
   }
 
   public isActive(name: string) {
@@ -22,14 +21,16 @@ class Navigation extends Component<{}, IState> {
     this.setState({ activeItem: name })
   }
 
-  public renderItems(items: string[]) {
-    return items.map((item, index) => (
-      <Menu.Item
-        key={index}
-        name={item}
-        active={this.isActive(item)}
-        onClick={() => this.changeActiveItem(item)}
-      />
+  public renderItems() {
+    return routes.map((route, index) => (
+      <Link to={route.path}>
+        <Menu.Item
+          key={index}
+          name={route.label}
+          active={this.isActive(route.label)}
+          onClick={() => this.changeActiveItem(route.label)}
+        />
+      </Link>
     ))
   }
 
@@ -44,10 +45,7 @@ class Navigation extends Component<{}, IState> {
         style={styles.container}
       >
         <NavHeader text="Manajemen Crew" icon="user circle outline" />
-        {this.renderItems(itemsCrew)}
-
-        <NavHeader text="Manajemen Miniclass" icon="lightbulb outline" />
-        {this.renderItems(itemsMiniclass)}
+        {this.renderItems()}
       </Menu>
     )
   }
