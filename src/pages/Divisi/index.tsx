@@ -23,6 +23,6 @@ export default class Divisi extends Component<{}, IState> {
   }
 
   public render() {
-    return <DataTable data={this.state.divisi} itemPerPage={1} />
+    return <DataTable data={this.state.divisi} itemPerPage={3} />
   }
 }
