@@ -2,18 +2,25 @@ import React, { Component } from "react"
 import { Table } from "semantic-ui-react"
 
 interface IProps {
+  fields: IField[]
   data: any[]
-  offset: number
+  startingNumber: number
 }
 
 export default class TableBody extends Component<IProps> {
   public renderRow() {
-    let offset = this.props.offset
-    return this.props.data.map((item, index) => (
+    let startingNumber = this.props.startingNumber
+    return this.props.data.map((row, index) => (
       <Table.Row key={index}>
-        <Table.Cell>{++offset}</Table.Cell>
-        <Table.Cell>{item.nama}</Table.Cell>
+        <Table.Cell>{startingNumber++}</Table.Cell>
+        {this.renderCell(row)}
       </Table.Row>
+    ))
+  }
+
+  public renderCell(row: any) {
+    return this.props.fields.map((field) => (
+      <Table.Cell>{row[field.name]}</Table.Cell>
     ))
   }
 

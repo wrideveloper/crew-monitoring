@@ -4,6 +4,11 @@ declare interface IRoute {
   component: React.FunctionComponent | React.Components
 }
 
+declare interface IField {
+  name: string
+  label: string
+}
+
 declare interface IAnggota {
   nim: number
   nama: string

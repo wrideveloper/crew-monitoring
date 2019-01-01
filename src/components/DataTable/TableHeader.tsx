@@ -2,20 +2,23 @@ import React, { Component } from "react"
 import { Table } from "semantic-ui-react"
 
 interface IProps {
-  headerTitles: string[]
+  fields: IField[]
 }
 
 export default class TableHeader extends Component<IProps> {
   public renderHeaderCells() {
-    return this.props.headerTitles.map((title) => (
-      <Table.HeaderCell>{title}</Table.HeaderCell>
+    return this.props.fields.map((field) => (
+      <Table.HeaderCell>{field.label}</Table.HeaderCell>
     ))
   }
 
   public render() {
     return (
       <Table.Header>
-        <Table.Row>{this.renderHeaderCells()}</Table.Row>
+        <Table.Row>
+          <Table.HeaderCell>No</Table.HeaderCell>
+          {this.renderHeaderCells()}
+        </Table.Row>
       </Table.Header>
     )
   }

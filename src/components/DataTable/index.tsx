@@ -7,7 +7,7 @@ import TablePagination from "./TablePagination"
 interface IProps {
   data: any[]
   itemPerPage: number
-  headerTitles: string[]
+  fields: IField[]
 }
 
 interface IState {
@@ -36,8 +36,12 @@ export default class DataTable extends Component<IProps, IState> {
   public render() {
     return (
       <Table celled>
-        <TableHeader headerTitles={this.props.headerTitles} />
-        <TableBody data={this.getPaginateData()} offset={this.getOffset()} />
+        <TableHeader fields={this.props.fields} />
+        <TableBody
+          fields={this.props.fields}
+          data={this.getPaginateData()}
+          startingNumber={this.getOffset() + 1}
+        />
         <Table.Footer>
           <Table.Row>
             <TablePagination

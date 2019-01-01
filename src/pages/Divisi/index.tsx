@@ -6,6 +6,13 @@ interface IState {
   divisi: IDivisi[]
 }
 
+const fields: IField[] = [
+  {
+    name: "nama",
+    label: "Nama Divisi",
+  },
+]
+
 export default class Divisi extends Component<{}, IState> {
   public state: IState = {
     divisi: [],
@@ -24,11 +31,7 @@ export default class Divisi extends Component<{}, IState> {
 
   public render() {
     return (
-      <DataTable
-        data={this.state.divisi}
-        itemPerPage={1}
-        headerTitles={["No", "Nama Divisi"]}
-      />
+      <DataTable data={this.state.divisi} itemPerPage={2} fields={fields} />
     )
   }
 }
