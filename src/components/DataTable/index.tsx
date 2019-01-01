@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import { Table } from "semantic-ui-react"
-import Pagination from "./Pagination"
 import TableBody from "./TableBody"
 import TableHeader from "./TableHeader"
+import TablePagination from "./TablePagination"
 
 interface IProps {
   data: any[]
@@ -11,16 +11,16 @@ interface IProps {
 }
 
 interface IState {
-  currentPage: number
+  activePage: number
 }
 
 export default class DataTable extends Component<IProps, IState> {
   public state: IState = {
-    currentPage: 1,
+    activePage: 1,
   }
 
   public getOffset() {
-    return (this.state.currentPage - 1) * this.props.itemPerPage
+    return (this.state.activePage - 1) * this.props.itemPerPage
   }
 
   public getPaginateData() {
@@ -30,7 +30,7 @@ export default class DataTable extends Component<IProps, IState> {
   }
 
   public changePage(page: number) {
-    this.setState({ currentPage: page })
+    this.setState({ activePage: page })
   }
 
   public render() {
@@ -40,11 +40,10 @@ export default class DataTable extends Component<IProps, IState> {
         <TableBody data={this.getPaginateData()} offset={this.getOffset()} />
         <Table.Footer>
           <Table.Row>
-            <Pagination
+            <TablePagination
               dataLength={this.props.data.length}
               itemPerPage={this.props.itemPerPage}
-              currentPage={this.state.currentPage}
-              onPaginationItemClick={(pageNumber) => this.changePage(pageNumber)}
+              onPageChange={(pageNumber) => this.changePage(pageNumber)}
             />
           </Table.Row>
         </Table.Footer>

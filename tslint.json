@@ -21,7 +21,7 @@
     "jsx-space-before-trailing-slash": true,
     "jsx-wrap-multiline": true,
     "jsx-no-lambda": false,
-    "jsx-no-multiline-js": true,
+    "jsx-no-multiline-js": false,
     "jsx-alignment": true
   },
   "rulesDirectory": []
