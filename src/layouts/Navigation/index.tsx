@@ -9,8 +9,8 @@ interface IState {
 }
 
 class Navigation extends Component<{}, IState> {
-  public state = {
-    activeItem: routes[0].label,
+  public state: IState = {
+    activeItem: "",
   }
 
   public isActive(name: string) {
