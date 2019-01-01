@@ -18,7 +18,7 @@ export default class Pagination extends Component<IProps> {
     return pageNumber === this.props.currentPage
   }
 
-  public renderPagination() {
+  public renderPaginationItems() {
     return [...Array(this.getTotalPage())].map((item, index) => {
       const pageNumber = index + 1
       return (
@@ -36,7 +36,7 @@ export default class Pagination extends Component<IProps> {
     return (
       <Table.HeaderCell colSpan="3">
         <Menu floated="right" pagination>
-          {this.renderPagination()}
+          {this.renderPaginationItems()}
         </Menu>
       </Table.HeaderCell>
     )

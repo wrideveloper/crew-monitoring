@@ -1,10 +1,12 @@
 import React, { Component } from "react"
 import { Table } from "semantic-ui-react"
 import Pagination from "./Pagination"
+import TableHeader from "./TableHeader"
 
 interface IProps {
   data: any[]
   itemPerPage: number
+  headerTitles: string[]
 }
 
 interface IState {
@@ -43,12 +45,7 @@ export default class DataTable extends Component<IProps, IState> {
   public render() {
     return (
       <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>No</Table.HeaderCell>
-            <Table.HeaderCell>Nama Divisi</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+        <TableHeader headerTitles={this.props.headerTitles} />
         <Table.Body>{this.renderRow()}</Table.Body>
         <Table.Footer>
           <Table.Row>
