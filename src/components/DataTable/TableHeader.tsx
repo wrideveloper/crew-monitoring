@@ -4,13 +4,14 @@ import { Table } from "semantic-ui-react"
 interface IProps {
   fields: IField[]
   sortBy: string
-  direction: "ascending" | "descending"
+  isDescending: boolean
   onChangeSort: (fieldName: string) => void
 }
 
 export default class TableHeader extends Component<IProps> {
   public isSorted(fieldName: string) {
-    const { sortBy, direction } = this.props
+    const { sortBy, isDescending } = this.props
+    const direction = isDescending ? "descending" : "ascending"
     return fieldName === sortBy ? direction : undefined
   }
 

@@ -18,7 +18,7 @@ interface IState {
   searchValue: string
   searchKey: string
   sortBy: string
-  direction: "ascending" | "descending"
+  isDescending: boolean
 }
 
 export default class DataTable extends Component<IProps, IState> {
@@ -28,7 +28,7 @@ export default class DataTable extends Component<IProps, IState> {
     searchValue: "",
     searchKey: this.props.fields[0].name,
     sortBy: this.props.fields[0].name,
-    direction: "ascending",
+    isDescending: false,
   }
 
   public changeSearchValue(value: string) {
@@ -40,15 +40,11 @@ export default class DataTable extends Component<IProps, IState> {
   }
 
   public changeSort(fieldName: string) {
-    let direction: "ascending" | "descending"
-    if (this.state.sortBy === fieldName) {
-      direction =
-        this.state.direction === "ascending" ? "descending" : "ascending"
-    } else {
-      direction = "ascending"
-    }
-
-    this.setState({ sortBy: fieldName, direction, activePage: 1 })
+    this.setState({
+      sortBy: fieldName,
+      isDescending: !this.state.isDescending,
+      activePage: 1,
+    })
   }
 
   public changePage(page: number) {
@@ -68,8 +64,8 @@ export default class DataTable extends Component<IProps, IState> {
   }
 
   public getSortedData() {
-    const direction = this.state.direction === "ascending" ? "asc" : "desc"
-    return _.orderBy(this.getFilteredData(), [this.state.sortBy], [direction])
+    const sortedData = _.sortBy(this.getFilteredData(), this.state.sortBy)
+    return this.state.isDescending ? sortedData.reverse() : sortedData
   }
 
   public getPaginatedData() {
@@ -104,7 +100,7 @@ export default class DataTable extends Component<IProps, IState> {
           <TableHeader
             fields={this.props.fields}
             sortBy={this.state.sortBy}
-            direction={this.state.direction}
+            isDescending={this.state.isDescending}
             onChangeSort={(fieldName) => this.changeSort(fieldName)}
           />
           <TableBody
