@@ -19,8 +19,8 @@ export default class TableBody extends Component<IProps> {
   }
 
   public renderCell(row: any) {
-    return this.props.fields.map((field) => (
-      <Table.Cell>{row[field.name]}</Table.Cell>
+    return this.props.fields.map((field, index) => (
+      <Table.Cell key={index}>{row[field.name]}</Table.Cell>
     ))
   }
 

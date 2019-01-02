@@ -23,9 +23,9 @@ class Navigation extends Component<{}, IState> {
 
   public renderItems() {
     return routes.map((route, index) => (
-      <Link to={route.path}>
+      <Link to={route.path} key={index}>
         <Menu.Item
-          key={index}
+          as="span"
           name={route.label}
           active={this.isActive(route.label)}
           onClick={() => this.changeActiveItem(route.label)}

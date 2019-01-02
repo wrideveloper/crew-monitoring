@@ -7,8 +7,8 @@ interface IProps {
 
 export default class TableHeader extends Component<IProps> {
   public renderHeaderCells() {
-    return this.props.fields.map((field) => (
-      <Table.HeaderCell>{field.label}</Table.HeaderCell>
+    return this.props.fields.map((field, index) => (
+      <Table.HeaderCell key={index}>{field.label}</Table.HeaderCell>
     ))
   }
 
