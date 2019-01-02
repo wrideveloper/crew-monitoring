@@ -17,6 +17,8 @@ interface IState {
   itemPerPage: number
   searchValue: string
   searchKey: string
+  sortBy: string
+  direction: "ascending" | "descending"
 }
 
 export default class DataTable extends Component<IProps, IState> {
@@ -25,6 +27,8 @@ export default class DataTable extends Component<IProps, IState> {
     itemPerPage: 1,
     searchValue: "",
     searchKey: this.props.fields[0].name,
+    sortBy: this.props.fields[0].name,
+    direction: "ascending",
   }
 
   public changeSearchValue(value: string) {
@@ -33,6 +37,18 @@ export default class DataTable extends Component<IProps, IState> {
 
   public changeSearchKey(key: string) {
     this.setState({ searchKey: key, activePage: 1 })
+  }
+
+  public changeSort(fieldName: string) {
+    let direction: "ascending" | "descending"
+    if (this.state.sortBy === fieldName) {
+      direction =
+        this.state.direction === "ascending" ? "descending" : "ascending"
+    } else {
+      direction = "ascending"
+    }
+
+    this.setState({ sortBy: fieldName, direction, activePage: 1 })
   }
 
   public changePage(page: number) {
@@ -51,10 +67,15 @@ export default class DataTable extends Component<IProps, IState> {
     })
   }
 
+  public getSortedData() {
+    const direction = this.state.direction === "ascending" ? "asc" : "desc"
+    return _.orderBy(this.getFilteredData(), [this.state.sortBy], [direction])
+  }
+
   public getPaginatedData() {
     const offset = this.getOffset()
     const end = offset + this.state.itemPerPage
-    return this.getFilteredData().slice(offset, end)
+    return this.getSortedData().slice(offset, end)
   }
 
   public getOffset() {
@@ -79,8 +100,13 @@ export default class DataTable extends Component<IProps, IState> {
           </Grid.Column>
         </Grid>
 
-        <Table celled>
-          <TableHeader fields={this.props.fields} />
+        <Table celled sortable>
+          <TableHeader
+            fields={this.props.fields}
+            sortBy={this.state.sortBy}
+            direction={this.state.direction}
+            onChangeSort={(fieldName) => this.changeSort(fieldName)}
+          />
           <TableBody
             fields={this.props.fields}
             data={this.getPaginatedData()}
