@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Pagination, Table } from "semantic-ui-react"
 
 interface IProps {
+  activePage: number
   dataLength: number
   itemPerPage: number
   onPageChange: (pageNumber: number) => void
@@ -16,7 +17,7 @@ export default class TablePagination extends Component<IProps> {
     return (
       <Table.HeaderCell colSpan="3" textAlign="right">
         <Pagination
-          defaultActivePage={1}
+          activePage={this.props.activePage}
           totalPages={this.getTotalPages()}
           onPageChange={(event, { activePage }) =>
             this.props.onPageChange(activePage as number)}
