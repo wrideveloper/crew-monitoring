@@ -17,7 +17,7 @@ interface IState {
   itemPerPage: number
   searchValue: string
   searchKey: string
-  sortBy: string
+  sortKey: string
   isDescending: boolean
 }
 
@@ -27,7 +27,7 @@ export default class DataTable extends Component<IProps, IState> {
     itemPerPage: 1,
     searchValue: "",
     searchKey: this.props.fields[0].name,
-    sortBy: this.props.fields[0].name,
+    sortKey: this.props.fields[0].name,
     isDescending: false,
   }
 
@@ -40,11 +40,11 @@ export default class DataTable extends Component<IProps, IState> {
   }
 
   public changeSort(fieldName: string) {
-    this.setState({
-      sortBy: fieldName,
-      isDescending: !this.state.isDescending,
+    this.setState((prevState) => ({
+      sortKey: fieldName,
+      isDescending: !prevState.isDescending,
       activePage: 1,
-    })
+    }))
   }
 
   public changePage(page: number) {
@@ -64,7 +64,7 @@ export default class DataTable extends Component<IProps, IState> {
   }
 
   public getSortedData() {
-    const sortedData = _.sortBy(this.getFilteredData(), this.state.sortBy)
+    const sortedData = _.sortBy(this.getFilteredData(), this.state.sortKey)
     return this.state.isDescending ? sortedData.reverse() : sortedData
   }
 
@@ -99,7 +99,7 @@ export default class DataTable extends Component<IProps, IState> {
         <Table celled sortable>
           <TableHeader
             fields={this.props.fields}
-            sortBy={this.state.sortBy}
+            sortKey={this.state.sortKey}
             isDescending={this.state.isDescending}
             onChangeSort={(fieldName) => this.changeSort(fieldName)}
           />
