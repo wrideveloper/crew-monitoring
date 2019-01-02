@@ -21,6 +21,7 @@ export default class TableLimiter extends Component<IProps> {
     return (
       <div>
         <Dropdown
+          floating
           text="Item Perhalaman"
           button
           options={options}
