@@ -27,14 +27,6 @@ export default class DataTable extends Component<IProps, IState> {
     searchKey: this.props.fields[0].name,
   }
 
-  public changePage(page: number) {
-    this.setState({ activePage: page })
-  }
-
-  public changeLimit(limit: number) {
-    this.setState({ itemPerPage: limit, activePage: 1 })
-  }
-
   public changeSearchValue(value: string) {
     this.setState({ searchValue: value, activePage: 1 })
   }
@@ -43,14 +35,19 @@ export default class DataTable extends Component<IProps, IState> {
     this.setState({ searchKey: key, activePage: 1 })
   }
 
-  public getOffset() {
-    return (this.state.activePage - 1) * this.state.itemPerPage
+  public changePage(page: number) {
+    this.setState({ activePage: page })
+  }
+
+  public changeLimit(limit: number) {
+    this.setState({ itemPerPage: limit, activePage: 1 })
   }
 
   public getFilteredData() {
     return this.props.data.filter((item) => {
-      const currentItem = item[this.state.searchKey] as string
-      return currentItem.search(this.state.searchValue) > -1
+      const currentItem = (item[this.state.searchKey] as string).toLowerCase()
+      const searchValue = this.state.searchValue.toLowerCase()
+      return currentItem.search(searchValue) > -1
     })
   }
 
@@ -58,6 +55,10 @@ export default class DataTable extends Component<IProps, IState> {
     const offset = this.getOffset()
     const end = offset + this.state.itemPerPage
     return this.getFilteredData().slice(offset, end)
+  }
+
+  public getOffset() {
+    return (this.state.activePage - 1) * this.state.itemPerPage
   }
 
   public render() {
