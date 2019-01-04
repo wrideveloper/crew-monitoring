@@ -1,7 +1,7 @@
-import axios from "axios"
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
+import { createDivisi, deleteDivisi, getDivisi, updateDivisi } from "./service"
 
 interface IState {
   divisi: IDivisi[]
@@ -20,20 +20,23 @@ export default class Divisi extends Component<{}, IState> {
   }
 
   public componentDidMount() {
-    axios
-      .get("https://crew-data-management.herokuapp.com/divisi")
-      .then((response) => {
-        const data = response.data
-        this.setState({
-          divisi: data,
-        })
-      })
+    this.get()
   }
 
-  public addDivisi(input: any) {
-    const { divisi } = this.state
-    divisi.push(input)
-    this.setState({ divisi })
+  public get() {
+    getDivisi().then((divisi) => this.setState({ divisi: divisi as IDivisi[] }))
+  }
+
+  public create(input: IDivisi) {
+    createDivisi(input).then(() => this.get())
+  }
+
+  public update(input: IDivisi, id: string) {
+    updateDivisi(input, id).then(() => this.get())
+  }
+
+  public delete(id: string) {
+    deleteDivisi(id).then(() => this.get())
   }
 
   public render() {
@@ -43,9 +46,9 @@ export default class Divisi extends Component<{}, IState> {
         <DataTable
           data={this.state.divisi}
           fields={fields}
-          onCreate={(input) => console.log("create : ", input)}
-          onUpdate={(input) => console.log("update : ", input)}
-          onDelete={(input) => console.log("delete : ", input)}
+          onCreate={(input: IDivisi) => this.create(input)}
+          onUpdate={(input: IDivisi) => this.update(input, input._id)}
+          onDelete={(input: IDivisi) => this.delete(input._id)}
         />
       </Fragment>
     )

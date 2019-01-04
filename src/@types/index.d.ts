@@ -10,6 +10,7 @@ declare interface IField {
 }
 
 declare interface IAnggota {
+  _id: string
   nim: number
   nama: string
   email: string
@@ -21,9 +22,11 @@ declare interface IAnggota {
 }
 
 declare interface IDivisi {
+  _id: string
   nama: string
 }
 
 declare interface IJabatan {
+  _id: string
   nama: string
 }

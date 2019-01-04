@@ -51,6 +51,7 @@ export default class Form extends Component<IProps, IState> {
   public submit() {
     if (this.isUpdateMode()) this.props.onUpdate(this.state.input)
     else this.props.onCreate(this.state.input)
+    this.props.onClose()
   }
 
   public isUpdateMode() {
@@ -90,7 +91,10 @@ export default class Form extends Component<IProps, IState> {
             <Button
               content="Hapus"
               color="red"
-              onClick={() => this.props.onDelete(this.state.input)}
+              onClick={() => {
+                this.props.onDelete(this.state.input)
+                this.props.onClose()
+              }}
             />
           ) : null}
           <Button
