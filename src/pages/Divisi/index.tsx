@@ -43,12 +43,12 @@ export default class Divisi extends Component<{}, IState> {
     return (
       <Fragment>
         <Header content="Divisi" subheader="Kumpulan data divisi" />
-        <DataTable
+        <DataTable<IDivisi>
           data={this.state.divisi}
           fields={fields}
-          onCreate={(input: IDivisi) => this.create(input)}
-          onUpdate={(input: IDivisi) => this.update(input, input._id)}
-          onDelete={(input: IDivisi) => this.delete(input._id)}
+          onCreate={(input) => this.create(input)}
+          onUpdate={(input) => this.update(input, input._id)}
+          onDelete={(input) => this.delete(input._id)}
         />
       </Fragment>
     )

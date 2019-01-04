@@ -3,20 +3,20 @@ import { Button } from "semantic-ui-react"
 import Form from "./Form"
 import Table from "./Table"
 
-interface IProps {
-  data: any[]
+interface IProps<T> {
+  data: T[]
   fields: IField[]
-  onCreate: (input: any) => void
-  onUpdate: (input: any) => void
-  onDelete: (input: any) => void
+  onCreate: (input: T) => void
+  onUpdate: (input: T) => void
+  onDelete: (input: T) => void
 }
 
 interface IState {
   open: boolean
-  selectedData: object
+  selectedData: any
 }
 
-export default class DataTable extends Component<IProps, IState> {
+export default class DataTable<T> extends Component<IProps<T>, IState> {
   public state: IState = {
     open: false,
     selectedData: {},

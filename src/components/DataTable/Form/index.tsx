@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Button, Grid, Header, Input, Modal } from "semantic-ui-react"
-import { isError } from "util"
 
 interface IProps {
   open: boolean
