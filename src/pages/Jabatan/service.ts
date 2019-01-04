@@ -1,9 +1,9 @@
 import axios from "axios"
 import { serviceCrew } from "../../config"
 
-export const endpoint = serviceCrew + "divisi/"
+export const endpoint = serviceCrew + "jabatan/"
 
-export function getDivisi() {
+export function getJabatan() {
   return new Promise((resolve, reject) => {
     axios
       .get(endpoint)
@@ -14,29 +14,29 @@ export function getDivisi() {
   })
 }
 
-export function createDivisi(input: IDivisi) {
+export function createJabatan(input: IJabatan) {
   return new Promise((resolve, reject) => {
     axios
       .post(endpoint, {
-        divisi: input,
+        jabatan: input,
       })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
 }
 
-export function updateDivisi(input: IDivisi, id: string) {
+export function updateJabatan(input: IJabatan, id: string) {
   return new Promise((resolve, reject) => {
     axios
       .put(endpoint + id, {
-        divisi: input,
+        jabatan: input,
       })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
 }
 
-export function deleteDivisi(id: string) {
+export function deleteJabatan(id: string) {
   return new Promise((resolve, reject) => {
     axios
       .delete(endpoint + id)
