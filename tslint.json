@@ -6,6 +6,7 @@
     "semicolon": {
       "options": "never"
     },
+    "curly": false,
     "object-literal-sort-keys": false,
     "jsx-boolean-value": {
       "options": "never"

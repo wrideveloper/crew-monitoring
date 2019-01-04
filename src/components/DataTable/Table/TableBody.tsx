@@ -5,13 +5,14 @@ interface IProps {
   fields: IField[]
   data: any[]
   startingNumber: number
+  onRowClick: (rowData: any) => void
 }
 
 export default class TableBody extends Component<IProps> {
   public renderRow() {
     let startingNumber = this.props.startingNumber
     return this.props.data.map((row, index) => (
-      <Table.Row key={index}>
+      <Table.Row key={index} onClick={() => this.props.onRowClick(row)}>
         <Table.Cell>{startingNumber++}</Table.Cell>
         {this.renderCell(row)}
       </Table.Row>

@@ -1,5 +1,6 @@
 import axios from "axios"
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
+import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
 
 interface IState {
@@ -29,7 +30,24 @@ export default class Divisi extends Component<{}, IState> {
       })
   }
 
+  public addDivisi(input: any) {
+    const { divisi } = this.state
+    divisi.push(input)
+    this.setState({ divisi })
+  }
+
   public render() {
-    return <DataTable data={this.state.divisi} fields={fields} />
+    return (
+      <Fragment>
+        <Header content="Divisi" subheader="Kumpulan data divisi" />
+        <DataTable
+          data={this.state.divisi}
+          fields={fields}
+          onCreate={(input) => console.log("create : ", input)}
+          onUpdate={(input) => console.log("update : ", input)}
+          onDelete={(input) => console.log("delete : ", input)}
+        />
+      </Fragment>
+    )
   }
 }

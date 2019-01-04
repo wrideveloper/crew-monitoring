@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { BrowserRouter, Route } from "react-router-dom"
 import { Grid } from "semantic-ui-react"
-import Content from "./layouts/Content"
 import Menubar from "./layouts/Menubar"
 import Navigation from "./layouts/Navigation"
 import routes from "./routes"
@@ -22,7 +21,7 @@ class App extends Component {
           </Grid.Column>
           <Grid.Column width="13">
             <Menubar />
-            <Content>{this.renderRoutes()}</Content>
+            {this.renderRoutes()}
           </Grid.Column>
         </Grid>
       </BrowserRouter>
