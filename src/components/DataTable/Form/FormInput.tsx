@@ -27,7 +27,7 @@ export default class FormInput extends Component<IProps> {
             button
             floating
             options={this.getOptions(field.optionData!)}
-            value={this.props.value}
+            value={this.props.value[field.optionData!.valueKey]}
             onChange={(event, { value }) => this.props.onChange(value)}
           />
         </Fragment>
