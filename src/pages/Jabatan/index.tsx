@@ -1,12 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
-import {
-  createJabatan,
-  deleteJabatan,
-  getJabatan,
-  updateJabatan,
-} from "./service"
+import { JabatanService } from "../../services/JabatanService"
 
 interface IState {
   jabatan: IJabatan[]
@@ -24,26 +19,26 @@ export default class Jabatan extends Component<{}, IState> {
     jabatan: [],
   }
 
+  public jabatanService = new JabatanService()
+
   public componentDidMount() {
     this.get()
   }
 
   public get() {
-    getJabatan().then((jabatan) =>
-      this.setState({ jabatan: jabatan as IJabatan[] }),
-    )
+    this.jabatanService.get().then((jabatan) => this.setState({ jabatan }))
   }
 
   public create(input: IJabatan) {
-    createJabatan(input).then(() => this.get())
+    this.jabatanService.create(input).then(() => this.get())
   }
 
   public update(input: IJabatan, id: string) {
-    updateJabatan(input, id).then(() => this.get())
+    this.jabatanService.update(input, id).then(() => this.get())
   }
 
   public delete(id: string) {
-    deleteJabatan(id).then(() => this.get())
+    this.jabatanService.delete(id).then(() => this.get())
   }
 
   public render() {

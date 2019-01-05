@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import { BrowserRouter, Route } from "react-router-dom"
 import { Grid } from "semantic-ui-react"
-import Menubar from "./layouts/Menubar"
-import Navigation from "./layouts/Navigation"
+import Menubar from "./components/Layouts/Menubar"
+import Navigation from "./components/Layouts/Navigation"
 import routes from "./routes"
 
 class App extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { Menu } from "semantic-ui-react"
-import routes from "../../routes"
+import routes from "../../../routes"
 import NavHeader from "./NavHeader"
 
 interface IState {

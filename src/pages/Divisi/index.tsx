@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
-import { createDivisi, deleteDivisi, getDivisi, updateDivisi } from "./service"
+import { DivisiService } from "../../services/DivisiService"
 
 interface IState {
   divisi: IDivisi[]
@@ -19,24 +19,26 @@ export default class Divisi extends Component<{}, IState> {
     divisi: [],
   }
 
+  public divisiService = new DivisiService()
+
   public componentDidMount() {
     this.get()
   }
 
   public get() {
-    getDivisi().then((divisi) => this.setState({ divisi: divisi as IDivisi[] }))
+    this.divisiService.get().then((divisi) => this.setState({ divisi }))
   }
 
   public create(input: IDivisi) {
-    createDivisi(input).then(() => this.get())
+    this.divisiService.create(input).then(() => this.get())
   }
 
   public update(input: IDivisi, id: string) {
-    updateDivisi(input, id).then(() => this.get())
+    this.divisiService.update(input, id).then(() => this.get())
   }
 
   public delete(id: string) {
-    deleteDivisi(id).then(() => this.get())
+    this.divisiService.delete(id).then(() => this.get())
   }
 
   public render() {
