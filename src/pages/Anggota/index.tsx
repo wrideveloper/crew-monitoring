@@ -11,6 +11,7 @@ const fields: IField[] = [
   {
     name: "nim",
     label: "NIM",
+    type: "number",
   },
   {
     name: "nama",
@@ -29,6 +30,7 @@ const fields: IField[] = [
   {
     name: "angkatan",
     label: "Angkatan",
+    type: "number",
   },
   {
     name: "jabatan",

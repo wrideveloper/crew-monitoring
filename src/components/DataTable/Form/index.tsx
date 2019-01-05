@@ -65,6 +65,7 @@ export default class Form extends Component<IProps, IState> {
     return this.props.fields.map((field, index) => (
       <Grid.Column key={index}>
         <Input
+          type={field.type}
           label={field.label}
           fluid
           onChange={(event) => this.changeInput(field.name, event.target.value)}

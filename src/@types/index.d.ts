@@ -7,6 +7,7 @@ declare interface IRoute {
 declare interface IField {
   name: string
   label: string
+  type?: "text" | "number" | "password" | "select"
   hide?: boolean
 }
 
