@@ -30,6 +30,10 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
     this.setState({ open: false })
   }
 
+  public filterFields() {
+    return this.props.fields.filter((field) => !field.hide)
+  }
+
   public render() {
     return (
       <Fragment>
@@ -49,7 +53,7 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
         />
         <Table
           data={this.props.data}
-          fields={this.props.fields}
+          fields={this.filterFields()}
           onRowClick={(rowData: any) => this.openForm(rowData)}
         />
       </Fragment>

@@ -7,6 +7,7 @@ declare interface IRoute {
 declare interface IField {
   name: string
   label: string
+  hide?: boolean
 }
 
 declare interface IAnggota {

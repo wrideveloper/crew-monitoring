@@ -19,10 +19,12 @@ const fields: IField[] = [
   {
     name: "email",
     label: "Email",
+    hide: true,
   },
   {
     name: "kontak",
     label: "Kontak",
+    hide: true,
   },
   {
     name: "angkatan",
@@ -31,6 +33,7 @@ const fields: IField[] = [
   {
     name: "jabatan",
     label: "Jabatan",
+    hide: true,
   },
   {
     name: "divisi",
