@@ -1,5 +1,13 @@
 import React, { Component } from "react"
-import { Button, Grid, Header, Input, Modal } from "semantic-ui-react"
+import {
+  Button,
+  Dropdown,
+  DropdownItemProps,
+  Grid,
+  Header,
+  Input,
+  Modal,
+} from "semantic-ui-react"
 
 interface IProps {
   open: boolean
@@ -61,9 +69,21 @@ export default class Form extends Component<IProps, IState> {
     return Object.keys(object).length === 0
   }
 
-  public renderInputFields() {
-    return this.props.fields.map((field, index) => (
-      <Grid.Column key={index}>
+  public getOptions(optionData: IOptionData): DropdownItemProps[] {
+    return optionData.data.map((item) => ({
+      text: item[optionData.labelKey],
+      value: item[optionData.valueKey],
+    }))
+  }
+
+  public getInputField(field: IField) {
+    if (
+      field.type === undefined ||
+      field.type === "text" ||
+      field.type === "number" ||
+      field.type === "password"
+    ) {
+      return (
         <Input
           type={field.type}
           label={field.label}
@@ -71,7 +91,25 @@ export default class Form extends Component<IProps, IState> {
           onChange={(event) => this.changeInput(field.name, event.target.value)}
           value={this.state.input[field.name]}
         />
-      </Grid.Column>
+      )
+    } else if (field.type === "option") {
+      return (
+        <Dropdown
+          text={field.label}
+          labeled
+          button
+          floating
+          options={this.getOptions(field.optionData!)}
+          value={this.state.input[field.name]}
+          onChange={(event, { value }) => this.changeInput(field.name, value)}
+        />
+      )
+    }
+  }
+
+  public renderInputFields() {
+    return this.props.fields.map((field, index) => (
+      <Grid.Column key={index}>{this.getInputField(field)}</Grid.Column>
     ))
   }
 

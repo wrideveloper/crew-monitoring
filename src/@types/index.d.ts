@@ -7,8 +7,15 @@ declare interface IRoute {
 declare interface IField {
   name: string
   label: string
-  type?: "text" | "number" | "password" | "select"
+  type?: "text" | "number" | "password" | "option"
   hide?: boolean
+  optionData?: IOptionData
+}
+
+declare interface IOptionData {
+  data: any[]
+  labelKey: string
+  valueKey: string
 }
 
 declare interface IAnggota {

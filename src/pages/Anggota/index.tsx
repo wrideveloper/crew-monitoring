@@ -2,9 +2,13 @@ import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
 import { AnggotaService } from "../../services/AnggotaService"
+import { DivisiService } from "../../services/DivisiService"
+import { JabatanService } from "../../services/JabatanService"
 
 interface IState {
   anggota: IAnggota[]
+  jabatan: IJabatan[]
+  divisi: IDivisi[]
 }
 
 const fields: IField[] = [
@@ -36,22 +40,48 @@ const fields: IField[] = [
     name: "jabatan",
     label: "Jabatan",
     hide: true,
+    type: "option",
+    optionData: {
+      data: [],
+      labelKey: "nama",
+      valueKey: "_id",
+    },
   },
   {
     name: "divisi",
     label: "Divisi",
+    type: "option",
+    optionData: {
+      data: [],
+      labelKey: "nama",
+      valueKey: "_id",
+    },
   },
 ]
 
 export default class Anggota extends Component<{}, IState> {
   public state: IState = {
     anggota: [],
+    jabatan: [],
+    divisi: [],
   }
 
   public anggotaService = new AnggotaService()
+  public jabatanService = new JabatanService()
+  public divisiService = new DivisiService()
 
   public componentDidMount() {
     this.get()
+    this.getDivisi()
+    this.getJabatan()
+  }
+
+  public getDivisi() {
+    this.divisiService.get().then((divisi) => this.setState({ divisi }))
+  }
+
+  public getJabatan() {
+    this.jabatanService.get().then((jabatan) => this.setState({ jabatan }))
   }
 
   public get() {
@@ -71,6 +101,8 @@ export default class Anggota extends Component<{}, IState> {
   }
 
   public render() {
+    fields[5].optionData!.data = this.state.jabatan
+    fields[6].optionData!.data = this.state.divisi
     return (
       <Fragment>
         <Header content="Anggota" subheader="Kumpulan data anggota crew" />
