@@ -15,7 +15,7 @@ export default class TablePagination extends Component<IProps> {
 
   public render() {
     return (
-      <Table.HeaderCell colSpan="3" textAlign="right">
+      <Table.HeaderCell colSpan="100" textAlign="right">
         <Pagination
           activePage={this.props.activePage}
           totalPages={this.getTotalPages()}

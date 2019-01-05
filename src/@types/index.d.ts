@@ -17,8 +17,8 @@ declare interface IAnggota {
   kontak: string
   angkatan: number
   foto?: string
-  jabatan?: IJabatan
-  divisi?: IDivisi
+  jabatan?: IJabatan | string
+  divisi?: IDivisi | string
 }
 
 declare interface IDivisi {

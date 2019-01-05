@@ -58,7 +58,7 @@ export default class CustomTable extends Component<IProps, IState> {
 
   public getFilteredData() {
     return this.props.data.filter((item) => {
-      const currentItem = (item[this.state.searchKey] as string).toLowerCase()
+      const currentItem = item[this.state.searchKey].toString().toLowerCase()
       const searchValue = this.state.searchValue.toLowerCase()
       return currentItem.search(searchValue) > -1
     })

@@ -1,14 +1,12 @@
-import React from "react"
-
-import Crew from "../pages/Crew"
+import Anggota from "../pages/Anggota"
 import Divisi from "../pages/Divisi"
 import Jabatan from "../pages/Jabatan"
 
 const routes: IRoute[] = [
   {
-    component: Crew,
-    label: "Data Crew",
-    path: "/crew",
+    component: Anggota,
+    label: "Anggota",
+    path: "/anggota",
   },
   {
     component: Divisi,
