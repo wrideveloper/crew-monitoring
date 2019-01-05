@@ -71,7 +71,7 @@ export default class Anggota extends Component<{}, IState> {
   public divisiService = new DivisiService()
 
   public componentDidMount() {
-    this.get()
+    this.getAnggota()
     this.getDivisi()
     this.getJabatan()
   }
@@ -84,34 +84,38 @@ export default class Anggota extends Component<{}, IState> {
     this.jabatanService.get().then((jabatan) => this.setState({ jabatan }))
   }
 
-  public get() {
+  public getAnggota() {
     this.anggotaService.get().then((anggota) => this.setState({ anggota }))
   }
 
-  public create(input: IAnggota) {
-    this.anggotaService.create(input).then(() => this.get())
+  public createAnggota(input: IAnggota) {
+    this.anggotaService.create(input).then(() => this.getAnggota())
   }
 
-  public update(input: IAnggota, id: string) {
-    this.anggotaService.update(input, id).then(() => this.get())
+  public updateAnggota(input: IAnggota, id: string) {
+    this.anggotaService.update(input, id).then(() => this.getAnggota())
   }
 
-  public delete(id: string) {
-    this.anggotaService.delete(id).then(() => this.get())
+  public deleteAnggota(id: string) {
+    this.anggotaService.delete(id).then(() => this.getAnggota())
+  }
+
+  public setOptionsData() {
+    fields[5].optionData!.data = this.state.jabatan
+    fields[6].optionData!.data = this.state.divisi
   }
 
   public render() {
-    fields[5].optionData!.data = this.state.jabatan
-    fields[6].optionData!.data = this.state.divisi
+    this.setOptionsData()
     return (
       <Fragment>
         <Header content="Anggota" subheader="Kumpulan data anggota crew" />
         <DataTable<IAnggota>
           data={this.state.anggota}
           fields={fields}
-          onCreate={(input) => this.create(input)}
-          onUpdate={(input) => this.update(input, input._id)}
-          onDelete={(input) => this.delete(input._id)}
+          onCreate={(input) => this.createAnggota(input)}
+          onUpdate={(input) => this.updateAnggota(input, input._id)}
+          onDelete={(input) => this.deleteAnggota(input._id)}
         />
       </Fragment>
     )

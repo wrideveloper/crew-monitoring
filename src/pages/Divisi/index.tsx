@@ -22,23 +22,23 @@ export default class Divisi extends Component<{}, IState> {
   public divisiService = new DivisiService()
 
   public componentDidMount() {
-    this.get()
+    this.getDivisi()
   }
 
-  public get() {
+  public getDivisi() {
     this.divisiService.get().then((divisi) => this.setState({ divisi }))
   }
 
-  public create(input: IDivisi) {
-    this.divisiService.create(input).then(() => this.get())
+  public createDivisi(input: IDivisi) {
+    this.divisiService.create(input).then(() => this.getDivisi())
   }
 
-  public update(input: IDivisi, id: string) {
-    this.divisiService.update(input, id).then(() => this.get())
+  public updateDivisi(input: IDivisi, id: string) {
+    this.divisiService.update(input, id).then(() => this.getDivisi())
   }
 
-  public delete(id: string) {
-    this.divisiService.delete(id).then(() => this.get())
+  public deleteDivisi(id: string) {
+    this.divisiService.delete(id).then(() => this.getDivisi())
   }
 
   public render() {
@@ -48,9 +48,9 @@ export default class Divisi extends Component<{}, IState> {
         <DataTable<IDivisi>
           data={this.state.divisi}
           fields={fields}
-          onCreate={(input) => this.create(input)}
-          onUpdate={(input) => this.update(input, input._id)}
-          onDelete={(input) => this.delete(input._id)}
+          onCreate={(input) => this.createDivisi(input)}
+          onUpdate={(input) => this.updateDivisi(input, input._id)}
+          onDelete={(input) => this.deleteDivisi(input._id)}
         />
       </Fragment>
     )

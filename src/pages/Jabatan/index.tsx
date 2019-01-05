@@ -22,23 +22,23 @@ export default class Jabatan extends Component<{}, IState> {
   public jabatanService = new JabatanService()
 
   public componentDidMount() {
-    this.get()
+    this.getJabatan()
   }
 
-  public get() {
+  public getJabatan() {
     this.jabatanService.get().then((jabatan) => this.setState({ jabatan }))
   }
 
-  public create(input: IJabatan) {
-    this.jabatanService.create(input).then(() => this.get())
+  public createJabatan(input: IJabatan) {
+    this.jabatanService.create(input).then(() => this.getJabatan())
   }
 
-  public update(input: IJabatan, id: string) {
-    this.jabatanService.update(input, id).then(() => this.get())
+  public updateJabatan(input: IJabatan, id: string) {
+    this.jabatanService.update(input, id).then(() => this.getJabatan())
   }
 
-  public delete(id: string) {
-    this.jabatanService.delete(id).then(() => this.get())
+  public deleteJabatan(id: string) {
+    this.jabatanService.delete(id).then(() => this.getJabatan())
   }
 
   public render() {
@@ -48,9 +48,9 @@ export default class Jabatan extends Component<{}, IState> {
         <DataTable
           data={this.state.jabatan}
           fields={fields}
-          onCreate={(input: IJabatan) => this.create(input)}
-          onUpdate={(input: IJabatan) => this.update(input, input._id)}
-          onDelete={(input: IJabatan) => this.delete(input._id)}
+          onCreate={(input: IJabatan) => this.createJabatan(input)}
+          onUpdate={(input: IJabatan) => this.updateJabatan(input, input._id)}
+          onDelete={(input: IJabatan) => this.deleteJabatan(input._id)}
         />
       </Fragment>
     )
