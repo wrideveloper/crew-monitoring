@@ -7,7 +7,7 @@ declare interface IRoute {
 declare interface IField {
   name: string
   label: string
-  type?: "text" | "number" | "password" | "option"
+  type?: "text" | "number" | "password" | "option" | "image"
   optionData?: IOptionData
   hide?: boolean
 }
@@ -25,7 +25,7 @@ declare interface IAnggota {
   email: string
   kontak: string
   angkatan: number
-  foto?: string
+  foto?: string | File
   jabatan?: IJabatan | string
   divisi?: IDivisi | string
 }

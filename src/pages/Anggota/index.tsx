@@ -57,6 +57,12 @@ const fields: IField[] = [
       valueKey: "_id",
     },
   },
+  {
+    name: "foto",
+    label: "Foto",
+    type: "image",
+    hide: true,
+  },
 ]
 
 export default class Anggota extends Component<{}, IState> {
@@ -88,12 +94,16 @@ export default class Anggota extends Component<{}, IState> {
     this.anggotaService.get().then((anggota) => this.setState({ anggota }))
   }
 
-  public createAnggota(input: IAnggota) {
-    this.anggotaService.create(input).then(() => this.getAnggota())
+  public async createAnggota(input: IAnggota) {
+    const { _id } = await this.anggotaService.create(input)
+    await this.anggotaService.uploadFoto(input.foto as File, _id)
+    this.getAnggota()
   }
 
-  public updateAnggota(input: IAnggota, id: string) {
-    this.anggotaService.update(input, id).then(() => this.getAnggota())
+  public async updateAnggota(input: IAnggota, id: string) {
+    await this.anggotaService.update(input, id)
+    await this.anggotaService.uploadFoto(input.foto as File, id)
+    this.getAnggota()
   }
 
   public deleteAnggota(id: string) {

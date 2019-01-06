@@ -1,5 +1,7 @@
-import React, { Component, Fragment } from "react"
-import { Dropdown, DropdownItemProps, Input, Label } from "semantic-ui-react"
+import React, { Component } from "react"
+import { Input } from "semantic-ui-react"
+import InputDropdown from "./InputDropdown"
+import InputImage from "./InputImage"
 
 interface IProps {
   field: IField
@@ -8,36 +10,23 @@ interface IProps {
 }
 
 export default class FormInput extends Component<IProps> {
-  public getDropdownValue() {
-    const { value, field } = this.props
-    return value ? value[field.optionData!.valueKey] : undefined
-  }
-
-  public getOptions(): DropdownItemProps[] {
-    const { optionData } = this.props.field
-    return optionData!.data.map((item) => ({
-      text: item[optionData!.labelKey],
-      value: item[optionData!.valueKey],
-    }))
-  }
-
   public renderInput() {
-    const { field } = this.props
+    const { field, value } = this.props
     if (field.type === "option") {
       return (
-        <Fragment>
-          <Label size="large" content={field.label} />
-          <Dropdown
-            placeholder={"Pilih " + field.label}
-            inline
-            basic
-            button
-            floating
-            options={this.getOptions()}
-            value={this.getDropdownValue()}
-            onChange={(event, { value }) => this.props.onChange(value)}
-          />
-        </Fragment>
+        <InputDropdown
+          field={field}
+          onChange={(value) => this.props.onChange(value)}
+          value={value}
+        />
+      )
+    } else if (field.type === "image") {
+      return (
+        <InputImage
+          field={field}
+          onChange={(value) => this.props.onChange(value)}
+          value={value}
+        />
       )
     } else {
       return (
@@ -46,7 +35,7 @@ export default class FormInput extends Component<IProps> {
           label={field.label}
           fluid
           onChange={(event) => this.props.onChange(event.target.value)}
-          value={this.props.value}
+          value={value}
         />
       )
     }
