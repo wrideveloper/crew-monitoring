@@ -19,16 +19,14 @@ const options: DropdownItemProps[] = [
 export default class TableLimiter extends Component<IProps> {
   public render() {
     return (
-      <div>
-        <Dropdown
-          floating
-          text="Item Perhalaman"
-          button
-          options={options}
-          defaultValue={options[0].value}
-          onChange={(event, { value }) => this.props.onChange(value as number)}
-        />
-      </div>
+      <Dropdown
+        floating
+        text="Item Perhalaman"
+        button
+        options={options}
+        defaultValue={options[0].value}
+        onChange={(event, { value }) => this.props.onChange(value as number)}
+      />
     )
   }
 }

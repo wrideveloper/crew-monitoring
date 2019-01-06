@@ -21,25 +21,36 @@ export default class Form extends Component<IProps, IState> {
     input: {},
   }
 
-  public componentWillReceiveProps(nextProps: IProps) {
-    if (this.isModalOpen(nextProps))
-      // TODO: somehow this line make props initialInput changed when input state changed
-      this.setState({ input: nextProps.initialInput })
+  public isObjectEmpty(object: any) {
+    return Object.keys(object).length === 0
+  }
 
-    if (this.isModalClose(nextProps)) this.setState({ input: {} })
+  public isUpdateMode() {
+    return !this.isObjectEmpty(this.props.initialInput)
   }
 
   public isModalOpen(nextProps: IProps) {
     return (
       this.props.open === false &&
       nextProps.open === true &&
-      this.isEmpty(this.state.input) &&
-      !this.isEmpty(nextProps.initialInput)
+      this.isObjectEmpty(this.state.input) &&
+      !this.isObjectEmpty(nextProps.initialInput)
     )
   }
 
   public isModalClose(nextProps: IProps) {
     return this.props.open === true && nextProps.open === false
+  }
+
+  public componentWillReceiveProps(nextProps: IProps) {
+    if (this.isModalOpen(nextProps)) {
+      // TODO: somehow this line make props initialInput changed when input state changed
+      this.setState({ input: nextProps.initialInput })
+    }
+
+    if (this.isModalClose(nextProps)) {
+      this.setState({ input: {} })
+    }
   }
 
   public changeInput(name: string, value: any) {
@@ -54,15 +65,20 @@ export default class Form extends Component<IProps, IState> {
     this.props.onClose()
   }
 
-  public isUpdateMode() {
-    return !this.isEmpty(this.props.initialInput)
+  public renderDeleteButton() {
+    return this.isUpdateMode() ? (
+      <Button
+        content="Hapus"
+        color="red"
+        onClick={() => {
+          this.props.onDelete(this.state.input)
+          this.props.onClose()
+        }}
+      />
+    ) : null
   }
 
-  public isEmpty(object: any) {
-    return Object.keys(object).length === 0
-  }
-
-  public renderInputFields() {
+  public renderFormInputs() {
     return this.props.fields.map((field, index) => (
       <Grid.Column key={index}>
         <FormInput
@@ -83,19 +99,10 @@ export default class Form extends Component<IProps, IState> {
       >
         <Header content={this.isUpdateMode() ? "Ubah Data" : "Tambah Data"} />
         <Modal.Content>
-          <Grid columns="2">{this.renderInputFields()}</Grid>
+          <Grid columns="2">{this.renderFormInputs()}</Grid>
         </Modal.Content>
         <Modal.Actions>
-          {this.isUpdateMode() ? (
-            <Button
-              content="Hapus"
-              color="red"
-              onClick={() => {
-                this.props.onDelete(this.state.input)
-                this.props.onClose()
-              }}
-            />
-          ) : null}
+          {this.renderDeleteButton()}
           <Button
             color="green"
             content="Simpan"

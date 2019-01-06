@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Table } from "semantic-ui-react"
 
 interface IProps {
-  fields: IField[]
+  shownFields: IField[]
   sortKey: string
   isDescending: boolean
   onChangeSort: (fieldName: string) => void
@@ -20,14 +20,13 @@ export default class TableHeader extends Component<IProps> {
   }
 
   public renderHeaderCells() {
-    return this.props.fields.map((field, index) => (
+    return this.props.shownFields.map((field, index) => (
       <Table.HeaderCell
         key={index}
         sorted={this.isSorted(field.name)}
         onClick={() => this.props.onChangeSort(field.name)}
-      >
-        {field.label}
-      </Table.HeaderCell>
+        content={field.label}
+      />
     ))
   }
 

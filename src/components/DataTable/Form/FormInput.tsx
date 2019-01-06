@@ -8,14 +8,21 @@ interface IProps {
 }
 
 export default class FormInput extends Component<IProps> {
-  public getOptions(optionData: IOptionData): DropdownItemProps[] {
-    return optionData.data.map((item) => ({
-      text: item[optionData.labelKey],
-      value: item[optionData.valueKey],
+  public getDropdownValue() {
+    const { value, field } = this.props
+    return value ? value[field.optionData!.valueKey] : undefined
+  }
+
+  public getOptions(): DropdownItemProps[] {
+    const { optionData } = this.props.field
+    return optionData!.data.map((item) => ({
+      text: item[optionData!.labelKey],
+      value: item[optionData!.valueKey],
     }))
   }
 
-  public getInput(field: IField) {
+  public renderInput() {
+    const { field } = this.props
     if (field.type === "option") {
       return (
         <Fragment>
@@ -26,8 +33,8 @@ export default class FormInput extends Component<IProps> {
             basic
             button
             floating
-            options={this.getOptions(field.optionData!)}
-            value={this.props.value[field.optionData!.valueKey]}
+            options={this.getOptions()}
+            value={this.getDropdownValue()}
             onChange={(event, { value }) => this.props.onChange(value)}
           />
         </Fragment>
@@ -46,6 +53,6 @@ export default class FormInput extends Component<IProps> {
   }
 
   public render() {
-    return this.getInput(this.props.field)
+    return this.renderInput()
   }
 }
