@@ -27,7 +27,10 @@ export default class InputImage extends Component<IProps, IState> {
   public render() {
     return (
       <Fragment>
-        <Image src={this.state.preview} rounded size="small" />
+        {this.props.value ? (
+          <Image src={this.state.preview} rounded size="small" />
+        ) : null}
+
         <br />
         <Input
           label={this.props.field.label}
