@@ -4,11 +4,13 @@ import DataTable from "../../components/DataTable"
 import { AnggotaService } from "../../services/AnggotaService"
 import { DivisiService } from "../../services/DivisiService"
 import { JabatanService } from "../../services/JabatanService"
+import { MiniclassService } from "../../services/MiniclassService"
 
 interface IState {
   anggota: IAnggota[]
   jabatan: IJabatan[]
   divisi: IDivisi[]
+  miniclass: IMiniclass[]
 }
 
 const fields: IField[] = [
@@ -58,6 +60,16 @@ const fields: IField[] = [
     },
   },
   {
+    name: "miniclass",
+    label: "Miniclass",
+    type: "option",
+    optionData: {
+      data: [],
+      labelKey: "nama",
+      valueKey: "_id",
+    },
+  },
+  {
     name: "foto",
     label: "Foto",
     type: "image",
@@ -70,16 +82,19 @@ export default class Anggota extends Component<{}, IState> {
     anggota: [],
     jabatan: [],
     divisi: [],
+    miniclass: [],
   }
 
   public anggotaService = new AnggotaService()
   public jabatanService = new JabatanService()
   public divisiService = new DivisiService()
+  public miniclassService = new MiniclassService()
 
   public componentDidMount() {
     this.getAnggota()
     this.getDivisi()
     this.getJabatan()
+    this.getMiniclass()
   }
 
   public getDivisi() {
@@ -90,19 +105,25 @@ export default class Anggota extends Component<{}, IState> {
     this.jabatanService.get().then((jabatan) => this.setState({ jabatan }))
   }
 
+  public getMiniclass() {
+    this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
+  }
+
   public getAnggota() {
     this.anggotaService.get().then((anggota) => this.setState({ anggota }))
   }
 
   public async createAnggota(input: IAnggota) {
     const { _id } = await this.anggotaService.create(input)
-    await this.anggotaService.uploadFoto(input.foto as File, _id)
+    if (input.foto instanceof File)
+      await this.anggotaService.uploadFoto(input.foto as File, _id)
     this.getAnggota()
   }
 
   public async updateAnggota(input: IAnggota, id: string) {
     await this.anggotaService.update(input, id)
-    await this.anggotaService.uploadFoto(input.foto as File, id)
+    if (input.foto instanceof File)
+      await this.anggotaService.uploadFoto(input.foto as File, id)
     this.getAnggota()
   }
 
@@ -113,6 +134,7 @@ export default class Anggota extends Component<{}, IState> {
   public setOptionsData() {
     fields[5].optionData!.data = this.state.jabatan
     fields[6].optionData!.data = this.state.divisi
+    fields[7].optionData!.data = this.state.miniclass
   }
 
   public render() {

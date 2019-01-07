@@ -28,6 +28,7 @@ declare interface IAnggota {
   foto?: string | File
   jabatan?: IJabatan | string
   divisi?: IDivisi | string
+  miniclass?: IMiniclass | string
 }
 
 declare interface IDivisi {
@@ -38,4 +39,10 @@ declare interface IDivisi {
 declare interface IJabatan {
   _id: string
   nama: string
+}
+
+declare interface IMiniclass {
+  _id: string
+  nama: string
+  divisi: IDivisi | string
 }
