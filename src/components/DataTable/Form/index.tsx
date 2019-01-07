@@ -30,12 +30,7 @@ export default class Form extends Component<IProps, IState> {
   }
 
   public isModalOpen(nextProps: IProps) {
-    return (
-      this.props.open === false &&
-      nextProps.open === true &&
-      this.isObjectEmpty(this.state.input) &&
-      !this.isObjectEmpty(nextProps.initialInput)
-    )
+    return this.props.open === false && nextProps.open === true
   }
 
   public isModalClose(nextProps: IProps) {
@@ -44,8 +39,8 @@ export default class Form extends Component<IProps, IState> {
 
   public componentWillReceiveProps(nextProps: IProps) {
     if (this.isModalOpen(nextProps)) {
-      // TODO: somehow this line make props initialInput changed when input state changed
-      this.setState({ input: nextProps.initialInput })
+      const initialInput = JSON.parse(JSON.stringify(nextProps.initialInput))
+      this.setState({ input: initialInput })
     }
 
     if (this.isModalClose(nextProps)) {

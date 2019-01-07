@@ -25,7 +25,12 @@ export default class TableBody extends Component<IProps> {
   public renderRow() {
     let { startingNumber } = this.props
     return this.props.paginatedData.map((rowData, index) => (
-      <Table.Row key={index} onClick={() => this.props.onRowClick(rowData)}>
+      <Table.Row
+        key={index}
+        onClick={() =>
+          this.props.onRowClick(JSON.parse(JSON.stringify(rowData)))
+        }
+      >
         <Table.Cell>{startingNumber++}</Table.Cell>
         {this.renderCell(rowData)}
       </Table.Row>
