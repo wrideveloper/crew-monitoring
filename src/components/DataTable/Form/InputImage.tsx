@@ -6,6 +6,7 @@ interface IProps {
   field: IField
   onChange: (value: any) => void
   value: any
+  error: boolean | undefined
 }
 
 interface IState {
@@ -33,6 +34,7 @@ export default class InputImage extends Component<IProps, IState> {
           fluid
           type="file"
           onChange={(event) => this.changeImage(event.target.files![0])}
+          error={this.props.error}
         />
       </Fragment>
     )

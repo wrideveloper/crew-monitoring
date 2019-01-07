@@ -7,6 +7,7 @@ interface IProps {
   field: IField
   onChange: (value: any) => void
   value: any
+  error: boolean | undefined
 }
 
 export default class FormInput extends Component<IProps> {
@@ -18,6 +19,7 @@ export default class FormInput extends Component<IProps> {
           field={field}
           onChange={(value) => this.props.onChange(value)}
           value={value}
+          error={this.props.error}
         />
       )
     } else if (field.type === "image") {
@@ -26,6 +28,7 @@ export default class FormInput extends Component<IProps> {
           field={field}
           onChange={(value) => this.props.onChange(value)}
           value={value}
+          error={this.props.error}
         />
       )
     } else {
@@ -36,6 +39,7 @@ export default class FormInput extends Component<IProps> {
           fluid
           onChange={(event) => this.props.onChange(event.target.value)}
           value={value}
+          error={this.props.error}
         />
       )
     }
