@@ -11,9 +11,10 @@ interface IProps {
 export default class TableBody extends Component<IProps> {
   public getCellData(rowData: any, field: IField) {
     const cellData = rowData[field.name]
-    return cellData instanceof Object
-      ? cellData[field.optionData!.labelKey]
-      : cellData
+    if (field.type === "option") return cellData[field.optionData!.labelKey]
+    else if (field.type === "date")
+      return new Date(cellData).toLocaleDateString("id")
+    else return cellData
   }
 
   public renderCell(row: any) {

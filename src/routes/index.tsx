@@ -2,6 +2,7 @@ import Anggota from "../pages/Anggota"
 import Divisi from "../pages/Divisi"
 import Jabatan from "../pages/Jabatan"
 import Miniclass from "../pages/Miniclass"
+import Presensi from "../pages/Presensi"
 
 const routes: IRoute[] = [
   {
@@ -23,6 +24,11 @@ const routes: IRoute[] = [
     component: Miniclass,
     label: "Miniclass",
     path: "/miniclass",
+  },
+  {
+    component: Presensi,
+    label: "Presensi",
+    path: "/presensi",
   },
 ]
 

@@ -31,6 +31,17 @@ export default class FormInput extends Component<IProps> {
           error={this.props.error}
         />
       )
+    } else if (field.type === "date") {
+      return (
+        <Input
+          type={field.type}
+          label={field.label}
+          fluid
+          onChange={(event) => this.props.onChange(event.target.value)}
+          value={String(value).slice(0, 10)}
+          error={this.props.error}
+        />
+      )
     } else {
       return (
         <Input

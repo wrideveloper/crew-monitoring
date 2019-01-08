@@ -7,7 +7,7 @@ declare interface IRoute {
 declare interface IField {
   name: string
   label: string
-  type?: "text" | "number" | "password" | "option" | "image"
+  type?: "text" | "number" | "password" | "option" | "image" | "date"
   optionData?: IOptionData
   hide?: boolean
 }
@@ -45,4 +45,13 @@ declare interface IMiniclass {
   _id: string
   nama: string
   divisi: IDivisi | string
+}
+
+declare interface IPresensi {
+  _id: string
+  topik: string
+  miniclass: string | IMiniclass
+  angkatan: number
+  tanggal: Date
+  peserta: string[] | IAnggota[]
 }
