@@ -32,6 +32,11 @@ declare interface IAnggota {
   miniclass?: IMiniclass | string
 }
 
+declare interface IDivisi {
+  _id: string
+  nama: string
+}
+
 declare interface IJabatan {
   _id: string
   nama: string
