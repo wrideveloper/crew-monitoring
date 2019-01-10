@@ -9,6 +9,7 @@ interface IProps<T> {
   onCreate: (input: T) => void
   onUpdate: (input: T) => void
   onDelete: (input: T) => void
+  additionalAction?: (selectedData: T) => JSX.Element | null
 }
 
 interface IState {
@@ -50,6 +51,7 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
           onUpdate={(input) => this.props.onUpdate(input)}
           onDelete={(input) => this.props.onDelete(input)}
           onClose={() => this.closeForm()}
+          additionalAction={this.props.additionalAction}
         />
         <Table
           data={this.props.data}

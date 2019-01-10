@@ -7,9 +7,16 @@ export class ServiceGenerator<T> {
     return new Promise<T[]>((resolve, reject) => {
       axios
         .get(this.endpoint)
-        .then((response) => {
-          resolve(response.data)
-        })
+        .then((response) => resolve(response.data))
+        .catch((error) => reject(error))
+    })
+  }
+
+  public getById(id: string) {
+    return new Promise<T>((resolve, reject) => {
+      axios
+        .get(this.endpoint + id)
+        .then((response) => resolve(response.data))
         .catch((error) => reject(error))
     })
   }

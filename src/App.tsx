@@ -8,7 +8,7 @@ import routes from "./routes"
 class App extends Component {
   public renderRoutes() {
     return routes.map((route, index) => (
-      <Route path={route.path} component={route.component} key={index} />
+      <Route path={route.path} component={route.component} key={index} exact />
     ))
   }
 

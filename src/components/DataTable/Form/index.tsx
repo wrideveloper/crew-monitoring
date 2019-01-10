@@ -10,6 +10,7 @@ interface IProps {
   onUpdate: (input: any) => void
   onDelete: (input: any) => void
   onClose: () => void
+  additionalAction?: (selectedData: any) => JSX.Element | null
 }
 
 interface IState {
@@ -80,6 +81,12 @@ export default class Form extends Component<IProps, IState> {
     }
   }
 
+  public renderAdditionalAction() {
+    return this.props.additionalAction
+      ? this.props.additionalAction(this.props.initialInput)
+      : null
+  }
+
   public renderDeleteButton() {
     return this.isUpdateMode() ? (
       <Button
@@ -118,6 +125,7 @@ export default class Form extends Component<IProps, IState> {
           <Grid columns="2">{this.renderFormInputs()}</Grid>
         </Modal.Content>
         <Modal.Actions>
+          {this.renderAdditionalAction()}
           {this.renderDeleteButton()}
           <Button
             color="green"

@@ -1,4 +1,5 @@
 import Anggota from "../pages/Anggota"
+import Checkin from "../pages/Checkin"
 import Divisi from "../pages/Divisi"
 import Jabatan from "../pages/Jabatan"
 import Miniclass from "../pages/Miniclass"
@@ -29,6 +30,12 @@ const routes: IRoute[] = [
     component: Presensi,
     label: "Presensi",
     path: "/presensi",
+  },
+  {
+    component: Checkin,
+    label: "Presensi",
+    path: "/presensi/:id",
+    hide: true,
   },
 ]
 

@@ -2,6 +2,7 @@ declare interface IRoute {
   label: string
   path: string
   component: React.FunctionComponent | React.Components
+  hide?: boolean
 }
 
 declare interface IField {
@@ -31,11 +32,6 @@ declare interface IAnggota {
   miniclass?: IMiniclass | string
 }
 
-declare interface IDivisi {
-  _id: string
-  nama: string
-}
-
 declare interface IJabatan {
   _id: string
   nama: string
@@ -53,5 +49,5 @@ declare interface IPresensi {
   miniclass: string | IMiniclass
   angkatan: number
   tanggal: Date
-  peserta: string[] | IAnggota[]
+  peserta: string[]
 }
