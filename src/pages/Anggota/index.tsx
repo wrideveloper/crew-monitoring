@@ -113,14 +113,14 @@ export default class Anggota extends Component<{}, IState> {
     this.anggotaService.get().then((anggota) => this.setState({ anggota }))
   }
 
-  public async createAnggota(input: IAnggota) {
+  public async createAnggota(input: IAnggotaInput) {
     const { _id } = await this.anggotaService.create(input)
     if (input.foto instanceof File)
       await this.anggotaService.uploadFoto(input.foto as File, _id)
     this.getAnggota()
   }
 
-  public async updateAnggota(input: IAnggota, id: string) {
+  public async updateAnggota(input: IAnggotaInput, id: string) {
     await this.anggotaService.update(input, id)
     if (input.foto instanceof File)
       await this.anggotaService.uploadFoto(input.foto as File, id)
@@ -142,7 +142,7 @@ export default class Anggota extends Component<{}, IState> {
     return (
       <Fragment>
         <Header content="Anggota" subheader="Kumpulan data anggota crew" />
-        <DataTable<IAnggota>
+        <DataTable<IAnggota, IAnggotaInput>
           data={this.state.anggota}
           fields={fields}
           onCreate={(input) => this.createAnggota(input)}

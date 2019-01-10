@@ -48,17 +48,19 @@ export default class Miniclass extends Component<{}, IState> {
     this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
   }
 
-  public async createAnggota(input: IMiniclass) {
+  public async createMiniclass(input: IMiniclassInput) {
+    console.log("input miniclass : ", input)
     await this.miniclassService.create(input)
     this.getMiniclass()
   }
 
-  public async updateAnggota(input: IMiniclass, id: string) {
+  public async updateMiniclass(input: IMiniclassInput, id: string) {
     await this.miniclassService.update(input, id)
     this.getMiniclass()
+    console.log("miniclass input ", input)
   }
 
-  public deleteAnggota(id: string) {
+  public deleteMiniclass(id: string) {
     this.miniclassService.delete(id).then(() => this.getMiniclass())
   }
 
@@ -71,12 +73,12 @@ export default class Miniclass extends Component<{}, IState> {
     return (
       <Fragment>
         <Header content="Miniclass" subheader="Kumpulan data miniclass" />
-        <DataTable<IMiniclass>
+        <DataTable<IMiniclass, IMiniclassInput>
           data={this.state.miniclass}
           fields={fields}
-          onCreate={(input) => this.createAnggota(input)}
-          onUpdate={(input) => this.updateAnggota(input, input._id)}
-          onDelete={(input) => this.deleteAnggota(input._id)}
+          onCreate={(input) => this.createMiniclass(input)}
+          onUpdate={(input) => this.updateMiniclass(input, input._id)}
+          onDelete={(input) => this.deleteMiniclass(input._id)}
         />
       </Fragment>
     )

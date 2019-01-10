@@ -3,13 +3,13 @@ import { Button } from "semantic-ui-react"
 import Form from "./Form"
 import Table from "./Table"
 
-interface IProps<T> {
-  data: T[]
+interface IProps<TDATA, TINPUT> {
+  data: TDATA[]
   fields: IField[]
-  onCreate: (input: T) => void
-  onUpdate: (input: T) => void
-  onDelete: (input: T) => void
-  additionalAction?: (selectedData: T) => JSX.Element | null
+  onCreate: (input: TINPUT) => void
+  onUpdate: (input: TINPUT) => void
+  onDelete: (input: TINPUT) => void
+  additionalAction?: (selectedData: TDATA) => JSX.Element | null
 }
 
 interface IState {
@@ -17,7 +17,10 @@ interface IState {
   selectedData: any
 }
 
-export default class DataTable<T> extends Component<IProps<T>, IState> {
+export default class DataTable<TDATA, TINPUT> extends Component<
+  IProps<TDATA, TINPUT>,
+  IState
+> {
   public state: IState = {
     open: false,
     selectedData: {},

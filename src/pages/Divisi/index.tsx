@@ -29,11 +29,11 @@ export default class Divisi extends Component<{}, IState> {
     this.divisiService.get().then((divisi) => this.setState({ divisi }))
   }
 
-  public createDivisi(input: IDivisi) {
+  public createDivisi(input: IDivisiInput) {
     this.divisiService.create(input).then(() => this.getDivisi())
   }
 
-  public updateDivisi(input: IDivisi, id: string) {
+  public updateDivisi(input: IDivisiInput, id: string) {
     this.divisiService.update(input, id).then(() => this.getDivisi())
   }
 
@@ -45,7 +45,7 @@ export default class Divisi extends Component<{}, IState> {
     return (
       <Fragment>
         <Header content="Divisi" subheader="Kumpulan data divisi" />
-        <DataTable<IDivisi>
+        <DataTable<IDivisi, IDivisiInput>
           data={this.state.divisi}
           fields={fields}
           onCreate={(input) => this.createDivisi(input)}

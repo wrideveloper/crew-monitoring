@@ -1,10 +1,10 @@
 import axios from "axios"
 
-export class ServiceGenerator<T> {
+export class ServiceGenerator<TDATA, TINPUT> {
   protected endpoint = ""
 
   public get() {
-    return new Promise<T[]>((resolve, reject) => {
+    return new Promise<TDATA[]>((resolve, reject) => {
       axios
         .get(this.endpoint)
         .then((response) => resolve(response.data))
@@ -13,7 +13,7 @@ export class ServiceGenerator<T> {
   }
 
   public getById(id: string) {
-    return new Promise<T>((resolve, reject) => {
+    return new Promise<TDATA>((resolve, reject) => {
       axios
         .get(this.endpoint + id)
         .then((response) => resolve(response.data))
@@ -21,8 +21,8 @@ export class ServiceGenerator<T> {
     })
   }
 
-  public create(input: T) {
-    return new Promise<T>((resolve, reject) => {
+  public create(input: TINPUT) {
+    return new Promise<TDATA>((resolve, reject) => {
       axios
         .post(this.endpoint, input)
         .then((response) => resolve(response.data))
@@ -30,8 +30,8 @@ export class ServiceGenerator<T> {
     })
   }
 
-  public update(input: T, id: string) {
-    return new Promise<T>((resolve, reject) => {
+  public update(input: TINPUT, id: string) {
+    return new Promise<TDATA>((resolve, reject) => {
       axios
         .put(this.endpoint + id, input)
         .then((response) => resolve(response.data))
@@ -40,7 +40,7 @@ export class ServiceGenerator<T> {
   }
 
   public delete(id: string) {
-    return new Promise<T>((resolve, reject) => {
+    return new Promise<TDATA>((resolve, reject) => {
       axios
         .delete(this.endpoint + id)
         .then((response) => resolve(response.data))

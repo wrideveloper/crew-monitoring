@@ -62,12 +62,12 @@ export default class Presensi extends Component<{}, IState> {
     this.presensiService.get().then((presensi) => this.setState({ presensi }))
   }
 
-  public async createPresensi(input: IPresensi) {
+  public async createPresensi(input: IPresensiInput) {
     await this.presensiService.create(input)
     this.getPresensi()
   }
 
-  public async updatePresensi(input: IPresensi, id: string) {
+  public async updatePresensi(input: IPresensiInput, id: string) {
     await this.presensiService.update(input, id)
     this.getPresensi()
   }
@@ -96,7 +96,7 @@ export default class Presensi extends Component<{}, IState> {
           content="Presensi"
           subheader="Kumpulan data presensi miniclass"
         />
-        <DataTable<IPresensi>
+        <DataTable<IPresensi, IPresensiInput>
           data={this.state.presensi}
           fields={fields}
           onCreate={(input) => this.createPresensi(input)}

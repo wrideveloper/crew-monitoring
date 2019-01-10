@@ -73,12 +73,11 @@ export default class Checkin extends Component<IProps, IState> {
 
   public submit() {
     this.presensiService
-      .update(this.state.presensi, this.state.presensi._id)
+      .update(this.state.presensi as any, this.state.presensi._id)
       .then(() => alert("updated"))
   }
 
   public render() {
-    console.log(this.state.presensi.peserta)
     return (
       <Fragment>
         <Header
