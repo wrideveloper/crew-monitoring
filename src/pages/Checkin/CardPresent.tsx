@@ -9,6 +9,10 @@ interface IProps {
 }
 
 export default class CardPresent extends Component<IProps> {
+  public isChecked(id: string) {
+    return this.props.presensi.peserta.indexOf(id) !== -1
+  }
+
   public getFilteredAnggota() {
     return this.props.anggota.filter((item) => {
       return (
@@ -26,6 +30,7 @@ export default class CardPresent extends Component<IProps> {
         <Table.Cell>{item.nama}</Table.Cell>
         <Table.Cell>
           <Checkbox
+            checked={this.isChecked(item._id)}
             value={item._id}
             onChange={(e, { value, checked }) =>
               this.props.onChange(value as string, checked as boolean)}

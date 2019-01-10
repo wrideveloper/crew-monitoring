@@ -74,7 +74,7 @@ export default class Checkin extends Component<IProps, IState> {
   public submit() {
     this.presensiService
       .update(this.state.presensi, this.state.presensi._id)
-      .then(() => alert("updated"))
+      .then(() => window.location.assign("/presensi"))
   }
 
   public render() {
