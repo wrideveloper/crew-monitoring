@@ -2,10 +2,7 @@ import axios from "axios"
 import { serviceCrew } from "../config"
 import { ServiceGenerator } from "./ServiceGenerator"
 
-export class MiniclassService extends ServiceGenerator<
-  IMiniclass,
-  IMiniclassInput
-> {
+export class MiniclassService extends ServiceGenerator<IMiniclass> {
   protected endpoint = serviceCrew + "miniclass/"
 
   public getAnggota(id: string, angkatan: number) {

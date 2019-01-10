@@ -2,7 +2,7 @@ import axios from "axios"
 import { serviceCrew } from "../config"
 import { ServiceGenerator } from "./ServiceGenerator"
 
-export class AnggotaService extends ServiceGenerator<IAnggota, IAnggotaInput> {
+export class AnggotaService extends ServiceGenerator<IAnggota> {
   protected endpoint = serviceCrew + "anggota/"
 
   public uploadFoto(foto: File, id: string) {

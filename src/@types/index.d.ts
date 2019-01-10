@@ -19,26 +19,6 @@ declare interface IOptionData {
   valueKey: string
 }
 
-declare interface IDivisi {
-  _id: string
-  nama: string
-}
-
-declare interface IDivisiInput {
-  _id: string
-  nama: string
-}
-
-declare interface IJabatan {
-  _id: string
-  nama: string
-}
-
-declare interface IJabatanInput {
-  _id: string
-  nama: string
-}
-
 declare interface IAnggota {
   _id: string
   nim: number
@@ -46,50 +26,27 @@ declare interface IAnggota {
   email: string
   kontak: string
   angkatan: number
-  foto?: string
-  jabatan?: IJabatan
-  divisi?: IDivisi
-  miniclass?: IMiniclass
+  foto?: string | File
+  jabatan?: IJabatan | string
+  divisi?: IDivisi | string
+  miniclass?: IMiniclass | string
 }
 
-declare interface IAnggotaInput {
+declare interface IJabatan {
   _id: string
-  nim: number
   nama: string
-  email: string
-  kontak: string
-  angkatan: number
-  foto?: File
-  jabatan?: string
-  divisi?: string
-  miniclass?: string
 }
 
 declare interface IMiniclass {
   _id: string
   nama: string
-  divisi: IDivisi
-}
-
-declare interface IMiniclassInput {
-  _id: string
-  nama: string
-  divisi: string
+  divisi: IDivisi | string
 }
 
 declare interface IPresensi {
   _id: string
   topik: string
-  miniclass: IMiniclass
-  angkatan: number
-  tanggal: Date
-  peserta: string[]
-}
-
-declare interface IPresensiInput {
-  _id: string
-  topik: string
-  miniclass: string
+  miniclass: string | IMiniclass
   angkatan: number
   tanggal: Date
   peserta: string[]
