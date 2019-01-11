@@ -1,6 +1,7 @@
 import _ from "lodash"
 import React, { Component } from "react"
 import { Card, Grid, Table } from "semantic-ui-react"
+import TableBlank from "./TableBlank"
 import TableBody from "./TableBody"
 import TableHeader from "./TableHeader"
 import TableLimiter from "./TableLimiter"
@@ -97,6 +98,37 @@ export default class CustomTable extends Component<IProps, IState> {
     return this.getSortedData().slice(offset, end)
   }
 
+  public renderTable() {
+    return this.getSearchedData().length !== 0 ? (
+      <Table celled sortable selectable>
+        <TableHeader
+          shownFields={this.props.shownFields}
+          sortKey={this.state.sortKey}
+          isDescending={this.state.isDescending}
+          onChangeSort={(fieldName) => this.changeSort(fieldName)}
+        />
+        <TableBody
+          shownFields={this.props.shownFields}
+          paginatedData={this.getPaginatedData()}
+          startingNumber={this.getOffset() + 1}
+          onRowClick={(rowData) => this.props.onRowClick(rowData)}
+        />
+        <Table.Footer>
+          <Table.Row>
+            <TablePagination
+              dataLength={this.getSearchedData().length}
+              itemPerPage={this.state.itemPerPage}
+              activePage={this.state.activePage}
+              onPageChange={(pageNumber) => this.changePage(pageNumber)}
+            />
+          </Table.Row>
+        </Table.Footer>
+      </Table>
+    ) : (
+      <TableBlank />
+    )
+  }
+
   public render() {
     return (
       <Card fluid>
@@ -115,31 +147,7 @@ export default class CustomTable extends Component<IProps, IState> {
               <TableLimiter onChange={(limit) => this.changeLimit(limit)} />
             </Grid.Column>
           </Grid>
-
-          <Table celled sortable selectable>
-            <TableHeader
-              shownFields={this.props.shownFields}
-              sortKey={this.state.sortKey}
-              isDescending={this.state.isDescending}
-              onChangeSort={(fieldName) => this.changeSort(fieldName)}
-            />
-            <TableBody
-              shownFields={this.props.shownFields}
-              paginatedData={this.getPaginatedData()}
-              startingNumber={this.getOffset() + 1}
-              onRowClick={(rowData) => this.props.onRowClick(rowData)}
-            />
-            <Table.Footer>
-              <Table.Row>
-                <TablePagination
-                  dataLength={this.getSearchedData().length}
-                  itemPerPage={this.state.itemPerPage}
-                  activePage={this.state.activePage}
-                  onPageChange={(pageNumber) => this.changePage(pageNumber)}
-                />
-              </Table.Row>
-            </Table.Footer>
-          </Table>
+          {this.renderTable()}
         </Card.Content>
       </Card>
     )
