@@ -22,7 +22,7 @@ const fields: IField[] = [
     type: "option",
     optionData: {
       data: [],
-      labelKey: "nama",
+      textKey: "nama",
       valueKey: "_id",
     },
   },
@@ -44,10 +44,6 @@ export default class Presensi extends Component<{}, IState> {
 
   public presensiService = new PresensiService()
   public miniclassService = new MiniclassService()
-
-  public setOptionsData() {
-    fields[1].optionData!.data = this.state.miniclass
-  }
 
   public componentDidMount() {
     this.getMiniclass()
@@ -86,6 +82,10 @@ export default class Presensi extends Component<{}, IState> {
         <Button content="Checkin" color="orange" />
       </Link>
     ) : null
+  }
+
+  public setOptionsData() {
+    fields[1].optionData!.data = this.state.miniclass
   }
 
   public render() {

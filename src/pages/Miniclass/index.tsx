@@ -20,7 +20,7 @@ const fields: IField[] = [
     type: "option",
     optionData: {
       data: [],
-      labelKey: "nama",
+      textKey: "nama",
       valueKey: "_id",
     },
   },

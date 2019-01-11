@@ -17,7 +17,7 @@ export default class InputDropdown extends Component<IProps> {
   public getOptions(): DropdownItemProps[] {
     const { optionData } = this.props.field
     return optionData!.data.map((item) => ({
-      text: item[optionData!.labelKey],
+      text: item[optionData!.textKey],
       value: item[optionData!.valueKey],
     }))
   }

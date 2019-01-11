@@ -9,17 +9,20 @@ interface IProps {
 }
 
 export default class TableBody extends Component<IProps> {
-  public getCellData(rowData: any, field: IField) {
+  public getCellText(rowData: any, field: IField) {
     const cellData = rowData[field.name]
-    if (field.type === "option") return cellData[field.optionData!.labelKey]
-    else if (field.type === "date")
+    if (field.type === "option") {
+      return cellData[field.optionData!.textKey]
+    } else if (field.type === "date") {
       return new Date(cellData).toLocaleDateString("id")
-    else return cellData
+    } else {
+      return cellData
+    }
   }
 
   public renderCell(row: any) {
     return this.props.shownFields.map((field, index) => (
-      <Table.Cell key={index}>{this.getCellData(row, field)}</Table.Cell>
+      <Table.Cell key={index}>{this.getCellText(row, field)}</Table.Cell>
     ))
   }
 

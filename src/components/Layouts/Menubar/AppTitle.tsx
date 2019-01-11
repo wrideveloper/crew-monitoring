@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Header, Icon, Menu } from "semantic-ui-react"
+import { Header, Menu } from "semantic-ui-react"
 
 class NavigationHeader extends Component {
   public render() {

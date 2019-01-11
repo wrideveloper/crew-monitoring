@@ -15,7 +15,7 @@ declare interface IField {
 
 declare interface IOptionData {
   data: any[]
-  labelKey: string
+  textKey: string
   valueKey: string
 }
 
