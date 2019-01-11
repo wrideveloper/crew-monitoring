@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
+import { Link, RouteComponentProps, withRouter } from "react-router-dom"
 import { Menu } from "semantic-ui-react"
 import routes from "../../../routes"
 import NavHeader from "./NavHeader"
@@ -8,13 +8,16 @@ interface IState {
   activeItem: string
 }
 
-class Navigation extends Component<{}, IState> {
+class Navigation extends Component<RouteComponentProps, IState> {
   public state: IState = {
     activeItem: "",
   }
 
-  public isActive(name: string) {
-    return this.state.activeItem === name
+  public isActive(route: IRoute) {
+    return (
+      this.state.activeItem === route.label ||
+      this.props.location.pathname.includes(route.path)
+    )
   }
 
   public changeActiveItem(name: string) {
@@ -28,7 +31,7 @@ class Navigation extends Component<{}, IState> {
           <Menu.Item
             as="span"
             name={route.label}
-            active={this.isActive(route.label)}
+            active={this.isActive(route)}
             onClick={() => this.changeActiveItem(route.label)}
           />
         </Link>
@@ -59,4 +62,4 @@ const styles = {
   },
 }
 
-export default Navigation
+export default withRouter(Navigation)
