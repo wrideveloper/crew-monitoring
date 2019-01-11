@@ -1,5 +1,5 @@
 import _ from "lodash"
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import { Card, Grid, Table } from "semantic-ui-react"
 import TableBlank from "./TableBlank"
 import TableBody from "./TableBody"
@@ -107,30 +107,29 @@ export default class CustomTable extends Component<IProps, IState> {
       return <TableBlank />
     } else {
       return (
-        <Table celled sortable selectable>
-          <TableHeader
-            shownFields={this.props.shownFields}
-            sortKey={this.state.sortKey}
-            isDescending={this.state.isDescending}
-            onChangeSort={(fieldName) => this.changeSort(fieldName)}
+        <Fragment>
+          <Table celled sortable selectable>
+            <TableHeader
+              shownFields={this.props.shownFields}
+              sortKey={this.state.sortKey}
+              isDescending={this.state.isDescending}
+              onChangeSort={(fieldName) => this.changeSort(fieldName)}
+            />
+            <TableBody
+              shownFields={this.props.shownFields}
+              paginatedData={this.getPaginatedData()}
+              startingNumber={this.getOffset() + 1}
+              onRowClick={(rowData) => this.props.onRowClick(rowData)}
+            />
+          </Table>
+
+          <TablePagination
+            dataLength={this.getSearchedData().length}
+            itemPerPage={this.state.itemPerPage}
+            activePage={this.state.activePage}
+            onPageChange={(pageNumber) => this.changePage(pageNumber)}
           />
-          <TableBody
-            shownFields={this.props.shownFields}
-            paginatedData={this.getPaginatedData()}
-            startingNumber={this.getOffset() + 1}
-            onRowClick={(rowData) => this.props.onRowClick(rowData)}
-          />
-          <Table.Footer>
-            <Table.Row>
-              <TablePagination
-                dataLength={this.getSearchedData().length}
-                itemPerPage={this.state.itemPerPage}
-                activePage={this.state.activePage}
-                onPageChange={(pageNumber) => this.changePage(pageNumber)}
-              />
-            </Table.Row>
-          </Table.Footer>
-        </Table>
+        </Fragment>
       )
     }
   }

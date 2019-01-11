@@ -13,22 +13,21 @@ export default class TablePagination extends Component<IProps> {
     return Math.ceil(this.props.dataLength / this.props.itemPerPage)
   }
 
-  public renderPagination() {
+  public render() {
     return this.getTotalPages() > 1 ? (
       <Pagination
         activePage={this.props.activePage}
         totalPages={this.getTotalPages()}
         onPageChange={(event, { activePage }) =>
           this.props.onPageChange(activePage as number)}
+        style={styles.pagination}
       />
     ) : null
   }
+}
 
-  public render() {
-    return (
-      <Table.HeaderCell colSpan="100" textAlign="right">
-        {this.renderPagination()}
-      </Table.HeaderCell>
-    )
-  }
+const styles = {
+  pagination: {
+    float: "right",
+  },
 }
