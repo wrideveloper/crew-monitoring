@@ -56,11 +56,37 @@ export default class CustomTable extends Component<IProps, IState> {
     this.setState({ itemPerPage: limit, activePage: 1 })
   }
 
+  public isDate(cellData: any) {
+    return !isNaN(Date.parse(cellData)) && isNaN(cellData)
+  }
+
+  public getFieldBySearchKey() {
+    return this.props.shownFields.find(
+      (field) => field.name === this.state.searchKey,
+    )
+  }
+
+  public getCellValueFromObject(cellData: any) {
+    const field = this.getFieldBySearchKey()
+    return cellData[field!.optionData!.labelKey]
+  }
+
+  public getCellValue(cellData: any): string {
+    if (cellData instanceof Object) {
+      return String(this.getCellValueFromObject(cellData))
+    } else if (this.isDate(cellData)) {
+      return new Date(cellData).toLocaleDateString("id")
+    } else {
+      return String(cellData)
+    }
+  }
+
   public getSearchedData() {
     return this.props.data.filter((rowData) => {
-      const cellData = String(rowData[this.state.searchKey]).toLowerCase()
+      const cellData = rowData[this.state.searchKey]
+      const cellValue = this.getCellValue(cellData).toLowerCase()
       const searchValue = this.state.searchValue.toLowerCase()
-      return cellData.search(searchValue) > -1
+      return cellValue.search(searchValue) > -1
     })
   }
 
