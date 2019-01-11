@@ -5,6 +5,7 @@ import { DivisiService } from "../../services/DivisiService"
 
 interface IState {
   divisi: IDivisi[]
+  loading: boolean
 }
 
 const fields: IField[] = [
@@ -17,6 +18,7 @@ const fields: IField[] = [
 export default class Divisi extends Component<{}, IState> {
   public state: IState = {
     divisi: [],
+    loading: false,
   }
 
   public divisiService = new DivisiService()
@@ -25,20 +27,28 @@ export default class Divisi extends Component<{}, IState> {
     this.getDivisi()
   }
 
-  public getDivisi() {
-    this.divisiService.get().then((divisi) => this.setState({ divisi }))
+  public async getDivisi() {
+    this.setState({ loading: true })
+    const divisi = await this.divisiService.get()
+    this.setState({ divisi, loading: false })
   }
 
-  public createDivisi(input: IDivisi) {
-    this.divisiService.create(input).then(() => this.getDivisi())
+  public async createDivisi(input: IDivisi) {
+    this.setState({ loading: true })
+    await this.divisiService.create(input)
+    this.getDivisi()
   }
 
-  public updateDivisi(input: IDivisi, id: string) {
-    this.divisiService.update(input, id).then(() => this.getDivisi())
+  public async updateDivisi(input: IDivisi, id: string) {
+    this.setState({ loading: true })
+    await this.divisiService.update(input, id)
+    this.getDivisi()
   }
 
-  public deleteDivisi(id: string) {
-    this.divisiService.delete(id).then(() => this.getDivisi())
+  public async deleteDivisi(id: string) {
+    this.setState({ loading: true })
+    await this.divisiService.delete(id)
+    this.getDivisi()
   }
 
   public render() {
@@ -47,6 +57,7 @@ export default class Divisi extends Component<{}, IState> {
         <Header content="Divisi" subheader="Kumpulan data divisi" />
         <DataTable<IDivisi>
           data={this.state.divisi}
+          loading={this.state.loading}
           fields={fields}
           onCreate={(input) => this.createDivisi(input)}
           onUpdate={(input) => this.updateDivisi(input, input._id)}

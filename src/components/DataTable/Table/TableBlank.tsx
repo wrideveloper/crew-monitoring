@@ -1,20 +1,24 @@
 import React, { Component } from "react"
-import { Header, Icon } from "semantic-ui-react"
+import { Card, Header, Icon } from "semantic-ui-react"
 
 export default class TableBlank extends Component {
   public render() {
     return (
-      <Header size="huge" icon color="grey" style={styles.header}>
-        <Icon name="frown outline" />
-        <Header.Content>Data Tidak Ditemukan</Header.Content>
-      </Header>
+      <Card fluid style={styles.card}>
+        <Card.Content>
+          <Header size="huge" icon color="grey">
+            <Icon name="frown outline" />
+            <Header.Content>Data Tidak Ditemukan</Header.Content>
+          </Header>
+        </Card.Content>
+      </Card>
     )
   }
 }
 
 const styles = {
-  header: {
-    marginVertical: 100,
-    marginHorizontal: "auto",
+  card: {
+    paddingTop: 50,
+    paddingBottom: 50,
   },
 }

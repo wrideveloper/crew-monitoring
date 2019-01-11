@@ -5,6 +5,7 @@ import { JabatanService } from "../../services/JabatanService"
 
 interface IState {
   jabatan: IJabatan[]
+  loading: boolean
 }
 
 const fields: IField[] = [
@@ -17,6 +18,7 @@ const fields: IField[] = [
 export default class Jabatan extends Component<{}, IState> {
   public state: IState = {
     jabatan: [],
+    loading: false,
   }
 
   public jabatanService = new JabatanService()
@@ -25,20 +27,28 @@ export default class Jabatan extends Component<{}, IState> {
     this.getJabatan()
   }
 
-  public getJabatan() {
-    this.jabatanService.get().then((jabatan) => this.setState({ jabatan }))
+  public async getJabatan() {
+    this.setState({ loading: true })
+    const jabatan = await this.jabatanService.get()
+    this.setState({ jabatan, loading: false })
   }
 
-  public createJabatan(input: IJabatan) {
-    this.jabatanService.create(input).then(() => this.getJabatan())
+  public async createJabatan(input: IJabatan) {
+    this.setState({ loading: true })
+    await this.jabatanService.create(input)
+    this.getJabatan()
   }
 
-  public updateJabatan(input: IJabatan, id: string) {
-    this.jabatanService.update(input, id).then(() => this.getJabatan())
+  public async updateJabatan(input: IJabatan, id: string) {
+    this.setState({ loading: true })
+    await this.jabatanService.update(input, id)
+    this.getJabatan()
   }
 
-  public deleteJabatan(id: string) {
-    this.jabatanService.delete(id).then(() => this.getJabatan())
+  public async deleteJabatan(id: string) {
+    this.setState({ loading: true })
+    await this.jabatanService.delete(id)
+    this.getJabatan()
   }
 
   public render() {
@@ -47,6 +57,7 @@ export default class Jabatan extends Component<{}, IState> {
         <Header content="Jabatan" subheader="Kumpulan data jabatan" />
         <DataTable
           data={this.state.jabatan}
+          loading={this.state.loading}
           fields={fields}
           onCreate={(input: IJabatan) => this.createJabatan(input)}
           onUpdate={(input: IJabatan) => this.updateJabatan(input, input._id)}

@@ -11,6 +11,7 @@ interface IState {
   jabatan: IJabatan[]
   divisi: IDivisi[]
   miniclass: IMiniclass[]
+  loading: boolean
 }
 
 const fields: IField[] = [
@@ -83,6 +84,7 @@ export default class Anggota extends Component<{}, IState> {
     jabatan: [],
     divisi: [],
     miniclass: [],
+    loading: false,
   }
 
   public anggotaService = new AnggotaService()
@@ -109,11 +111,14 @@ export default class Anggota extends Component<{}, IState> {
     this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
   }
 
-  public getAnggota() {
-    this.anggotaService.get().then((anggota) => this.setState({ anggota }))
+  public async getAnggota() {
+    this.setState({ loading: true })
+    const anggota = await this.anggotaService.get()
+    this.setState({ anggota, loading: false })
   }
 
   public async createAnggota(input: IAnggota) {
+    this.setState({ loading: true })
     const { _id } = await this.anggotaService.create(input)
     if (input.foto instanceof File)
       await this.anggotaService.uploadFoto(input.foto as File, _id)
@@ -121,14 +126,17 @@ export default class Anggota extends Component<{}, IState> {
   }
 
   public async updateAnggota(input: IAnggota, id: string) {
+    this.setState({ loading: true })
     await this.anggotaService.update(input, id)
     if (input.foto instanceof File)
       await this.anggotaService.uploadFoto(input.foto as File, id)
     this.getAnggota()
   }
 
-  public deleteAnggota(id: string) {
-    this.anggotaService.delete(id).then(() => this.getAnggota())
+  public async deleteAnggota(id: string) {
+    this.setState({ loading: true })
+    await this.anggotaService.delete(id)
+    this.getAnggota()
   }
 
   public setOptionsData() {
@@ -144,6 +152,7 @@ export default class Anggota extends Component<{}, IState> {
         <Header content="Anggota" subheader="Kumpulan data anggota crew" />
         <DataTable<IAnggota>
           data={this.state.anggota}
+          loading={this.state.loading}
           fields={fields}
           onCreate={(input) => this.createAnggota(input)}
           onUpdate={(input) => this.updateAnggota(input, input._id)}

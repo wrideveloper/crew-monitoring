@@ -6,6 +6,7 @@ import Table from "./Table"
 interface IProps<T> {
   data: T[]
   fields: IField[]
+  loading: boolean
   onCreate: (input: T) => void
   onUpdate: (input: T) => void
   onDelete: (input: T) => void
@@ -55,6 +56,7 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
         />
         <Table
           data={this.props.data}
+          loading={this.props.loading}
           shownFields={this.getShownFields()}
           onRowClick={(rowData: any) => this.openForm(rowData)}
         />

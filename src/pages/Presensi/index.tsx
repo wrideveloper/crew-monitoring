@@ -8,6 +8,7 @@ import { PresensiService } from "../../services/PresensiService"
 interface IState {
   presensi: IPresensi[]
   miniclass: IMiniclass[]
+  loading: boolean
 }
 
 const fields: IField[] = [
@@ -40,6 +41,7 @@ export default class Presensi extends Component<{}, IState> {
   public state: IState = {
     presensi: [],
     miniclass: [],
+    loading: false,
   }
 
   public presensiService = new PresensiService()
@@ -54,22 +56,28 @@ export default class Presensi extends Component<{}, IState> {
     this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
   }
 
-  public getPresensi() {
-    this.presensiService.get().then((presensi) => this.setState({ presensi }))
+  public async getPresensi() {
+    this.setState({ loading: true })
+    const presensi = await this.presensiService.get()
+    this.setState({ presensi, loading: false })
   }
 
   public async createPresensi(input: IPresensi) {
+    this.setState({ loading: true })
     await this.presensiService.create(input)
     this.getPresensi()
   }
 
   public async updatePresensi(input: IPresensi, id: string) {
+    this.setState({ loading: true })
     await this.presensiService.update(input, id)
     this.getPresensi()
   }
 
-  public deletePresensi(id: string) {
-    this.presensiService.delete(id).then(() => this.getPresensi())
+  public async deletePresensi(id: string) {
+    this.setState({ loading: true })
+    await this.presensiService.delete(id)
+    this.getPresensi()
   }
 
   public isUpdateMode(presensi: IPresensi) {
@@ -98,6 +106,7 @@ export default class Presensi extends Component<{}, IState> {
         />
         <DataTable<IPresensi>
           data={this.state.presensi}
+          loading={this.state.loading}
           fields={fields}
           onCreate={(input) => this.createPresensi(input)}
           onUpdate={(input) => this.updatePresensi(input, input._id)}

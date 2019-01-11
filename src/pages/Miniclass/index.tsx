@@ -7,6 +7,7 @@ import { MiniclassService } from "../../services/MiniclassService"
 interface IState {
   miniclass: IMiniclass[]
   divisi: IDivisi[]
+  loading: boolean
 }
 
 const fields: IField[] = [
@@ -30,6 +31,7 @@ export default class Miniclass extends Component<{}, IState> {
   public state: IState = {
     miniclass: [],
     divisi: [],
+    loading: false,
   }
 
   public miniclassService = new MiniclassService()
@@ -44,22 +46,28 @@ export default class Miniclass extends Component<{}, IState> {
     this.divisiService.get().then((divisi) => this.setState({ divisi }))
   }
 
-  public getMiniclass() {
-    this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
+  public async getMiniclass() {
+    this.setState({ loading: true })
+    const miniclass = await this.miniclassService.get()
+    this.setState({ miniclass, loading: false })
   }
 
   public async createAnggota(input: IMiniclass) {
+    this.setState({ loading: true })
     await this.miniclassService.create(input)
     this.getMiniclass()
   }
 
   public async updateAnggota(input: IMiniclass, id: string) {
+    this.setState({ loading: true })
     await this.miniclassService.update(input, id)
     this.getMiniclass()
   }
 
-  public deleteAnggota(id: string) {
-    this.miniclassService.delete(id).then(() => this.getMiniclass())
+  public async deleteAnggota(id: string) {
+    this.setState({ loading: true })
+    await this.miniclassService.delete(id)
+    this.getMiniclass()
   }
 
   public setOptionsData() {
@@ -73,6 +81,7 @@ export default class Miniclass extends Component<{}, IState> {
         <Header content="Miniclass" subheader="Kumpulan data miniclass" />
         <DataTable<IMiniclass>
           data={this.state.miniclass}
+          loading={this.state.loading}
           fields={fields}
           onCreate={(input) => this.createAnggota(input)}
           onUpdate={(input) => this.updateAnggota(input, input._id)}
