@@ -1,9 +1,18 @@
-import React, { Component } from "react"
-import { Button, Card, Checkbox, Table } from "semantic-ui-react"
+import React, { Component, Fragment } from "react"
+import {
+  Button,
+  Card,
+  Checkbox,
+  Header,
+  Icon,
+  Placeholder,
+  Table,
+} from "semantic-ui-react"
 
 interface IProps {
   presensi: IPresensi
   anggota: IAnggota[]
+  loading: boolean
   onChange: (id: string, checked: boolean) => void
   onSubmit: () => void
 }
@@ -40,10 +49,26 @@ export default class CardPresent extends Component<IProps> {
     ))
   }
 
-  public render() {
-    return (
-      <Card fluid>
-        <Card.Content>
+  public renderTable() {
+    if (this.props.loading) {
+      return (
+        <Placeholder fluid>
+          <Placeholder.Line length="full" style={styles.line} />
+          <Placeholder.Line length="full" style={styles.line} />
+          <Placeholder.Line length="full" style={styles.line} />
+          <Placeholder.Line length="full" style={styles.line} />
+        </Placeholder>
+      )
+    } else if (this.getFilteredAnggota().length === 0) {
+      return (
+        <Header size="huge" icon color="grey">
+          <Icon name="frown outline" />
+          <Header.Content>Peserta Miniclass Kosong</Header.Content>
+        </Header>
+      )
+    } else {
+      return (
+        <Fragment>
           <Table selectable>
             <Table.Header>
               <Table.Row>
@@ -60,8 +85,22 @@ export default class CardPresent extends Component<IProps> {
             color="green"
             onClick={() => this.props.onSubmit()}
           />
-        </Card.Content>
+        </Fragment>
+      )
+    }
+  }
+
+  public render() {
+    return (
+      <Card fluid>
+        <Card.Content>{this.renderTable()}</Card.Content>
       </Card>
     )
   }
+}
+
+const styles = {
+  line: {
+    fontSize: 30,
+  },
 }
