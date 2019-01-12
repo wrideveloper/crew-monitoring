@@ -70,12 +70,12 @@ const fields: IField[] = [
       valueKey: "_id",
     },
   },
-  {
-    name: "foto",
-    label: "Foto",
-    type: "image",
-    hide: true,
-  },
+  // {
+  //   name: "foto",
+  //   label: "Foto",
+  //   type: "image",
+  //   hide: true,
+  // },
 ]
 
 export default class Anggota extends Component<{}, IState> {
