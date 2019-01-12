@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
+import ErrorMessage from "../../components/ErrorMessage"
 import { DivisiService } from "../../services/DivisiService"
 
 interface IState {
   divisi: IDivisi[]
   loading: boolean
+  error?: Error
 }
 
 const fields: IField[] = [
@@ -27,34 +29,50 @@ export default class Divisi extends Component<{}, IState> {
     this.getDivisi()
   }
 
-  public async getDivisi() {
+  public getDivisi() {
     this.setState({ loading: true })
-    const divisi = await this.divisiService.get()
-    this.setState({ divisi, loading: false })
+    this.divisiService
+      .get()
+      .then((divisi) => this.setState({ divisi }))
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async createDivisi(input: IDivisi) {
+  public createDivisi(input: IDivisi) {
     this.setState({ loading: true })
-    await this.divisiService.create(input)
-    this.getDivisi()
+    this.divisiService
+      .create(input)
+      .then(() => this.getDivisi())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async updateDivisi(input: IDivisi, id: string) {
+  public updateDivisi(input: IDivisi, id: string) {
     this.setState({ loading: true })
-    await this.divisiService.update(input, id)
-    this.getDivisi()
+    this.divisiService
+      .update(input, id)
+      .then(() => this.getDivisi())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
   public async deleteDivisi(id: string) {
     this.setState({ loading: true })
-    await this.divisiService.delete(id)
-    this.getDivisi()
+    this.divisiService
+      .delete(id)
+      .then(() => this.getDivisi())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
   public render() {
     return (
       <Fragment>
         <Header content="Divisi" subheader="Kumpulan data divisi" />
+        <ErrorMessage
+          error={this.state.error}
+          onDismiss={() => this.setState({ error: undefined })}
+        />
         <DataTable<IDivisi>
           data={this.state.divisi}
           loading={this.state.loading}

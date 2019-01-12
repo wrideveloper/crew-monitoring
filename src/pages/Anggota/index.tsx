@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
+import ErrorMessage from "../../components/ErrorMessage"
 import { AnggotaService } from "../../services/AnggotaService"
 import { DivisiService } from "../../services/DivisiService"
 import { JabatanService } from "../../services/JabatanService"
@@ -12,6 +13,7 @@ interface IState {
   divisi: IDivisi[]
   miniclass: IMiniclass[]
   loading: boolean
+  error?: Error
 }
 
 const fields: IField[] = [
@@ -111,32 +113,40 @@ export default class Anggota extends Component<{}, IState> {
     this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
   }
 
-  public async getAnggota() {
+  public getAnggota() {
     this.setState({ loading: true })
-    const anggota = await this.anggotaService.get()
-    this.setState({ anggota, loading: false })
+    this.anggotaService
+      .get()
+      .then((anggota) => this.setState({ anggota }))
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async createAnggota(input: IAnggota) {
+  public createAnggota(input: IAnggota) {
     this.setState({ loading: true })
-    const { _id } = await this.anggotaService.create(input)
-    if (input.foto instanceof File)
-      await this.anggotaService.uploadFoto(input.foto as File, _id)
-    this.getAnggota()
+    this.anggotaService
+      .create(input)
+      .then(() => this.getAnggota())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async updateAnggota(input: IAnggota, id: string) {
+  public updateAnggota(input: IAnggota, id: string) {
     this.setState({ loading: true })
-    await this.anggotaService.update(input, id)
-    if (input.foto instanceof File)
-      await this.anggotaService.uploadFoto(input.foto as File, id)
-    this.getAnggota()
+    this.anggotaService
+      .update(input, id)
+      .then(() => this.getAnggota())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async deleteAnggota(id: string) {
+  public deleteAnggota(id: string) {
     this.setState({ loading: true })
-    await this.anggotaService.delete(id)
-    this.getAnggota()
+    this.anggotaService
+      .delete(id)
+      .then(() => this.getAnggota())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
   public setOptionsData() {
@@ -150,6 +160,10 @@ export default class Anggota extends Component<{}, IState> {
     return (
       <Fragment>
         <Header content="Anggota" subheader="Kumpulan data anggota crew" />
+        <ErrorMessage
+          error={this.state.error}
+          onDismiss={() => this.setState({ error: undefined })}
+        />
         <DataTable<IAnggota>
           data={this.state.anggota}
           loading={this.state.loading}

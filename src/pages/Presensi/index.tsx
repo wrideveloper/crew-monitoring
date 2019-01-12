@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react"
 import { Link } from "react-router-dom"
 import { Button, Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
+import ErrorMessage from "../../components/ErrorMessage"
 import { MiniclassService } from "../../services/MiniclassService"
 import { PresensiService } from "../../services/PresensiService"
 
@@ -9,6 +10,7 @@ interface IState {
   presensi: IPresensi[]
   miniclass: IMiniclass[]
   loading: boolean
+  error?: Error
 }
 
 const fields: IField[] = [
@@ -58,26 +60,38 @@ export default class Presensi extends Component<{}, IState> {
 
   public async getPresensi() {
     this.setState({ loading: true })
-    const presensi = await this.presensiService.get()
-    this.setState({ presensi, loading: false })
+    this.presensiService
+      .get()
+      .then((presensi) => this.setState({ presensi }))
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async createPresensi(input: IPresensi) {
+  public createPresensi(input: IPresensi) {
     this.setState({ loading: true })
-    await this.presensiService.create(input)
-    this.getPresensi()
+    this.presensiService
+      .create(input)
+      .then(() => this.getPresensi())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async updatePresensi(input: IPresensi, id: string) {
+  public updatePresensi(input: IPresensi, id: string) {
     this.setState({ loading: true })
-    await this.presensiService.update(input, id)
-    this.getPresensi()
+    this.presensiService
+      .update(input, id)
+      .then(() => this.getPresensi())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async deletePresensi(id: string) {
+  public deletePresensi(id: string) {
     this.setState({ loading: true })
-    await this.presensiService.delete(id)
-    this.getPresensi()
+    this.presensiService
+      .delete(id)
+      .then(() => this.getPresensi())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
   public isUpdateMode(presensi: IPresensi) {
@@ -103,6 +117,10 @@ export default class Presensi extends Component<{}, IState> {
         <Header
           content="Presensi"
           subheader="Kumpulan data presensi miniclass"
+        />
+        <ErrorMessage
+          error={this.state.error}
+          onDismiss={() => this.setState({ error: undefined })}
         />
         <DataTable<IPresensi>
           data={this.state.presensi}

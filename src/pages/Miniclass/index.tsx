@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
+import ErrorMessage from "../../components/ErrorMessage"
 import { DivisiService } from "../../services/DivisiService"
 import { MiniclassService } from "../../services/MiniclassService"
 
@@ -8,6 +9,7 @@ interface IState {
   miniclass: IMiniclass[]
   divisi: IDivisi[]
   loading: boolean
+  error?: Error
 }
 
 const fields: IField[] = [
@@ -46,28 +48,40 @@ export default class Miniclass extends Component<{}, IState> {
     this.divisiService.get().then((divisi) => this.setState({ divisi }))
   }
 
-  public async getMiniclass() {
+  public getMiniclass() {
     this.setState({ loading: true })
-    const miniclass = await this.miniclassService.get()
-    this.setState({ miniclass, loading: false })
+    this.miniclassService
+      .get()
+      .then((miniclass) => this.setState({ miniclass }))
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async createAnggota(input: IMiniclass) {
+  public createAnggota(input: IMiniclass) {
     this.setState({ loading: true })
-    await this.miniclassService.create(input)
-    this.getMiniclass()
+    this.miniclassService
+      .create(input)
+      .then(() => this.getMiniclass())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async updateAnggota(input: IMiniclass, id: string) {
+  public updateAnggota(input: IMiniclass, id: string) {
     this.setState({ loading: true })
-    await this.miniclassService.update(input, id)
-    this.getMiniclass()
+    this.miniclassService
+      .update(input, id)
+      .then(() => this.getMiniclass())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async deleteAnggota(id: string) {
+  public deleteAnggota(id: string) {
     this.setState({ loading: true })
-    await this.miniclassService.delete(id)
-    this.getMiniclass()
+    this.miniclassService
+      .delete(id)
+      .then(() => this.getMiniclass())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
   public setOptionsData() {
@@ -79,6 +93,10 @@ export default class Miniclass extends Component<{}, IState> {
     return (
       <Fragment>
         <Header content="Miniclass" subheader="Kumpulan data miniclass" />
+        <ErrorMessage
+          error={this.state.error}
+          onDismiss={() => this.setState({ error: undefined })}
+        />
         <DataTable<IMiniclass>
           data={this.state.miniclass}
           loading={this.state.loading}

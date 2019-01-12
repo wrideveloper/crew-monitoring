@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
+import ErrorMessage from "../../components/ErrorMessage"
 import { JabatanService } from "../../services/JabatanService"
 
 interface IState {
   jabatan: IJabatan[]
   loading: boolean
+  error?: Error
 }
 
 const fields: IField[] = [
@@ -27,34 +29,50 @@ export default class Jabatan extends Component<{}, IState> {
     this.getJabatan()
   }
 
-  public async getJabatan() {
+  public getJabatan() {
     this.setState({ loading: true })
-    const jabatan = await this.jabatanService.get()
-    this.setState({ jabatan, loading: false })
+    this.jabatanService
+      .get()
+      .then((jabatan) => this.setState({ jabatan }))
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async createJabatan(input: IJabatan) {
+  public createJabatan(input: IJabatan) {
     this.setState({ loading: true })
-    await this.jabatanService.create(input)
-    this.getJabatan()
+    this.jabatanService
+      .create(input)
+      .then(() => this.getJabatan())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async updateJabatan(input: IJabatan, id: string) {
+  public updateJabatan(input: IJabatan, id: string) {
     this.setState({ loading: true })
-    await this.jabatanService.update(input, id)
-    this.getJabatan()
+    this.jabatanService
+      .update(input, id)
+      .then(() => this.getJabatan())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
-  public async deleteJabatan(id: string) {
+  public deleteJabatan(id: string) {
     this.setState({ loading: true })
-    await this.jabatanService.delete(id)
-    this.getJabatan()
+    this.jabatanService
+      .delete(id)
+      .then(() => this.getJabatan())
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
   public render() {
     return (
       <Fragment>
         <Header content="Jabatan" subheader="Kumpulan data jabatan" />
+        <ErrorMessage
+          error={this.state.error}
+          onDismiss={() => this.setState({ error: undefined })}
+        />
         <DataTable
           data={this.state.jabatan}
           loading={this.state.loading}
