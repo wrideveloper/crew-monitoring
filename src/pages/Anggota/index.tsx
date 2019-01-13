@@ -127,8 +127,7 @@ export default class Anggota extends Component<{}, IState> {
     this.anggotaService
       .create(input)
       .then(() => this.getAnggota())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public updateAnggota(input: IAnggota, id: string) {
@@ -136,8 +135,7 @@ export default class Anggota extends Component<{}, IState> {
     this.anggotaService
       .update(input, id)
       .then(() => this.getAnggota())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public deleteAnggota(id: string) {
@@ -145,8 +143,7 @@ export default class Anggota extends Component<{}, IState> {
     this.anggotaService
       .delete(id)
       .then(() => this.getAnggota())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public setOptionsData() {

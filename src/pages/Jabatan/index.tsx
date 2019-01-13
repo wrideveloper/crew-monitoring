@@ -43,8 +43,7 @@ export default class Jabatan extends Component<{}, IState> {
     this.jabatanService
       .create(input)
       .then(() => this.getJabatan())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public updateJabatan(input: IJabatan, id: string) {
@@ -52,8 +51,7 @@ export default class Jabatan extends Component<{}, IState> {
     this.jabatanService
       .update(input, id)
       .then(() => this.getJabatan())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public deleteJabatan(id: string) {
@@ -61,8 +59,7 @@ export default class Jabatan extends Component<{}, IState> {
     this.jabatanService
       .delete(id)
       .then(() => this.getJabatan())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public render() {

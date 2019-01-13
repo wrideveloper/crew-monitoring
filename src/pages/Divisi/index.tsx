@@ -43,8 +43,7 @@ export default class Divisi extends Component<{}, IState> {
     this.divisiService
       .create(input)
       .then(() => this.getDivisi())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public updateDivisi(input: IDivisi, id: string) {
@@ -52,8 +51,7 @@ export default class Divisi extends Component<{}, IState> {
     this.divisiService
       .update(input, id)
       .then(() => this.getDivisi())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public async deleteDivisi(id: string) {
@@ -61,8 +59,7 @@ export default class Divisi extends Component<{}, IState> {
     this.divisiService
       .delete(id)
       .then(() => this.getDivisi())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public render() {

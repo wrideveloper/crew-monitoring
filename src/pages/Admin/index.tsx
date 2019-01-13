@@ -48,8 +48,7 @@ export default class Admin extends Component<{}, IState> {
     this.adminService
       .create(input)
       .then(() => this.getAdmin())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public updateAdmin(input: IAdmin, id: string) {
@@ -57,8 +56,7 @@ export default class Admin extends Component<{}, IState> {
     this.adminService
       .update(input, id)
       .then(() => this.getAdmin())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public async deleteAdmin(id: string) {
@@ -66,8 +64,7 @@ export default class Admin extends Component<{}, IState> {
     this.adminService
       .delete(id)
       .then(() => this.getAdmin())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public render() {

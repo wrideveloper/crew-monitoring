@@ -62,8 +62,7 @@ export default class Miniclass extends Component<{}, IState> {
     this.miniclassService
       .create(input)
       .then(() => this.getMiniclass())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public updateAnggota(input: IMiniclass, id: string) {
@@ -71,8 +70,7 @@ export default class Miniclass extends Component<{}, IState> {
     this.miniclassService
       .update(input, id)
       .then(() => this.getMiniclass())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public deleteAnggota(id: string) {
@@ -80,8 +78,7 @@ export default class Miniclass extends Component<{}, IState> {
     this.miniclassService
       .delete(id)
       .then(() => this.getMiniclass())
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
+      .catch((error) => this.setState({ error, loading: false }))
   }
 
   public setOptionsData() {
