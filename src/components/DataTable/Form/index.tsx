@@ -7,8 +7,8 @@ interface IProps {
   fields: IField[]
   initialInput: any
   onCreate: (input: any) => void
-  onUpdate: (input: any) => void
-  onDelete: (input: any) => void
+  onUpdate?: (input: any) => void
+  onDelete?: (input: any) => void
   onClose: () => void
   additionalAction?: (selectedData: any) => JSX.Element | null
 }
@@ -75,7 +75,7 @@ export default class Form extends Component<IProps, IState> {
   public submit() {
     this.validateInput()
     if (this.isInputValid()) {
-      if (this.isUpdateMode()) this.props.onUpdate(this.state.input)
+      if (this.isUpdateMode()) this.props.onUpdate!(this.state.input)
       else this.props.onCreate(this.state.input)
       this.props.onClose()
     }
@@ -88,15 +88,21 @@ export default class Form extends Component<IProps, IState> {
   }
 
   public renderDeleteButton() {
-    return this.isUpdateMode() ? (
+    return this.props.onDelete !== undefined && this.isUpdateMode() ? (
       <Button
         content="Hapus"
         color="red"
         onClick={() => {
-          this.props.onDelete(this.state.input)
+          this.props.onDelete!(this.state.input)
           this.props.onClose()
         }}
       />
+    ) : null
+  }
+
+  public renderSubmitButton() {
+    return this.props.onUpdate !== undefined || !this.isUpdateMode() ? (
+      <Button color="green" content="Simpan" onClick={() => this.submit()} />
     ) : null
   }
 
@@ -108,6 +114,7 @@ export default class Form extends Component<IProps, IState> {
           onChange={(value) => this.changeInput(field.name, value)}
           value={this.state.input[field.name]}
           error={this.state.inputError[field.name]}
+          readOnly={this.props.onUpdate === undefined && this.isUpdateMode()}
         />
       </Grid.Column>
     ))
@@ -127,11 +134,7 @@ export default class Form extends Component<IProps, IState> {
         <Modal.Actions>
           {this.renderAdditionalAction()}
           {this.renderDeleteButton()}
-          <Button
-            color="green"
-            content="Simpan"
-            onClick={() => this.submit()}
-          />
+          {this.renderSubmitButton()}
         </Modal.Actions>
       </Modal>
     )

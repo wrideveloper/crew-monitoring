@@ -7,6 +7,7 @@ interface IProps {
   onChange: (value: any) => void
   value: any
   error: boolean | undefined
+  readOnly: boolean
 }
 
 interface IState {
@@ -38,6 +39,7 @@ export default class InputImage extends Component<IProps, IState> {
           type="file"
           onChange={(event) => this.changeImage(event.target.files![0])}
           error={this.props.error}
+          readOnly={this.props.readOnly}
         />
       </Fragment>
     )

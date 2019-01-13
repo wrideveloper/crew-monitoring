@@ -80,7 +80,7 @@ export default class Admin extends Component<{}, IState> {
           loading={this.state.loading}
           fields={fields}
           onCreate={(input) => this.createAdmin(input)}
-          onUpdate={(input) => this.updateAdmin(input, input._id)}
+          // onUpdate={(input) => this.updateAdmin(input, input._id)}
           onDelete={(input) => this.deleteAdmin(input._id)}
         />
       </Fragment>

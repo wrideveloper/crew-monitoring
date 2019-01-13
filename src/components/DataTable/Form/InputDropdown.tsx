@@ -6,6 +6,7 @@ interface IProps {
   onChange: (value: any) => void
   value: any
   error: boolean | undefined
+  readOnly: boolean
 }
 
 export default class InputDropdown extends Component<IProps> {
@@ -36,6 +37,7 @@ export default class InputDropdown extends Component<IProps> {
           value={this.getValue()}
           onChange={(event, { value }) => this.props.onChange(value)}
           error={this.props.error}
+          disabled={this.props.readOnly}
         />
       </Fragment>
     )

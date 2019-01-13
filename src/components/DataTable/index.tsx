@@ -8,8 +8,8 @@ interface IProps<T> {
   fields: IField[]
   loading: boolean
   onCreate: (input: T) => void
-  onUpdate: (input: T) => void
-  onDelete: (input: T) => void
+  onUpdate?: (input: T) => void
+  onDelete?: (input: T) => void
   additionalAction?: (selectedData: T) => JSX.Element | null
 }
 
@@ -49,8 +49,8 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
           fields={this.props.fields}
           initialInput={this.state.selectedData}
           onCreate={(input) => this.props.onCreate(input)}
-          onUpdate={(input) => this.props.onUpdate(input)}
-          onDelete={(input) => this.props.onDelete(input)}
+          onUpdate={this.props.onUpdate}
+          onDelete={this.props.onDelete}
           onClose={() => this.closeForm()}
           additionalAction={this.props.additionalAction}
         />

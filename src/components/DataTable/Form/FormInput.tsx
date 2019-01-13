@@ -8,6 +8,7 @@ interface IProps {
   onChange: (value: any) => void
   value: any
   error: boolean | undefined
+  readOnly: boolean
 }
 
 export default class FormInput extends Component<IProps> {
@@ -20,6 +21,7 @@ export default class FormInput extends Component<IProps> {
           onChange={(value) => this.props.onChange(value)}
           value={value}
           error={this.props.error}
+          readOnly={this.props.readOnly}
         />
       )
     } else if (field.type === "image") {
@@ -29,6 +31,7 @@ export default class FormInput extends Component<IProps> {
           onChange={(value) => this.props.onChange(value)}
           value={value}
           error={this.props.error}
+          readOnly={this.props.readOnly}
         />
       )
     } else if (field.type === "date") {
@@ -40,6 +43,7 @@ export default class FormInput extends Component<IProps> {
           onChange={(event) => this.props.onChange(event.target.value)}
           value={String(value).slice(0, 10)}
           error={this.props.error}
+          readOnly={this.props.readOnly}
         />
       )
     } else {
@@ -51,6 +55,7 @@ export default class FormInput extends Component<IProps> {
           onChange={(event) => this.props.onChange(event.target.value)}
           value={value}
           error={this.props.error}
+          readOnly={this.props.readOnly}
         />
       )
     }
