@@ -56,3 +56,9 @@ declare interface IPresensi {
   tanggal: Date
   peserta: string[]
 }
+
+declare interface IAdmin {
+  _id: string
+  username: string
+  password: string
+}

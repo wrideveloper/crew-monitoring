@@ -1,3 +1,4 @@
+import Admin from "../pages/Admin"
 import Anggota from "../pages/Anggota"
 import Checkin from "../pages/Checkin"
 import Divisi from "../pages/Divisi"
@@ -36,6 +37,11 @@ const routes: IRoute[] = [
     label: "Presensi",
     path: "/presensi/:id",
     hide: true,
+  },
+  {
+    component: Admin,
+    label: "Admin",
+    path: "/admin",
   },
 ]
 
