@@ -34,8 +34,8 @@ const routes: IRoute[] = [
   },
   {
     component: Checkin,
-    label: "Presensi",
-    path: "/presensi/:id",
+    label: "Checkin",
+    path: "/checkin",
     hide: true,
   },
   {

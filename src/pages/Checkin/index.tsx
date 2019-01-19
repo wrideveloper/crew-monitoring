@@ -1,16 +1,11 @@
 import React, { Component, Fragment } from "react"
 import { RouteComponentProps } from "react-router"
-import { Grid, Header } from "semantic-ui-react"
+import { Button, Grid, Header } from "semantic-ui-react"
+import Table from "../../components/DataTable/Table"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AnggotaService } from "../../services/AnggotaService"
 import { PresensiService } from "../../services/PresensiService"
 import CardInfo from "./CardInfo"
-import CardPresent from "./CardPresent"
-
-interface IMatchParams {
-  id: string
-}
-interface IProps extends RouteComponentProps<IMatchParams> {}
 
 interface IState {
   presensi: IPresensi
@@ -19,23 +14,20 @@ interface IState {
   error?: Error
 }
 
-export default class Checkin extends Component<IProps, IState> {
+const fields: IField[] = [
+  {
+    name: "nama",
+    label: "Nama",
+  },
+  {
+    name: "hadir",
+    label: "Hadir",
+  },
+]
+
+export default class Checkin extends Component<RouteComponentProps, IState> {
   public state: IState = {
-    presensi: {
-      _id: "",
-      angkatan: 0,
-      peserta: [],
-      tanggal: new Date(),
-      topik: "",
-      miniclass: {
-        _id: "",
-        divisi: {
-          _id: "",
-          nama: "",
-        },
-        nama: "",
-      },
-    },
+    presensi: JSON.parse(localStorage.getItem("presensi")!) as IPresensi,
     anggota: [],
     loading: false,
   }
@@ -43,40 +35,17 @@ export default class Checkin extends Component<IProps, IState> {
   public presensiService = new PresensiService()
   public anggotaService = new AnggotaService()
 
-  public componentDidMount() {
-    this.getAnggota()
-    this.getPresensi()
-  }
-
   public getAnggota() {
-    this.anggotaService.get().then((anggota) => this.setState({ anggota }))
-  }
-
-  public getPresensi() {
     this.setState({ loading: true })
-    const { id } = this.props.match.params
-    this.presensiService
-      .getById(id)
-      .then((presensi) => this.setState({ presensi }))
+    this.anggotaService
+      .get()
+      .then((anggota) => this.setState({ anggota }))
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
   }
 
-  public addPeserta(id: string) {
-    const { presensi } = this.state
-    presensi.peserta.push(id)
-    this.setState({ presensi })
-  }
-
-  public removePeserta(id: string) {
-    const { presensi } = this.state
-    presensi.peserta = presensi.peserta.filter((item) => item !== id)
-    this.setState({ presensi })
-  }
-
-  public changePeserta(id: string, checked: boolean) {
-    if (checked) this.addPeserta(id)
-    else this.removePeserta(id)
+  public componentDidMount() {
+    this.getAnggota()
   }
 
   public submit() {
@@ -86,6 +55,49 @@ export default class Checkin extends Component<IProps, IState> {
       .then(() => this.props.history.push("/presensi"))
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
+  }
+
+  public addPeserta(anggota: IAnggota) {
+    const { presensi } = this.state
+    presensi.peserta.push(anggota._id)
+    this.setState({ presensi })
+  }
+
+  public removePeserta(anggota: IAnggota) {
+    const { presensi } = this.state
+    presensi.peserta = presensi.peserta.filter((id) => id !== anggota._id)
+    this.setState({ presensi })
+  }
+
+  public checkIn(anggota: IAnggota) {
+    if (this.isAttend(anggota)) {
+      this.removePeserta(anggota)
+    } else {
+      this.addPeserta(anggota)
+    }
+  }
+
+  public isAttend(anggota: IAnggota) {
+    return (
+      this.state.presensi.peserta.filter((id) => id === anggota._id).length > 0
+    )
+  }
+
+  public isAngkatanMatch(anggota: IAnggota) {
+    return anggota.angkatan === this.state.presensi.angkatan
+  }
+
+  public isMiniclassMatch(anggota: IAnggota) {
+    return (
+      (anggota.miniclass as IMiniclass)._id ===
+      (this.state.presensi.miniclass as IMiniclass)._id
+    )
+  }
+
+  public getAnggotaMiniclass() {
+    return this.state.anggota
+      .filter((item) => this.isMiniclassMatch(item) && this.isAngkatanMatch(item))
+      .map((item) => ({ ...item, hadir: this.isAttend(item) ? "Ya" : "Tidak" }))
   }
 
   public render() {
@@ -100,20 +112,21 @@ export default class Checkin extends Component<IProps, IState> {
           onDismiss={() => this.setState({ error: undefined })}
         />
         <Grid columns="2">
-          <Grid.Column>
-            <CardPresent
-              presensi={this.state.presensi}
-              anggota={this.state.anggota}
+          <Grid.Column width="10">
+            <Table
+              shownFields={fields}
               loading={this.state.loading}
-              onChange={(id, checked) => this.changePeserta(id, checked)}
-              onSubmit={() => this.submit()}
+              data={this.getAnggotaMiniclass()}
+              onRowClick={(rowData) => this.checkIn(rowData)}
+            />
+            <Button
+              color="green"
+              content="Simpan"
+              onClick={() => this.submit()}
             />
           </Grid.Column>
-          <Grid.Column>
-            <CardInfo
-              presensi={this.state.presensi}
-              loading={this.state.loading}
-            />
+          <Grid.Column width="6">
+            <CardInfo presensi={this.state.presensi} />
           </Grid.Column>
         </Grid>
       </Fragment>

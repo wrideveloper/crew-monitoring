@@ -58,7 +58,7 @@ export default class Presensi extends Component<{}, IState> {
     this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
   }
 
-  public async getPresensi() {
+  public getPresensi() {
     this.setState({ loading: true })
     this.presensiService
       .get()
@@ -94,14 +94,16 @@ export default class Presensi extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public isUpdateMode(presensi: IPresensi) {
-    return presensi._id
-  }
-
   public renderAdditionalAction(presensi: IPresensi) {
-    return this.isUpdateMode(presensi) ? (
-      <Link to={`/presensi/${presensi._id}`}>
-        <Button content="Checkin" color="orange" />
+    return presensi._id ? (
+      <Link to={`/checkin`}>
+        <Button
+          content="Checkin"
+          color="orange"
+          onClick={() =>
+            localStorage.setItem("presensi", JSON.stringify(presensi))
+          }
+        />
       </Link>
     ) : null
   }
