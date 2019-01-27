@@ -28,7 +28,7 @@ interface IState {
 export default class CustomTable extends Component<IProps, IState> {
   public state: IState = {
     activePage: 1,
-    itemPerPage: 1,
+    itemPerPage: 10,
     searchValue: "",
     searchKey: this.props.shownFields[0].name,
     sortKey: this.props.shownFields[0].name,

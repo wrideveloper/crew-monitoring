@@ -7,12 +7,16 @@ interface IProps {
 
 const options: DropdownItemProps[] = [
   {
-    text: "1",
-    value: 1,
+    text: "10",
+    value: 10,
   },
   {
-    text: "2",
-    value: 2,
+    text: "25",
+    value: 25,
+  },
+  {
+    text: "50",
+    value: 50,
   },
 ]
 
