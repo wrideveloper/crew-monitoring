@@ -57,6 +57,18 @@ declare interface IPresensi {
   peserta: string[]
 }
 
+declare interface IKategoriKegiatan {
+  _id: string
+  nama: string
+}
+
+declare interface IKegiatan {
+  _id: string
+  nama: string
+  laporan: string
+  kategoriKegiatan: string | IKategoriKegiatan
+}
+
 declare interface IAdmin {
   _id: string
   username: string

@@ -3,6 +3,8 @@ import Anggota from "../pages/Anggota"
 import Checkin from "../pages/Checkin"
 import Divisi from "../pages/Divisi"
 import Jabatan from "../pages/Jabatan"
+import KategoriKegiatan from "../pages/KategoriKegiatan"
+import Kegiatan from "../pages/Kegiatan"
 import Miniclass from "../pages/Miniclass"
 import Presensi from "../pages/Presensi"
 
@@ -37,6 +39,16 @@ const routes: IRoute[] = [
     label: "Checkin",
     path: "/checkin",
     hide: true,
+  },
+  {
+    component: Kegiatan,
+    label: "Kegiatan",
+    path: "/kegiatan",
+  },
+  {
+    component: KategoriKegiatan,
+    label: "Kategori Kegiatan",
+    path: "/kategoriKegiatan",
   },
   {
     component: Admin,
