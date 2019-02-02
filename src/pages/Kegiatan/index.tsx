@@ -17,15 +17,18 @@ const fields: IField[] = [
     name: "tanggal",
     label: "Tanggal",
     type: "date",
+    validations: ["required"],
   },
   {
     name: "nama",
     label: "Nama",
+    validations: ["required"],
   },
   {
     name: "kategoriKegiatan",
     label: "Kategori",
     type: "option",
+    validations: ["required"],
     optionData: {
       data: [],
       textKey: "nama",
@@ -35,6 +38,7 @@ const fields: IField[] = [
   {
     name: "laporan",
     label: "Laporan",
+    validations: ["required"],
     hide: true,
   },
 ]
@@ -55,9 +59,7 @@ export default class Kegiatan extends Component<{}, IState> {
   }
 
   public getKategoriKegiatan() {
-    this.kategoriKegiatanService
-      .get()
-      .then((kategoriKegiatan) => this.setState({ kategoriKegiatan }))
+    this.kategoriKegiatanService.get().then((kategoriKegiatan) => this.setState({ kategoriKegiatan }))
   }
 
   public getKegiatan() {

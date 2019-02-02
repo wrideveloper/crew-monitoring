@@ -16,11 +16,13 @@ const fields: IField[] = [
   {
     name: "nama",
     label: "Nama Miniclass",
+    validations: ["required"],
   },
   {
     name: "divisi",
     label: "Divisi",
     type: "option",
+    validations: ["required"],
     optionData: {
       data: [],
       textKey: "nama",

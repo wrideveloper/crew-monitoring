@@ -18,10 +18,12 @@ const fields: IField[] = [
     name: "tanggal",
     label: "Tanggal",
     type: "date",
+    validations: ["required"],
   },
   {
     name: "miniclass",
     label: "Miniclass",
+    validations: ["required"],
     type: "option",
     optionData: {
       data: [],
@@ -32,10 +34,12 @@ const fields: IField[] = [
   {
     name: "topik",
     label: "Topik",
+    validations: ["required"],
   },
   {
     name: "angkatan",
     label: "Angkatan",
+    validations: ["required", "numeric"],
   },
 ]
 
@@ -100,9 +104,7 @@ export default class Presensi extends Component<{}, IState> {
         <Button
           content="Checkin"
           color="orange"
-          onClick={() =>
-            localStorage.setItem("presensi", JSON.stringify(presensi))
-          }
+          onClick={() => localStorage.setItem("presensi", JSON.stringify(presensi))}
         />
       </Link>
     ) : null
@@ -116,10 +118,7 @@ export default class Presensi extends Component<{}, IState> {
     this.setOptionsData()
     return (
       <Fragment>
-        <Header
-          content="Presensi"
-          subheader="Kumpulan data presensi miniclass"
-        />
+        <Header content="Presensi" subheader="Kumpulan data presensi miniclass" />
         <ErrorMessage
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
