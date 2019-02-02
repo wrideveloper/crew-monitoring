@@ -60,9 +60,7 @@ export default class CustomTable extends Component<IProps, IState> {
   }
 
   public getFieldBySearchKey() {
-    return this.props.shownFields.find(
-      (field) => field.name === this.state.searchKey,
-    )
+    return this.props.shownFields.find((field) => field.name === this.state.searchKey)
   }
 
   public getCellText(cellData: any): string {

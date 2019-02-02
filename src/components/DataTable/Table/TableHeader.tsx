@@ -14,9 +14,7 @@ export default class TableHeader extends Component<IProps> {
   }
 
   public isSorted(fieldName: string) {
-    return fieldName === this.props.sortKey
-      ? this.sortByDirection()
-      : undefined
+    return fieldName === this.props.sortKey ? this.sortByDirection() : undefined
   }
 
   public renderHeaderCells() {

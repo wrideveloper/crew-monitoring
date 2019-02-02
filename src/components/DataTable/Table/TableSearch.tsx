@@ -26,8 +26,7 @@ export default class TableSearch extends Component<IProps> {
             floating
             options={this.getOptions()}
             value={this.props.searchKey}
-            onChange={(event, { value }) =>
-              this.props.onChangeSearchKey(value as string)}
+            onChange={(event, { value }) => this.props.onChangeSearchKey(value as string)}
           />
         }
         icon="search"

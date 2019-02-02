@@ -8,7 +8,8 @@ declare interface IRoute {
 declare interface IField {
   name: string
   label: string
-  type?: "text" | "number" | "password" | "option" | "image" | "date"
+  type?: "text" | "password" | "option" | "image" | "date"
+  validations?: string[]
   optionData?: IOptionData
   hide?: boolean
 }

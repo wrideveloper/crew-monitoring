@@ -7,7 +7,6 @@ interface IProps {
   field: IField
   onChange: (value: any) => void
   value: any
-  error: boolean | undefined
   readOnly: boolean
 }
 
@@ -20,7 +19,6 @@ export default class FormInput extends Component<IProps> {
           field={field}
           onChange={(value) => this.props.onChange(value)}
           value={value}
-          error={this.props.error}
           readOnly={this.props.readOnly}
         />
       )
@@ -30,7 +28,6 @@ export default class FormInput extends Component<IProps> {
           field={field}
           onChange={(value) => this.props.onChange(value)}
           value={value}
-          error={this.props.error}
           readOnly={this.props.readOnly}
         />
       )
@@ -42,7 +39,6 @@ export default class FormInput extends Component<IProps> {
           fluid
           onChange={(event) => this.props.onChange(event.target.value)}
           value={String(value).slice(0, 10)}
-          error={this.props.error}
           readOnly={this.props.readOnly}
         />
       )
@@ -54,7 +50,6 @@ export default class FormInput extends Component<IProps> {
           fluid
           onChange={(event) => this.props.onChange(event.target.value)}
           value={value}
-          error={this.props.error}
           readOnly={this.props.readOnly}
         />
       )

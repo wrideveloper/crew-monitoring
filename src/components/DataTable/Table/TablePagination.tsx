@@ -18,8 +18,7 @@ export default class TablePagination extends Component<IProps> {
       <Pagination
         activePage={this.props.activePage}
         totalPages={this.getTotalPages()}
-        onPageChange={(event, { activePage }) =>
-          this.props.onPageChange(activePage as number)}
+        onPageChange={(event, { activePage }) => this.props.onPageChange(activePage as number)}
         style={styles.pagination}
       />
     ) : null

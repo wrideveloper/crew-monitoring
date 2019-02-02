@@ -20,31 +20,35 @@ const fields: IField[] = [
   {
     name: "nim",
     label: "NIM",
-    type: "number",
+    validations: ["required", "numeric"],
   },
   {
     name: "nama",
     label: "Nama",
+    validations: ["required"],
   },
   {
     name: "email",
     label: "Email",
+    validations: ["required", "email"],
     hide: true,
   },
   {
     name: "kontak",
     label: "Kontak",
+    validations: ["required", "numeric"],
     hide: true,
   },
   {
     name: "angkatan",
     label: "Angkatan",
-    type: "number",
+    validations: ["required", "numeric"],
   },
   {
     name: "jabatan",
     label: "Jabatan",
     hide: true,
+    validations: ["required"],
     type: "option",
     optionData: {
       data: [],
@@ -55,6 +59,7 @@ const fields: IField[] = [
   {
     name: "divisi",
     label: "Divisi",
+    validations: ["required"],
     type: "option",
     optionData: {
       data: [],
@@ -65,6 +70,7 @@ const fields: IField[] = [
   {
     name: "miniclass",
     label: "Miniclass",
+    validations: ["required"],
     type: "option",
     optionData: {
       data: [],

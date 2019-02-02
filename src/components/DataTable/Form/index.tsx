@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { Button, Grid, Header, Modal } from "semantic-ui-react"
+import validator from "validator"
 import FormInput from "./FormInput"
+import FormInputError from "./FormInputError"
 
 interface IProps {
   open: boolean
@@ -15,21 +17,17 @@ interface IProps {
 
 interface IState {
   input: any
-  inputError: any
+  inputErrors: any
 }
 
 export default class Form extends Component<IProps, IState> {
   public state: IState = {
     input: {},
-    inputError: {},
-  }
-
-  public isObjectEmpty(object: any) {
-    return Object.keys(object).length === 0
+    inputErrors: {},
   }
 
   public isUpdateMode() {
-    return !this.isObjectEmpty(this.props.initialInput)
+    return !(Object.keys(this.props.initialInput).length === 0)
   }
 
   public isModalOpen(nextProps: IProps) {
@@ -40,20 +38,6 @@ export default class Form extends Component<IProps, IState> {
     return this.props.open === true && nextProps.open === false
   }
 
-  public isInputValid() {
-    return this.isObjectEmpty(this.state.inputError)
-  }
-
-  public validateInput() {
-    const { inputError } = this.state
-    this.props.fields.forEach((field) => {
-      const input = this.state.input[field.name]
-      if (input === "" || input === undefined) inputError[field.name] = true
-      else delete inputError[field.name]
-    })
-    this.setState({ inputError })
-  }
-
   public componentWillReceiveProps(nextProps: IProps) {
     if (this.isModalOpen(nextProps)) {
       const initialInput = JSON.parse(JSON.stringify(nextProps.initialInput))
@@ -61,20 +45,63 @@ export default class Form extends Component<IProps, IState> {
     }
 
     if (this.isModalClose(nextProps)) {
-      this.setState({ input: {}, inputError: {} })
+      this.setState({ input: {} })
     }
   }
 
+  public addError(name: string, message: string) {
+    const { inputErrors } = this.state
+    inputErrors[name] = message
+    this.setState({ inputErrors })
+  }
+
+  public removeError(name: string) {
+    const { inputErrors } = this.state
+    delete inputErrors[name]
+    this.setState({ inputErrors })
+  }
+
   public changeInput(name: string, value: any) {
-    const { input, inputError } = this.state
+    const { input } = this.state
     input[name] = value
-    delete inputError[name]
-    this.setState({ input, inputError })
+    this.setState({ input })
+    this.removeError(name)
+  }
+
+  public getValue(field: IField) {
+    const value = this.state.input[field.name]
+    if (value === undefined) return ""
+    else if (typeof value === "object") return value[field.optionData!.valueKey]
+    else return String(value)
+  }
+
+  public validate(field: IField) {
+    const value = this.getValue(field)
+    field.validations!.forEach((validation) => {
+      if (validation === "required" && validator.isEmpty(value))
+        this.addError(field.name, "wajib diisi ya")
+      if (validation === "email" && !validator.isEmail(value) && !validator.isEmpty(value))
+        this.addError(field.name, "ini bukan email lho")
+      if (validation === "alpha" && !validator.isAlpha(value) && !validator.isEmpty(value))
+        this.addError(field.name, "diisi huruf saja ya")
+      if (validation === "numeric" && !validator.isNumeric(value) && !validator.isEmpty(value))
+        this.addError(field.name, "diisi angka saja ya")
+    })
+  }
+
+  public validateInputs() {
+    this.props.fields.forEach((field) => {
+      if (field.validations !== undefined) this.validate(field)
+    })
+  }
+
+  public isValid() {
+    return Object.keys(this.state.inputErrors).length === 0
   }
 
   public submit() {
-    this.validateInput()
-    if (this.isInputValid()) {
+    this.validateInputs()
+    if (this.isValid()) {
       if (this.isUpdateMode()) this.props.onUpdate!(this.state.input)
       else this.props.onCreate(this.state.input)
       this.props.onClose()
@@ -82,9 +109,7 @@ export default class Form extends Component<IProps, IState> {
   }
 
   public renderAdditionalAction() {
-    return this.props.additionalAction
-      ? this.props.additionalAction(this.props.initialInput)
-      : null
+    return this.props.additionalAction ? this.props.additionalAction(this.props.initialInput) : null
   }
 
   public renderDeleteButton() {
@@ -113,20 +138,16 @@ export default class Form extends Component<IProps, IState> {
           field={field}
           onChange={(value) => this.changeInput(field.name, value)}
           value={this.state.input[field.name]}
-          error={this.state.inputError[field.name]}
           readOnly={this.props.onUpdate === undefined && this.isUpdateMode()}
         />
+        <FormInputError errorMessage={this.state.inputErrors[field.name]} />
       </Grid.Column>
     ))
   }
 
   public render() {
     return (
-      <Modal
-        open={this.props.open}
-        size="small"
-        onClose={() => this.props.onClose()}
-      >
+      <Modal open={this.props.open} size="small" onClose={() => this.props.onClose()}>
         <Header content={this.isUpdateMode() ? "Ubah Data" : "Tambah Data"} />
         <Modal.Content>
           <Grid columns="2">{this.renderFormInputs()}</Grid>

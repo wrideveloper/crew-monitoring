@@ -39,11 +39,7 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
   public render() {
     return (
       <Fragment>
-        <Button
-          content="Tambah"
-          color="green"
-          onClick={() => this.openForm({})}
-        />
+        <Button content="Tambah" color="green" onClick={() => this.openForm({})} />
         <Form
           open={this.state.open}
           fields={this.props.fields}

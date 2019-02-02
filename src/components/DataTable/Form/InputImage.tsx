@@ -6,7 +6,6 @@ interface IProps {
   field: IField
   onChange: (value: any) => void
   value: any
-  error: boolean | undefined
   readOnly: boolean
 }
 
@@ -28,9 +27,7 @@ export default class InputImage extends Component<IProps, IState> {
   public render() {
     return (
       <Fragment>
-        {this.props.value ? (
-          <Image src={this.state.preview} rounded size="small" />
-        ) : null}
+        {this.props.value ? <Image src={this.state.preview} rounded size="small" /> : null}
 
         <br />
         <Input
@@ -38,7 +35,6 @@ export default class InputImage extends Component<IProps, IState> {
           fluid
           type="file"
           onChange={(event) => this.changeImage(event.target.files![0])}
-          error={this.props.error}
           readOnly={this.props.readOnly}
         />
       </Fragment>
