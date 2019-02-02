@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import { Button, Grid, Header, Modal } from "semantic-ui-react"
-import validator from "validator"
 import FormInput from "./FormInput"
 import FormInputError from "./FormInputError"
+import FormValidator from "./FormValidator"
 
 interface IProps {
   open: boolean
@@ -45,11 +45,11 @@ export default class Form extends Component<IProps, IState> {
     }
 
     if (this.isModalClose(nextProps)) {
-      this.setState({ input: {} })
+      this.setState({ input: {}, inputErrors: {} })
     }
   }
 
-  public addError(name: string, message: string) {
+  public addError = (name: string, message: string) => {
     const { inputErrors } = this.state
     inputErrors[name] = message
     this.setState({ inputErrors })
@@ -68,40 +68,20 @@ export default class Form extends Component<IProps, IState> {
     this.removeError(name)
   }
 
-  public getValue(field: IField) {
-    const value = this.state.input[field.name]
-    if (value === undefined) return ""
-    else if (typeof value === "object") return value[field.optionData!.valueKey]
-    else return String(value)
-  }
-
-  public validate(field: IField) {
-    const value = this.getValue(field)
-    field.validations!.forEach((validation) => {
-      if (validation === "required" && validator.isEmpty(value))
-        this.addError(field.name, "wajib diisi ya")
-      if (validation === "email" && !validator.isEmail(value) && !validator.isEmpty(value))
-        this.addError(field.name, "ini bukan email lho")
-      if (validation === "alpha" && !validator.isAlpha(value) && !validator.isEmpty(value))
-        this.addError(field.name, "diisi huruf saja ya")
-      if (validation === "numeric" && !validator.isNumeric(value) && !validator.isEmpty(value))
-        this.addError(field.name, "diisi angka saja ya")
-    })
+  public isInputValid() {
+    return Object.keys(this.state.inputErrors).length === 0
   }
 
   public validateInputs() {
     this.props.fields.forEach((field) => {
-      if (field.validations !== undefined) this.validate(field)
+      if (field.validations !== undefined)
+        new FormValidator(field, this.state.input[field.name]).validate(this.addError)
     })
-  }
-
-  public isValid() {
-    return Object.keys(this.state.inputErrors).length === 0
   }
 
   public submit() {
     this.validateInputs()
-    if (this.isValid()) {
+    if (this.isInputValid()) {
       if (this.isUpdateMode()) this.props.onUpdate!(this.state.input)
       else this.props.onCreate(this.state.input)
       this.props.onClose()
