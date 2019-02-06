@@ -21,7 +21,7 @@ class App extends Component {
           </Grid.Column>
           <Grid.Column width="13">
             <Menubar />
-            {this.renderRoutes()}
+            <div style={styles.pageContainer}>{this.renderRoutes()}</div>
           </Grid.Column>
         </Grid>
       </BrowserRouter>
@@ -32,6 +32,9 @@ class App extends Component {
 const styles = {
   container: {
     paddingTop: 50,
+  },
+  pageContainer: {
+    padding: 25,
   },
 }
 
