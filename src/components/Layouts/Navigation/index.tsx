@@ -32,7 +32,7 @@ class Navigation extends Component<RouteComponentProps, IState> {
             as="span"
             name={route.label}
             active={this.isActive(route)}
-            onClick={() => this.changeActiveItem(route.label)}
+            onClick={() => this.changeActiveItem(route.label!)}
           />
         </Link>
       )

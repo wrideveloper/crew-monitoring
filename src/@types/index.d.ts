@@ -1,8 +1,9 @@
 declare interface IRoute {
-  label: string
+  label?: string
   path: string
   component: React.FunctionComponent | React.Components
   hide?: boolean
+  private?: boolean
 }
 
 declare interface IField {
@@ -74,4 +75,10 @@ declare interface IAdmin {
   _id: string
   username: string
   password: string
+}
+
+declare interface IAppContext {
+  token: string
+  setToken: (token: string) => void
+  isLoggedIn: () => boolean
 }
