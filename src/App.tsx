@@ -15,11 +15,12 @@ interface IState {
 
 class App extends Component {
   public state: IState = {
-    token: "",
+    token: localStorage.getItem("authToken") || "",
   }
 
   public setToken = (token: string) => {
     this.setState({ token })
+    localStorage.setItem("authToken", token)
   }
 
   public isLoggedIn = () => {
