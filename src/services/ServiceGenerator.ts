@@ -48,7 +48,7 @@ export class ServiceGenerator<T> {
     })
   }
 
-  private getHeader() {
+  protected getHeader() {
     return {
       "authorization": "Bearer " + localStorage.getItem("authToken") || "",
       "Accept": "application/json",

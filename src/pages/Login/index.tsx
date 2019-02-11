@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { RouteComponentProps } from "react-router"
 import { Button, Card, Form, Input } from "semantic-ui-react"
 import { Consumer } from "../../App"
+import { AdminService } from "../../services/AdminService"
 
 interface IState {
   input: {
@@ -18,6 +19,8 @@ export default class Login extends Component<RouteComponentProps, IState> {
     },
   }
 
+  public loginService = new AdminService()
+
   public redirectIfAuthenticated(isLoggedIn: boolean) {
     if (isLoggedIn) this.props.history.push("/")
   }
@@ -29,8 +32,15 @@ export default class Login extends Component<RouteComponentProps, IState> {
   }
 
   public login(context: IAppContext) {
-    context.setToken("1234")
-    this.props.history.push("/")
+    const { username, password } = this.state.input
+    this.loginService.login(username, password).then((data) => {
+      if (data.success) {
+        context.setToken(data.token!)
+        this.props.history.push("/")
+      } else {
+        alert("username atau password salah")
+      }
+    })
   }
 
   public render() {
