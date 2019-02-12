@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { RouteComponentProps } from "react-router"
 import { Button, Card, Form, Input } from "semantic-ui-react"
 import { Consumer } from "../../App"
-import { AdminService } from "../../services/AdminService"
+import { LoginService } from "../../services/LoginService"
 
 interface IState {
   input: {
@@ -19,7 +19,7 @@ export default class Login extends Component<RouteComponentProps, IState> {
     },
   }
 
-  public loginService = new AdminService()
+  public loginService = new LoginService()
 
   public redirectIfAuthenticated(isLoggedIn: boolean) {
     if (isLoggedIn) this.props.history.push("/")
