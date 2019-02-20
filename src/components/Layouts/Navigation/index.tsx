@@ -1,8 +1,7 @@
 import React, { Component } from "react"
 import { Link, RouteComponentProps, withRouter } from "react-router-dom"
-import { Menu } from "semantic-ui-react"
+import { Header, Menu } from "semantic-ui-react"
 import routes from "../../../routes"
-import NavHeader from "./NavHeader"
 
 interface IState {
   activeItem: string
@@ -29,11 +28,11 @@ class Navigation extends Component<RouteComponentProps, IState> {
       return route.hide ? null : (
         <Link to={route.path} key={index}>
           <Menu.Item
-            as="span"
-            name={route.label}
             active={this.isActive(route)}
             onClick={() => this.changeActiveItem(route.label!)}
-          />
+          >
+            <Header content={route.label} icon={route.icon} size="tiny" />
+          </Menu.Item>
         </Link>
       )
     })
@@ -49,7 +48,6 @@ class Navigation extends Component<RouteComponentProps, IState> {
         pointing
         style={styles.container}
       >
-        <NavHeader text="Manajemen Crew" icon="user circle outline" />
         {this.renderItems()}
       </Menu>
     )

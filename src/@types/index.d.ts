@@ -1,5 +1,6 @@
 declare interface IRoute {
   label?: string
+  icon?: string
   path: string
   component: React.FunctionComponent | React.Components
   hide?: boolean

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react"
-import { Header } from "semantic-ui-react"
+import { Link } from "react-router-dom"
+import { Button, Grid, Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
 import ErrorMessage from "../../components/ErrorMessage"
 import { KategoriKegiatanService } from "../../services/KategoriKegiatanService"
@@ -59,7 +60,9 @@ export default class Kegiatan extends Component<{}, IState> {
   }
 
   public getKategoriKegiatan() {
-    this.kategoriKegiatanService.get().then((kategoriKegiatan) => this.setState({ kategoriKegiatan }))
+    this.kategoriKegiatanService
+      .get()
+      .then((kategoriKegiatan) => this.setState({ kategoriKegiatan }))
   }
 
   public getKegiatan() {
@@ -106,7 +109,17 @@ export default class Kegiatan extends Component<{}, IState> {
     this.setOptionsData()
     return (
       <Fragment>
-        <Header content="Kegiatan" subheader="Kumpulan data kegiatan" />
+        <Grid style={styles.headerContainer}>
+          <Grid.Column width="8">
+            <Header content="Kegiatan" subheader="Kumpulan data kegiatan" />
+          </Grid.Column>
+          <Grid.Column width="8" textAlign="right">
+            <Link to="/kegiatan/kategori">
+              <Button content="Kategori Kegiatan" color="blue" />
+            </Link>
+          </Grid.Column>
+        </Grid>
+
         <ErrorMessage
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
@@ -122,4 +135,10 @@ export default class Kegiatan extends Component<{}, IState> {
       </Fragment>
     )
   }
+}
+
+const styles = {
+  headerContainer: {
+    marginBottom: 5,
+  },
 }

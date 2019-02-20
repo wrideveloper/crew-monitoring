@@ -100,11 +100,13 @@ export default class Presensi extends Component<{}, IState> {
 
   public renderAdditionalAction(presensi: IPresensi) {
     return presensi._id ? (
-      <Link to={`/checkin`}>
+      <Link to={`/presensi/checkin`}>
         <Button
           content="Checkin"
           color="orange"
-          onClick={() => localStorage.setItem("presensi", JSON.stringify(presensi))}
+          onClick={() =>
+            localStorage.setItem("presensi", JSON.stringify(presensi))
+          }
         />
       </Link>
     ) : null
@@ -118,7 +120,10 @@ export default class Presensi extends Component<{}, IState> {
     this.setOptionsData()
     return (
       <Fragment>
-        <Header content="Presensi" subheader="Kumpulan data presensi miniclass" />
+        <Header
+          content="Presensi"
+          subheader="Kumpulan data presensi miniclass"
+        />
         <ErrorMessage
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
