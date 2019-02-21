@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { RouteComponentProps } from "react-router"
-import { Button, Card, Form, Input } from "semantic-ui-react"
+import { Button, Card, Form, Header, Input, Loader } from "semantic-ui-react"
 import { Consumer } from "../../App"
 import { LoginService } from "../../services/LoginService"
 
@@ -9,6 +9,7 @@ interface IState {
     username: string
     password: string,
   }
+  loading: boolean
 }
 
 export default class Login extends Component<RouteComponentProps, IState> {
@@ -17,6 +18,7 @@ export default class Login extends Component<RouteComponentProps, IState> {
       username: "",
       password: "",
     },
+    loading: false,
   }
 
   public loginService = new LoginService()
@@ -31,16 +33,34 @@ export default class Login extends Component<RouteComponentProps, IState> {
     this.setState({ input })
   }
 
+  public resetValue() {
+    const { input } = this.state
+    input.password = ""
+    this.setState({ input })
+  }
+
   public login(context: IAppContext) {
     const { username, password } = this.state.input
+
+    this.setState({ loading: true })
     this.loginService.login(username, password).then((data) => {
+      this.setState({ loading: false })
       if (data.success) {
         context.setToken(data.token!)
         this.props.history.push("/")
       } else {
+        this.resetValue()
         alert("username atau password salah")
       }
     })
+  }
+
+  public getLoginButtonText() {
+    return this.state.loading ? (
+      <Loader active inline inverted size="small" />
+    ) : (
+      "Masuk"
+    )
   }
 
   public render() {
@@ -52,7 +72,11 @@ export default class Login extends Component<RouteComponentProps, IState> {
             <div style={styles.container}>
               <Card>
                 <Card.Content>
-                  <Card.Header textAlign="center">Login Crew</Card.Header>
+                  <Card.Header textAlign="center">
+                    <Header content="Crew Monitoring" icon="user circle" />
+                  </Card.Header>
+                </Card.Content>
+                <Card.Content>
                   <Form style={styles.form}>
                     <Form.Field>
                       <Input
@@ -73,15 +97,15 @@ export default class Login extends Component<RouteComponentProps, IState> {
                         }
                       />
                     </Form.Field>
-                    <Form.Field>
-                      <Button
-                        primary
-                        fluid
-                        content="Login"
-                        onClick={() => this.login(context!)}
-                      />
-                    </Form.Field>
                   </Form>
+                </Card.Content>
+                <Card.Content>
+                  <Button
+                    color="green"
+                    fluid
+                    content={this.getLoginButtonText()}
+                    onClick={() => this.login(context!)}
+                  />
                 </Card.Content>
               </Card>
             </div>

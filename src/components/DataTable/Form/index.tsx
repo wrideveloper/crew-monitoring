@@ -75,7 +75,9 @@ export default class Form extends Component<IProps, IState> {
   public validateInputs() {
     this.props.fields.forEach((field) => {
       if (field.validations !== undefined)
-        new FormValidator(field, this.state.input[field.name]).validate(this.addError)
+        new FormValidator(field, this.state.input[field.name]).validate(
+          this.addError,
+        )
     })
   }
 
@@ -89,7 +91,9 @@ export default class Form extends Component<IProps, IState> {
   }
 
   public renderAdditionalAction() {
-    return this.props.additionalAction ? this.props.additionalAction(this.props.initialInput) : null
+    return this.props.additionalAction
+      ? this.props.additionalAction(this.props.initialInput)
+      : null
   }
 
   public renderDeleteButton() {
@@ -127,7 +131,11 @@ export default class Form extends Component<IProps, IState> {
 
   public render() {
     return (
-      <Modal open={this.props.open} size="small" onClose={() => this.props.onClose()}>
+      <Modal
+        open={this.props.open}
+        size="large"
+        onClose={() => this.props.onClose()}
+      >
         <Header content={this.isUpdateMode() ? "Ubah Data" : "Tambah Data"} />
         <Modal.Content>
           <Grid columns="2">{this.renderFormInputs()}</Grid>

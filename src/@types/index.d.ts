@@ -63,6 +63,7 @@ declare interface IPresensi {
 declare interface IKategoriKegiatan {
   _id: string
   nama: string
+  keterangan: string
 }
 
 declare interface IKegiatan {

@@ -16,6 +16,11 @@ const fields: IField[] = [
     label: "Nama Kategori",
     validations: ["required"],
   },
+  {
+    name: "keterangan",
+    label: "Keterangan",
+    validations: ["required"],
+  },
 ]
 
 export default class KategoriKegiatan extends Component<{}, IState> {
@@ -66,7 +71,10 @@ export default class KategoriKegiatan extends Component<{}, IState> {
   public render() {
     return (
       <Fragment>
-        <Header content="Kategori Kegiatan" subheader="Kumpulan data Kategori Kegiatan" />
+        <Header
+          content="Kategori Kegiatan"
+          subheader="Kumpulan data Kategori Kegiatan"
+        />
         <ErrorMessage
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
