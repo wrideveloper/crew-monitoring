@@ -39,7 +39,6 @@ const fields: IField[] = [
   {
     name: "laporan",
     label: "Laporan",
-    validations: ["required"],
     hide: true,
   },
 ]

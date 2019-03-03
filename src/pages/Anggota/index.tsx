@@ -30,13 +30,13 @@ const fields: IField[] = [
   {
     name: "email",
     label: "Email",
-    validations: ["required", "email"],
+    validations: ["email"],
     hide: true,
   },
   {
     name: "kontak",
     label: "Kontak",
-    validations: ["required", "numeric"],
+    validations: ["numeric"],
     hide: true,
   },
   {
