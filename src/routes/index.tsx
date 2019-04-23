@@ -7,6 +7,7 @@ import KategoriKegiatan from "../pages/KategoriKegiatan"
 import Kegiatan from "../pages/Kegiatan"
 import Login from "../pages/Login"
 import Miniclass from "../pages/Miniclass"
+import NomorSurat from "../pages/NomorSurat"
 import Presensi from "../pages/Presensi"
 
 const routes: IRoute[] = [
@@ -62,6 +63,13 @@ const routes: IRoute[] = [
     component: Checkin,
     path: "/presensi/checkin",
     hide: true,
+    private: true,
+  },
+  {
+    component: NomorSurat,
+    label: "Nomor Surat",
+    icon: "envelope outline",
+    path: "/nomorSurat",
     private: true,
   },
   {

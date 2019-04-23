@@ -73,6 +73,13 @@ declare interface IKegiatan {
   kategoriKegiatan: string | IKategoriKegiatan
 }
 
+declare interface INomorSurat {
+  _id: string
+  nomor: string
+  keperluan: string
+  anggota: string | IAnggota
+}
+
 declare interface IAdmin {
   _id: string
   username: string
