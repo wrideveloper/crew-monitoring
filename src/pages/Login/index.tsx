@@ -73,7 +73,10 @@ export default class Login extends Component<RouteComponentProps, IState> {
               <Card>
                 <Card.Content>
                   <Card.Header textAlign="center">
-                    <Header content="Crew Monitoring" icon="user circle" />
+                    <Header
+                      content="Crew Monitoring"
+                      icon="user circle outline"
+                    />
                   </Card.Header>
                 </Card.Content>
                 <Card.Content>
