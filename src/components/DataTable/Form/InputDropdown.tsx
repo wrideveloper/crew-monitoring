@@ -54,6 +54,8 @@ const styles = {
     marginRight: 0,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
+    display: "flex",
+    alignItems: "center",
   },
   dropdown: {
     borderTopLeftRadius: 0,
