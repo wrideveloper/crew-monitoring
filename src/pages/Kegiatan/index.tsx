@@ -37,6 +37,11 @@ const fields: IField[] = [
     },
   },
   {
+    name: "album",
+    label: "Album",
+    hide: true,
+  },
+  {
     name: "laporan",
     label: "Laporan",
     hide: true,
