@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react"
-import { Dropdown, DropdownItemProps, Label } from "semantic-ui-react"
+import { Button, Dropdown, DropdownItemProps, Label } from "semantic-ui-react"
 
 interface IProps {
   field: IField
@@ -25,19 +25,38 @@ export default class InputDropdown extends Component<IProps> {
   public render() {
     return (
       <Fragment>
-        <Label size="large" content={this.props.field.label} />
-        <Dropdown
-          placeholder={"Pilih " + this.props.field.label}
-          inline
-          basic
-          button
-          floating
-          options={this.getOptions()}
-          value={this.getValue()}
-          onChange={(event, { value }) => this.props.onChange(value)}
-          disabled={this.props.readOnly}
-        />
+        <Button.Group fluid>
+          <Label
+            size="large"
+            content={this.props.field.label}
+            style={styles.label}
+          />
+          <Dropdown
+            placeholder={"Pilih " + this.props.field.label}
+            basic
+            selection
+            button
+            floating
+            options={this.getOptions()}
+            value={this.getValue()}
+            onChange={(event, { value }) => this.props.onChange(value)}
+            disabled={this.props.readOnly}
+            style={styles.dropdown}
+          />
+        </Button.Group>
       </Fragment>
     )
   }
+}
+
+const styles = {
+  label: {
+    marginRight: 0,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  dropdown: {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+  },
 }
