@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
 import { Image, Input } from "semantic-ui-react"
-import { serviceCrew } from "../../../config"
+import { api } from "../../../config"
 
 interface IProps {
   field: IField
@@ -15,7 +15,7 @@ interface IState {
 
 export default class InputImage extends Component<IProps, IState> {
   public state: IState = {
-    preview: serviceCrew + this.props.value,
+    preview: api.serviceCrew + this.props.value,
   }
 
   public changeImage(file: File) {
@@ -27,7 +27,9 @@ export default class InputImage extends Component<IProps, IState> {
   public render() {
     return (
       <Fragment>
-        {this.props.value ? <Image src={this.state.preview} rounded size="small" /> : null}
+        {this.props.value ? (
+          <Image src={this.state.preview} rounded size="small" />
+        ) : null}
 
         <br />
         <Input

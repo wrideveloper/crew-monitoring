@@ -1,6 +1,6 @@
-import { serviceCrew } from "../config"
+import { api } from "../config"
 import { ServiceGenerator } from "./ServiceGenerator"
 
 export class PresensiService extends ServiceGenerator<IPresensi> {
-  protected endpoint = serviceCrew + "presensi/"
+  protected endpoint = api.serviceCrew + "presensi/"
 }

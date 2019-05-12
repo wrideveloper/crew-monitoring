@@ -1,14 +1,8 @@
 import axios from "axios"
-import { serviceCrew } from "../config"
-import { ServiceGenerator } from "./ServiceGenerator"
-
-interface ILogin {
-  success: boolean
-  token?: string
-}
+import { api } from "../config"
 
 export class LoginService {
-  protected endpoint = serviceCrew + "login/"
+  protected endpoint = api.serviceCrew + "login/"
 
   public login(username: string, password: string) {
     return new Promise<ILogin>((resolve, reject) => {

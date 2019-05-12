@@ -91,3 +91,8 @@ declare interface IAppContext {
   setToken: (token: string) => void
   isLoggedIn: () => boolean
 }
+
+interface ILogin {
+  success: boolean
+  token?: string
+}

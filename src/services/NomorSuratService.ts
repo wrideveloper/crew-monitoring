@@ -1,7 +1,7 @@
 import axios from "axios"
-import { serviceCrew } from "../config"
+import { api } from "../config"
 import { ServiceGenerator } from "./ServiceGenerator"
 
 export class NomorSuratService extends ServiceGenerator<INomorSurat> {
-  protected endpoint = serviceCrew + "nomorSurat/"
+  protected endpoint = api.serviceCrew + "nomorSurat/"
 }

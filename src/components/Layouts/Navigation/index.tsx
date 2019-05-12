@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link, RouteComponentProps, withRouter } from "react-router-dom"
 import { Header, Menu } from "semantic-ui-react"
-import routes from "../../../routes"
+import { routes } from "../../../config"
 
 interface IState {
   activeItem: string

@@ -4,7 +4,7 @@ import { Grid } from "semantic-ui-react"
 import Menubar from "./components/Layouts/Menubar"
 import Navigation from "./components/Layouts/Navigation"
 import PrivateRoute from "./components/PrivateRoute"
-import routes from "./routes"
+import { routes } from "./config"
 
 const context = React.createContext<IAppContext | null>(null)
 const { Provider, Consumer } = context

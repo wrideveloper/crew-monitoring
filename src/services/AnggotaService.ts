@@ -1,9 +1,9 @@
 import axios from "axios"
-import { serviceCrew } from "../config"
+import { api } from "../config"
 import { ServiceGenerator } from "./ServiceGenerator"
 
 export class AnggotaService extends ServiceGenerator<IAnggota> {
-  protected endpoint = serviceCrew + "anggota/"
+  protected endpoint = api.serviceCrew + "anggota/"
 
   public uploadFoto(foto: File, id: string) {
     return new Promise<IAnggota>((resolve, reject) => {

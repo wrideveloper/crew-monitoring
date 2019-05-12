@@ -1,8 +1,8 @@
-import { serviceCrew } from "../config"
+import { api } from "../config"
 import { ServiceGenerator } from "./ServiceGenerator"
 
 export class KategoriKegiatanService extends ServiceGenerator<
   IKategoriKegiatan
 > {
-  protected endpoint = serviceCrew + "kategoriKegiatan/"
+  protected endpoint = api.serviceCrew + "kategoriKegiatan/"
 }

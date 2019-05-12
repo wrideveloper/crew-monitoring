@@ -1,6 +1,6 @@
-import { serviceCrew } from "../config"
+import { api } from "../config"
 import { ServiceGenerator } from "./ServiceGenerator"
 
 export class DivisiService extends ServiceGenerator<IDivisi> {
-  protected endpoint = serviceCrew + "divisi/"
+  protected endpoint = api.serviceCrew + "divisi/"
 }

@@ -1,9 +1,9 @@
 import axios from "axios"
-import { serviceCrew } from "../config"
+import { api } from "../config"
 import { ServiceGenerator } from "./ServiceGenerator"
 
 export class MiniclassService extends ServiceGenerator<IMiniclass> {
-  protected endpoint = serviceCrew + "miniclass/"
+  protected endpoint = api.serviceCrew + "miniclass/"
 
   public getAnggota(id: string, angkatan: number) {
     return new Promise<IAnggota[]>((resolve, reject) => {

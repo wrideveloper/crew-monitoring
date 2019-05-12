@@ -1,1 +1,4 @@
-export const serviceCrew = "https://crew-data-management.herokuapp.com/"
+import api from "./api"
+import routes from "./routes"
+
+export { api, routes }
