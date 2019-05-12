@@ -45,6 +45,7 @@ export default class FormInput extends Component<IProps> {
     } else {
       return (
         <Input
+          placeholder={`Masukkan ${field.label}`}
           type={field.type}
           label={field.label}
           fluid
