@@ -10,7 +10,10 @@ interface IProps<T> {
   onCreate?: (input: T) => void
   onUpdate?: (input: T) => void
   onDelete?: (input: T) => void
-  additionalAction?: (selectedData: T) => JSX.Element | null
+  additionalAction?: (
+    selectedData: T,
+    isUpdateMode: boolean,
+  ) => JSX.Element | null
 }
 
 interface IState {

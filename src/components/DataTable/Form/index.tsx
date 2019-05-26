@@ -12,7 +12,10 @@ interface IProps {
   onUpdate?: (input: any) => void
   onDelete?: (input: any) => void
   onClose: () => void
-  additionalAction?: (selectedData: any) => JSX.Element | null
+  additionalAction?: (
+    selectedData: any,
+    isUpdateMode: boolean,
+  ) => JSX.Element | null
 }
 
 interface IState {
@@ -40,7 +43,7 @@ export default class Form extends Component<IProps, IState> {
 
   public componentWillReceiveProps(nextProps: IProps) {
     if (this.isModalOpen(nextProps)) {
-      const initialInput = Object.create(nextProps.initialInput)
+      const initialInput = Object.assign({}, nextProps.initialInput)
       this.setState({ input: initialInput })
     }
 
@@ -92,7 +95,7 @@ export default class Form extends Component<IProps, IState> {
 
   public renderAdditionalAction() {
     return this.props.additionalAction
-      ? this.props.additionalAction(this.props.initialInput)
+      ? this.props.additionalAction(this.state.input, this.isUpdateMode())
       : null
   }
 

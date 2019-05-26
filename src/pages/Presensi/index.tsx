@@ -98,8 +98,8 @@ export default class Presensi extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public renderAdditionalAction(presensi: IPresensi) {
-    return presensi._id ? (
+  public renderAdditionalAction(presensi: IPresensi, isUpdateMode: boolean) {
+    return isUpdateMode ? (
       <Link to={`/presensi/checkin`}>
         <Button
           content="Checkin"
@@ -135,7 +135,9 @@ export default class Presensi extends Component<{}, IState> {
           onCreate={(input) => this.createPresensi(input)}
           onUpdate={(input) => this.updatePresensi(input, input._id)}
           onDelete={(input) => this.deletePresensi(input._id)}
-          additionalAction={(presensi) => this.renderAdditionalAction(presensi)}
+          additionalAction={(presensi, isUpdateMode) =>
+            this.renderAdditionalAction(presensi, isUpdateMode)
+          }
         />
       </Fragment>
     )
