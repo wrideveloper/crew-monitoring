@@ -40,7 +40,7 @@ export default class Form extends Component<IProps, IState> {
 
   public componentWillReceiveProps(nextProps: IProps) {
     if (this.isModalOpen(nextProps)) {
-      const initialInput = JSON.parse(JSON.stringify(nextProps.initialInput))
+      const initialInput = Object.create(nextProps.initialInput)
       this.setState({ input: initialInput })
     }
 
