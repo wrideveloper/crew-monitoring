@@ -7,7 +7,7 @@ interface IProps<T> {
   data: T[]
   fields: IField[]
   loading: boolean
-  onCreate: (input: T) => void
+  onCreate?: (input: T) => void
   onUpdate?: (input: T) => void
   onDelete?: (input: T) => void
   additionalAction?: (selectedData: T) => JSX.Element | null
@@ -40,19 +40,25 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
     return this.props.fields.filter((field) => !field.hideOnForm)
   }
 
+  public renderCreateButton() {
+    return this.props.onCreate !== undefined ? (
+      <Button
+        content="Tambah"
+        color="green"
+        onClick={() => this.openForm({})}
+      />
+    ) : null
+  }
+
   public render() {
     return (
       <Fragment>
-        <Button
-          content="Tambah"
-          color="green"
-          onClick={() => this.openForm({})}
-        />
+        {this.renderCreateButton()}
         <Form
           open={this.state.open}
           fields={this.getFormFields()}
           initialInput={this.state.selectedData}
-          onCreate={(input) => this.props.onCreate(input)}
+          onCreate={this.props.onCreate}
           onUpdate={this.props.onUpdate}
           onDelete={this.props.onDelete}
           onClose={() => this.closeForm()}

@@ -8,7 +8,7 @@ interface IProps {
   open: boolean
   fields: IField[]
   initialInput: any
-  onCreate: (input: any) => void
+  onCreate?: (input: any) => void
   onUpdate?: (input: any) => void
   onDelete?: (input: any) => void
   onClose: () => void
@@ -85,7 +85,7 @@ export default class Form extends Component<IProps, IState> {
     this.validateInputs()
     if (this.isInputValid()) {
       if (this.isUpdateMode()) this.props.onUpdate!(this.state.input)
-      else this.props.onCreate(this.state.input)
+      else this.props.onCreate!(this.state.input)
       this.props.onClose()
     }
   }
