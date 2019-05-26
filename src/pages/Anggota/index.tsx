@@ -31,13 +31,13 @@ const fields: IField[] = [
     name: "email",
     label: "Email",
     validations: ["email"],
-    hide: true,
+    hideOnTable: true,
   },
   {
     name: "kontak",
     label: "Kontak",
     validations: ["numeric"],
-    hide: true,
+    hideOnTable: true,
   },
   {
     name: "angkatan",
@@ -47,7 +47,7 @@ const fields: IField[] = [
   {
     name: "jabatan",
     label: "Jabatan",
-    hide: true,
+    hideOnTable: true,
     validations: ["required"],
     type: "option",
     optionData: {
@@ -78,12 +78,6 @@ const fields: IField[] = [
       valueKey: "_id",
     },
   },
-  // {
-  //   name: "foto",
-  //   label: "Foto",
-  //   type: "image",
-  //   hide: true,
-  // },
 ]
 
 export default class Anggota extends Component<{}, IState> {

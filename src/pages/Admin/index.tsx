@@ -20,7 +20,7 @@ const fields: IField[] = [
     name: "password",
     label: "Password",
     type: "password",
-    hide: true,
+    hideOnTable: true,
     validations: ["required"],
   },
 ]

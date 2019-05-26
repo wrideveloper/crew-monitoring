@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Dropdown, DropdownItemProps, Input } from "semantic-ui-react"
 
 interface IProps {
-  shownFields: IField[]
+  fields: IField[]
   searchValue: string
   searchKey: string
   onChangeSearchValue: (value: string) => void
@@ -11,7 +11,7 @@ interface IProps {
 
 export default class TableSearch extends Component<IProps> {
   public getOptions(): DropdownItemProps[] {
-    return this.props.shownFields.map((field) => ({
+    return this.props.fields.map((field) => ({
       text: field.label,
       value: field.name,
     }))
@@ -26,7 +26,8 @@ export default class TableSearch extends Component<IProps> {
             floating
             options={this.getOptions()}
             value={this.props.searchKey}
-            onChange={(event, { value }) => this.props.onChangeSearchKey(value as string)}
+            onChange={(event, { value }) =>
+              this.props.onChangeSearchKey(value as string)}
           />
         }
         icon="search"

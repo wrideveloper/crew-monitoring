@@ -114,7 +114,7 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
         <Grid columns="2">
           <Grid.Column width="10">
             <Table
-              shownFields={fields}
+              fields={fields}
               loading={this.state.loading}
               data={this.getAnggotaMiniclass()}
               onRowClick={(rowData) => this.checkIn(rowData)}

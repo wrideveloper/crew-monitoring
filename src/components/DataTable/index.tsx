@@ -32,17 +32,25 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
     this.setState({ open: false })
   }
 
-  public getShownFields() {
-    return this.props.fields.filter((field) => !field.hide)
+  public getTableFields() {
+    return this.props.fields.filter((field) => !field.hideOnTable)
+  }
+
+  public getFormFields() {
+    return this.props.fields.filter((field) => !field.hideOnForm)
   }
 
   public render() {
     return (
       <Fragment>
-        <Button content="Tambah" color="green" onClick={() => this.openForm({})} />
+        <Button
+          content="Tambah"
+          color="green"
+          onClick={() => this.openForm({})}
+        />
         <Form
           open={this.state.open}
-          fields={this.props.fields}
+          fields={this.getFormFields()}
           initialInput={this.state.selectedData}
           onCreate={(input) => this.props.onCreate(input)}
           onUpdate={this.props.onUpdate}
@@ -53,7 +61,7 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
         <Table
           data={this.props.data}
           loading={this.props.loading}
-          shownFields={this.getShownFields()}
+          fields={this.getTableFields()}
           onRowClick={(rowData: any) => this.openForm(rowData)}
         />
       </Fragment>

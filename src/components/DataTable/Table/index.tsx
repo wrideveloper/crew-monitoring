@@ -12,7 +12,7 @@ import TableSearch from "./TableSearch"
 interface IProps {
   data: any[]
   loading: boolean
-  shownFields: IField[]
+  fields: IField[]
   onRowClick: (rowData: any) => void
 }
 
@@ -30,8 +30,8 @@ export default class CustomTable extends Component<IProps, IState> {
     activePage: 1,
     itemPerPage: 10,
     searchValue: "",
-    searchKey: this.props.shownFields[0].name,
-    sortKey: this.props.shownFields[0].name,
+    searchKey: this.props.fields[0].name,
+    sortKey: this.props.fields[0].name,
     isDescending: false,
   }
 
@@ -60,7 +60,7 @@ export default class CustomTable extends Component<IProps, IState> {
   }
 
   public getFieldBySearchKey() {
-    return this.props.shownFields.find((field) => field.name === this.state.searchKey)
+    return this.props.fields.find((field) => field.name === this.state.searchKey)
   }
 
   public getCellText(cellData: any): string {
@@ -108,13 +108,13 @@ export default class CustomTable extends Component<IProps, IState> {
         <Fragment>
           <Table celled sortable selectable>
             <TableHeader
-              shownFields={this.props.shownFields}
+              fields={this.props.fields}
               sortKey={this.state.sortKey}
               isDescending={this.state.isDescending}
               onChangeSort={(fieldName) => this.changeSort(fieldName)}
             />
             <TableBody
-              shownFields={this.props.shownFields}
+              fields={this.props.fields}
               paginatedData={this.getPaginatedData()}
               startingNumber={this.getOffset() + 1}
               onRowClick={(rowData) => this.props.onRowClick(rowData)}
@@ -141,7 +141,7 @@ export default class CustomTable extends Component<IProps, IState> {
               <TableSearch
                 searchValue={this.state.searchValue}
                 searchKey={this.state.searchKey}
-                shownFields={this.props.shownFields}
+                fields={this.props.fields}
                 onChangeSearchValue={(value) => this.changeSearchValue(value)}
                 onChangeSearchKey={(key) => this.changeSearchKey(key)}
               />

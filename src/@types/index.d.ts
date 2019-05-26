@@ -13,7 +13,8 @@ declare interface IField {
   type?: "text" | "password" | "option" | "image" | "date"
   validations?: string[]
   optionData?: IOptionData
-  hide?: boolean
+  hideOnTable?: boolean
+  hideOnForm?: boolean
 }
 
 declare interface IOptionData {

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Table } from "semantic-ui-react"
 
 interface IProps {
-  shownFields: IField[]
+  fields: IField[]
   paginatedData: any[]
   startingNumber: number
   onRowClick: (rowData: any) => void
@@ -21,7 +21,7 @@ export default class TableBody extends Component<IProps> {
   }
 
   public renderCell(row: any) {
-    return this.props.shownFields.map((field, index) => (
+    return this.props.fields.map((field, index) => (
       <Table.Cell key={index}>{this.getCellText(row, field)}</Table.Cell>
     ))
   }
@@ -31,9 +31,7 @@ export default class TableBody extends Component<IProps> {
     return this.props.paginatedData.map((rowData, index) => (
       <Table.Row
         key={index}
-        onClick={() =>
-          this.props.onRowClick(JSON.parse(JSON.stringify(rowData)))
-        }
+        onClick={() => this.props.onRowClick(rowData)}
         style={{ cursor: "pointer" }}
       >
         <Table.Cell>{startingNumber++}</Table.Cell>
