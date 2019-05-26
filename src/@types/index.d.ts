@@ -31,9 +31,9 @@ declare interface IAnggota {
   kontak: string
   angkatan: number
   foto?: string | File
-  jabatan?: IJabatan | string
-  divisi?: IDivisi | string
-  miniclass?: IMiniclass | string
+  jabatan?: IJabatan
+  divisi?: IDivisi
+  miniclass?: IMiniclass
 }
 
 declare interface IDivisi {
@@ -49,13 +49,13 @@ declare interface IJabatan {
 declare interface IMiniclass {
   _id: string
   nama: string
-  divisi: IDivisi | string
+  divisi: IDivisi
 }
 
 declare interface IPresensi {
   _id: string
   topik: string
-  miniclass: string | IMiniclass
+  miniclass: IMiniclass
   angkatan: number
   tanggal: Date
   peserta: string[]
@@ -71,14 +71,14 @@ declare interface IKegiatan {
   _id: string
   nama: string
   laporan: string
-  kategoriKegiatan: string | IKategoriKegiatan
+  kategoriKegiatan: IKategoriKegiatan
 }
 
 declare interface INomorSurat {
   _id: string
   nomor: string
   keperluan: string
-  anggota: string | IAnggota
+  anggota: IAnggota
 }
 
 declare interface IAdmin {

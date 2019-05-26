@@ -88,10 +88,7 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
   }
 
   public isMiniclassMatch(anggota: IAnggota) {
-    return (
-      (anggota.miniclass as IMiniclass)._id ===
-      (this.state.presensi.miniclass as IMiniclass)._id
-    )
+    return anggota.miniclass!._id === this.state.presensi.miniclass._id
   }
 
   public getAnggotaMiniclass() {
