@@ -35,15 +35,15 @@ export default class CustomTable extends Component<IProps, IState> {
     isDescending: false,
   }
 
-  public changeSearchValue(value: string) {
+  public changeSearchValue = (value: string) => {
     this.setState({ searchValue: value, activePage: 1 })
   }
 
-  public changeSearchKey(key: string) {
+  public changeSearchKey = (key: string) => {
     this.setState({ searchKey: key, activePage: 1 })
   }
 
-  public changeSort(fieldName: string) {
+  public changeSort = (fieldName: string) => {
     this.setState((prevState) => ({
       sortKey: fieldName,
       isDescending: !prevState.isDescending,
@@ -51,11 +51,11 @@ export default class CustomTable extends Component<IProps, IState> {
     }))
   }
 
-  public changePage(page: number) {
+  public changePage = (page: number) => {
     this.setState({ activePage: page })
   }
 
-  public changeLimit(limit: number) {
+  public changeLimit = (limit: number) => {
     this.setState({ itemPerPage: limit, activePage: 1 })
   }
 
@@ -111,13 +111,13 @@ export default class CustomTable extends Component<IProps, IState> {
               fields={this.props.fields}
               sortKey={this.state.sortKey}
               isDescending={this.state.isDescending}
-              onChangeSort={(fieldName) => this.changeSort(fieldName)}
+              onChangeSort={this.changeSort}
             />
             <TableBody
               fields={this.props.fields}
               paginatedData={this.getPaginatedData()}
               startingNumber={this.getOffset() + 1}
-              onRowClick={(rowData) => this.props.onRowClick(rowData)}
+              onRowClick={this.props.onRowClick}
             />
           </Table>
 
@@ -125,7 +125,7 @@ export default class CustomTable extends Component<IProps, IState> {
             dataLength={this.getSearchedData().length}
             itemPerPage={this.state.itemPerPage}
             activePage={this.state.activePage}
-            onPageChange={(pageNumber) => this.changePage(pageNumber)}
+            onPageChange={this.changePage}
           />
         </Fragment>
       )
@@ -142,12 +142,12 @@ export default class CustomTable extends Component<IProps, IState> {
                 searchValue={this.state.searchValue}
                 searchKey={this.state.searchKey}
                 fields={this.props.fields}
-                onChangeSearchValue={(value) => this.changeSearchValue(value)}
-                onChangeSearchKey={(key) => this.changeSearchKey(key)}
+                onChangeSearchValue={this.changeSearchValue}
+                onChangeSearchKey={this.changeSearchKey}
               />
             </Grid.Column>
             <Grid.Column textAlign="right">
-              <TableLimiter onChange={(limit) => this.changeLimit(limit)} />
+              <TableLimiter onChange={this.changeLimit} />
             </Grid.Column>
           </Grid>
           {this.renderTable()}

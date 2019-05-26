@@ -48,7 +48,7 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
     this.getAnggota()
   }
 
-  public submit() {
+  public submit = () => {
     this.setState({ loading: true })
     this.presensiService
       .update(this.state.presensi, this.state.presensi._id)
@@ -69,7 +69,7 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
     this.setState({ presensi })
   }
 
-  public checkIn(anggota: IAnggota) {
+  public checkIn = (anggota: IAnggota) => {
     if (this.isAttend(anggota)) {
       this.removePeserta(anggota)
     } else {
@@ -117,13 +117,9 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
               fields={fields}
               loading={this.state.loading}
               data={this.getAnggotaMiniclass()}
-              onRowClick={(rowData) => this.checkIn(rowData)}
+              onRowClick={this.checkIn}
             />
-            <Button
-              color="green"
-              content="Simpan"
-              onClick={() => this.submit()}
-            />
+            <Button color="green" content="Simpan" onClick={this.submit} />
           </Grid.Column>
           <Grid.Column width="6">
             <CardInfo presensi={this.state.presensi} />

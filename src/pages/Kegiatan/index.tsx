@@ -69,7 +69,7 @@ export default class Kegiatan extends Component<{}, IState> {
       .then((kategoriKegiatan) => this.setState({ kategoriKegiatan }))
   }
 
-  public getKegiatan() {
+  public getKegiatan = () => {
     this.setState({ loading: true })
     this.kegiatanService
       .get()
@@ -78,29 +78,29 @@ export default class Kegiatan extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createKegiatan(input: IKegiatan) {
+  public createKegiatan = (input: IKegiatan) => {
     this.setState({ loading: true })
     this.kegiatanService
       .create(input)
-      .then(() => this.getKegiatan())
+      .then(this.getKegiatan)
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
   }
 
-  public updateKegiatan(input: IKegiatan, id: string) {
+  public updateKegiatan = (input: IKegiatan) => {
     this.setState({ loading: true })
     this.kegiatanService
-      .update(input, id)
-      .then(() => this.getKegiatan())
+      .update(input, input._id)
+      .then(this.getKegiatan)
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
   }
 
-  public deleteKegiatan(id: string) {
+  public deleteKegiatan = (input: IKegiatan) => {
     this.setState({ loading: true })
     this.kegiatanService
-      .delete(id)
-      .then(() => this.getKegiatan())
+      .delete(input._id)
+      .then(this.getKegiatan)
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
   }
@@ -132,9 +132,9 @@ export default class Kegiatan extends Component<{}, IState> {
           data={this.state.kegiatan}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input) => this.createKegiatan(input)}
-          onUpdate={(input) => this.updateKegiatan(input, input._id)}
-          onDelete={(input) => this.deleteKegiatan(input._id)}
+          onCreate={this.createKegiatan}
+          onUpdate={this.updateKegiatan}
+          onDelete={this.deleteKegiatan}
         />
       </Fragment>
     )

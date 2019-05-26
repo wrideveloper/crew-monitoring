@@ -84,7 +84,7 @@ export default class Form extends Component<IProps, IState> {
     })
   }
 
-  public submit() {
+  public submit = () => {
     this.validateInputs()
     if (this.isInputValid()) {
       if (this.isUpdateMode()) this.props.onUpdate!(this.state.input)
@@ -114,7 +114,7 @@ export default class Form extends Component<IProps, IState> {
 
   public renderSubmitButton() {
     return this.props.onUpdate !== undefined || !this.isUpdateMode() ? (
-      <Button color="green" content="Simpan" onClick={() => this.submit()} />
+      <Button color="green" content="Simpan" onClick={this.submit} />
     ) : null
   }
 
@@ -134,11 +134,7 @@ export default class Form extends Component<IProps, IState> {
 
   public render() {
     return (
-      <Modal
-        open={this.props.open}
-        size="large"
-        onClose={() => this.props.onClose()}
-      >
+      <Modal open={this.props.open} size="large" onClose={this.props.onClose}>
         <Header content={this.isUpdateMode() ? "Ubah Data" : "Tambah Data"} />
         <Modal.Content>
           <Grid columns="2">{this.renderFormInputs()}</Grid>

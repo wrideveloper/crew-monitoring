@@ -30,7 +30,7 @@ export default class Divisi extends Component<{}, IState> {
     this.getDivisi()
   }
 
-  public getDivisi() {
+  public getDivisi = () => {
     this.setState({ loading: true })
     this.divisiService
       .get()
@@ -39,27 +39,27 @@ export default class Divisi extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createDivisi(input: IDivisi) {
+  public createDivisi = (input: IDivisi) => {
     this.setState({ loading: true })
     this.divisiService
       .create(input)
-      .then(() => this.getDivisi())
+      .then(this.getDivisi)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public updateDivisi(input: IDivisi, id: string) {
+  public updateDivisi = (input: IDivisi) => {
     this.setState({ loading: true })
     this.divisiService
-      .update(input, id)
-      .then(() => this.getDivisi())
+      .update(input, input._id)
+      .then(this.getDivisi)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public async deleteDivisi(id: string) {
+  public deleteDivisi = (input: IDivisi) => {
     this.setState({ loading: true })
     this.divisiService
-      .delete(id)
-      .then(() => this.getDivisi())
+      .delete(input._id)
+      .then(this.getDivisi)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
@@ -75,9 +75,9 @@ export default class Divisi extends Component<{}, IState> {
           data={this.state.divisi}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input) => this.createDivisi(input)}
-          onUpdate={(input) => this.updateDivisi(input, input._id)}
-          onDelete={(input) => this.deleteDivisi(input._id)}
+          onCreate={this.createDivisi}
+          onUpdate={this.updateDivisi}
+          onDelete={this.deleteDivisi}
         />
       </Fragment>
     )

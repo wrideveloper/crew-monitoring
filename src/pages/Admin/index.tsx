@@ -37,7 +37,7 @@ export default class Admin extends Component<{}, IState> {
     this.getAdmin()
   }
 
-  public getAdmin() {
+  public getAdmin = () => {
     this.setState({ loading: true })
     this.adminService
       .get()
@@ -46,27 +46,19 @@ export default class Admin extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createAdmin(input: IAdmin) {
+  public createAdmin = (input: IAdmin) => {
     this.setState({ loading: true })
     this.adminService
       .create(input)
-      .then(() => this.getAdmin())
+      .then(this.getAdmin)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public updateAdmin(input: IAdmin, id: string) {
+  public deleteAdmin = (input: IAdmin) => {
     this.setState({ loading: true })
     this.adminService
-      .update(input, id)
-      .then(() => this.getAdmin())
-      .catch((error) => this.setState({ error, loading: false }))
-  }
-
-  public async deleteAdmin(id: string) {
-    this.setState({ loading: true })
-    this.adminService
-      .delete(id)
-      .then(() => this.getAdmin())
+      .delete(input._id)
+      .then(this.getAdmin)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
@@ -82,8 +74,8 @@ export default class Admin extends Component<{}, IState> {
           data={this.state.admin}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input) => this.createAdmin(input)}
-          onDelete={(input) => this.deleteAdmin(input._id)}
+          onCreate={this.createAdmin}
+          onDelete={this.deleteAdmin}
         />
       </Fragment>
     )

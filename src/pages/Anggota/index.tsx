@@ -113,7 +113,7 @@ export default class Anggota extends Component<{}, IState> {
     this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
   }
 
-  public getAnggota() {
+  public getAnggota = () => {
     this.setState({ loading: true })
     this.anggotaService
       .get()
@@ -122,27 +122,27 @@ export default class Anggota extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createAnggota(input: IAnggota) {
+  public createAnggota = (input: IAnggota) => {
     this.setState({ loading: true })
     this.anggotaService
       .create(input)
-      .then(() => this.getAnggota())
+      .then(this.getAnggota)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public updateAnggota(input: IAnggota, id: string) {
+  public updateAnggota = (input: IAnggota) => {
     this.setState({ loading: true })
     this.anggotaService
-      .update(input, id)
-      .then(() => this.getAnggota())
+      .update(input, input._id)
+      .then(this.getAnggota)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public deleteAnggota(id: string) {
+  public deleteAnggota = (input: IAnggota) => {
     this.setState({ loading: true })
     this.anggotaService
-      .delete(id)
-      .then(() => this.getAnggota())
+      .delete(input._id)
+      .then(this.getAnggota)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
@@ -165,9 +165,9 @@ export default class Anggota extends Component<{}, IState> {
           data={this.state.anggota}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input) => this.createAnggota(input)}
-          onUpdate={(input) => this.updateAnggota(input, input._id)}
-          onDelete={(input) => this.deleteAnggota(input._id)}
+          onCreate={this.createAnggota}
+          onUpdate={this.updateAnggota}
+          onDelete={this.deleteAnggota}
         />
       </Fragment>
     )

@@ -17,7 +17,7 @@ export default class FormInput extends Component<IProps> {
       return (
         <InputDropdown
           field={field}
-          onChange={(value) => this.props.onChange(value)}
+          onChange={this.props.onChange}
           value={value}
           readOnly={this.props.readOnly}
         />
@@ -26,7 +26,7 @@ export default class FormInput extends Component<IProps> {
       return (
         <InputImage
           field={field}
-          onChange={(value) => this.props.onChange(value)}
+          onChange={this.props.onChange}
           value={value}
           readOnly={this.props.readOnly}
         />

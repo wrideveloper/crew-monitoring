@@ -27,11 +27,11 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
     selectedData: {},
   }
 
-  public openForm(selectedData: any) {
+  public openForm = (selectedData: any) => {
     this.setState({ open: true, selectedData })
   }
 
-  public closeForm() {
+  public closeForm = () => {
     this.setState({ open: false })
   }
 
@@ -64,14 +64,14 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
           onCreate={this.props.onCreate}
           onUpdate={this.props.onUpdate}
           onDelete={this.props.onDelete}
-          onClose={() => this.closeForm()}
+          onClose={this.closeForm}
           additionalAction={this.props.additionalAction}
         />
         <Table
           data={this.props.data}
           loading={this.props.loading}
           fields={this.getTableFields()}
-          onRowClick={(rowData: any) => this.openForm(rowData)}
+          onRowClick={this.openForm}
         />
       </Fragment>
     )

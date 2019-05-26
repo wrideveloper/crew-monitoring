@@ -50,7 +50,7 @@ export default class Miniclass extends Component<{}, IState> {
     this.divisiService.get().then((divisi) => this.setState({ divisi }))
   }
 
-  public getMiniclass() {
+  public getMiniclass = () => {
     this.setState({ loading: true })
     this.miniclassService
       .get()
@@ -59,27 +59,27 @@ export default class Miniclass extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createAnggota(input: IMiniclass) {
+  public createAnggota = (input: IMiniclass) => {
     this.setState({ loading: true })
     this.miniclassService
       .create(input)
-      .then(() => this.getMiniclass())
+      .then(this.getMiniclass)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public updateAnggota(input: IMiniclass, id: string) {
+  public updateAnggota = (input: IMiniclass) => {
     this.setState({ loading: true })
     this.miniclassService
-      .update(input, id)
-      .then(() => this.getMiniclass())
+      .update(input, input._id)
+      .then(this.getMiniclass)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public deleteAnggota(id: string) {
+  public deleteAnggota = (input: IMiniclass) => {
     this.setState({ loading: true })
     this.miniclassService
-      .delete(id)
-      .then(() => this.getMiniclass())
+      .delete(input._id)
+      .then(this.getMiniclass)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
@@ -100,9 +100,9 @@ export default class Miniclass extends Component<{}, IState> {
           data={this.state.miniclass}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input) => this.createAnggota(input)}
-          onUpdate={(input) => this.updateAnggota(input, input._id)}
-          onDelete={(input) => this.deleteAnggota(input._id)}
+          onCreate={this.createAnggota}
+          onUpdate={this.updateAnggota}
+          onDelete={this.deleteAnggota}
         />
       </Fragment>
     )

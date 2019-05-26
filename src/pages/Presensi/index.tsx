@@ -62,7 +62,7 @@ export default class Presensi extends Component<{}, IState> {
     this.miniclassService.get().then((miniclass) => this.setState({ miniclass }))
   }
 
-  public getPresensi() {
+  public getPresensi = () => {
     this.setState({ loading: true })
     this.presensiService
       .get()
@@ -71,29 +71,29 @@ export default class Presensi extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createPresensi(input: IPresensi) {
+  public createPresensi = (input: IPresensi) => {
     this.setState({ loading: true })
     this.presensiService
       .create(input)
-      .then(() => this.getPresensi())
+      .then(this.getPresensi)
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
   }
 
-  public updatePresensi(input: IPresensi, id: string) {
+  public updatePresensi = (input: IPresensi) => {
     this.setState({ loading: true })
     this.presensiService
-      .update(input, id)
-      .then(() => this.getPresensi())
+      .update(input, input._id)
+      .then(this.getPresensi)
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
   }
 
-  public deletePresensi(id: string) {
+  public deletePresensi = (input: IPresensi) => {
     this.setState({ loading: true })
     this.presensiService
-      .delete(id)
-      .then(() => this.getPresensi())
+      .delete(input._id)
+      .then(this.getPresensi)
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
   }
@@ -132,12 +132,10 @@ export default class Presensi extends Component<{}, IState> {
           data={this.state.presensi}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input) => this.createPresensi(input)}
-          onUpdate={(input) => this.updatePresensi(input, input._id)}
-          onDelete={(input) => this.deletePresensi(input._id)}
-          additionalAction={(presensi, isUpdateMode) =>
-            this.renderAdditionalAction(presensi, isUpdateMode)
-          }
+          onCreate={this.createPresensi}
+          onUpdate={this.updatePresensi}
+          onDelete={this.deletePresensi}
+          additionalAction={this.renderAdditionalAction}
         />
       </Fragment>
     )

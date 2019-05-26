@@ -55,7 +55,7 @@ export default class NomorSurat extends Component<{}, IState> {
     this.anggotaService.get().then((anggota) => this.setState({ anggota }))
   }
 
-  public getNomorSurat() {
+  public getNomorSurat = () => {
     this.setState({ loading: true })
     this.nomorSuratService
       .get()
@@ -64,27 +64,27 @@ export default class NomorSurat extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createNomorSurat(input: INomorSurat) {
+  public createNomorSurat = (input: INomorSurat) => {
     this.setState({ loading: true })
     this.nomorSuratService
       .create(input)
-      .then(() => this.getNomorSurat())
+      .then(this.getNomorSurat)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public updateNomorSurat(input: INomorSurat, id: string) {
+  public updateNomorSurat = (input: INomorSurat) => {
     this.setState({ loading: true })
     this.nomorSuratService
-      .update(input, id)
-      .then(() => this.getNomorSurat())
+      .update(input, input._id)
+      .then(this.getNomorSurat)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public deleteNomorSurat(id: string) {
+  public deleteNomorSurat = (input: INomorSurat) => {
     this.setState({ loading: true })
     this.nomorSuratService
-      .delete(id)
-      .then(() => this.getNomorSurat())
+      .delete(input._id)
+      .then(this.getNomorSurat)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
@@ -108,9 +108,9 @@ export default class NomorSurat extends Component<{}, IState> {
           data={this.state.nomorSurat}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input) => this.createNomorSurat(input)}
-          onUpdate={(input) => this.updateNomorSurat(input, input._id)}
-          onDelete={(input) => this.deleteNomorSurat(input._id)}
+          onCreate={this.createNomorSurat}
+          onUpdate={this.updateNomorSurat}
+          onDelete={this.deleteNomorSurat}
         />
       </Fragment>
     )

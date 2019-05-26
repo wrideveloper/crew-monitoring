@@ -30,7 +30,7 @@ export default class Jabatan extends Component<{}, IState> {
     this.getJabatan()
   }
 
-  public getJabatan() {
+  public getJabatan = () => {
     this.setState({ loading: true })
     this.jabatanService
       .get()
@@ -39,27 +39,27 @@ export default class Jabatan extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createJabatan(input: IJabatan) {
+  public createJabatan = (input: IJabatan) => {
     this.setState({ loading: true })
     this.jabatanService
       .create(input)
-      .then(() => this.getJabatan())
+      .then(this.getJabatan)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public updateJabatan(input: IJabatan, id: string) {
+  public updateJabatan = (input: IJabatan) => {
     this.setState({ loading: true })
     this.jabatanService
-      .update(input, id)
-      .then(() => this.getJabatan())
+      .update(input, input._id)
+      .then(this.getJabatan)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public deleteJabatan(id: string) {
+  public deleteJabatan = (input: IJabatan) => {
     this.setState({ loading: true })
     this.jabatanService
-      .delete(id)
-      .then(() => this.getJabatan())
+      .delete(input._id)
+      .then(this.getJabatan)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
@@ -75,9 +75,9 @@ export default class Jabatan extends Component<{}, IState> {
           data={this.state.jabatan}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input: IJabatan) => this.createJabatan(input)}
-          onUpdate={(input: IJabatan) => this.updateJabatan(input, input._id)}
-          onDelete={(input: IJabatan) => this.deleteJabatan(input._id)}
+          onCreate={this.createJabatan}
+          onUpdate={this.updateJabatan}
+          onDelete={this.deleteJabatan}
         />
       </Fragment>
     )

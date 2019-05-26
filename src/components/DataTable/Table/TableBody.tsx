@@ -32,7 +32,7 @@ export default class TableBody extends Component<IProps> {
       <Table.Row
         key={index}
         onClick={() => this.props.onRowClick(rowData)}
-        style={{ cursor: "pointer" }}
+        style={styles.tableRow}
       >
         <Table.Cell>{startingNumber++}</Table.Cell>
         {this.renderCell(rowData)}
@@ -43,4 +43,10 @@ export default class TableBody extends Component<IProps> {
   public render() {
     return <Table.Body>{this.renderRow()}</Table.Body>
   }
+}
+
+const styles = {
+  tableRow: {
+    cursor: "pointer",
+  },
 }

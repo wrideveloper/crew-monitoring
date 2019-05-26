@@ -35,7 +35,7 @@ export default class KategoriKegiatan extends Component<{}, IState> {
     this.getKategoriKegiatan()
   }
 
-  public getKategoriKegiatan() {
+  public getKategoriKegiatan = () => {
     this.setState({ loading: true })
     this.kategoriKegiatanService
       .get()
@@ -44,27 +44,27 @@ export default class KategoriKegiatan extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createKategoriKegiatan(input: IKategoriKegiatan) {
+  public createKategoriKegiatan = (input: IKategoriKegiatan) => {
     this.setState({ loading: true })
     this.kategoriKegiatanService
       .create(input)
-      .then(() => this.getKategoriKegiatan())
+      .then(this.getKategoriKegiatan)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public updateKategoriKegiatan(input: IKategoriKegiatan, id: string) {
+  public updateKategoriKegiatan = (input: IKategoriKegiatan) => {
     this.setState({ loading: true })
     this.kategoriKegiatanService
-      .update(input, id)
-      .then(() => this.getKategoriKegiatan())
+      .update(input, input._id)
+      .then(this.getKategoriKegiatan)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public async deleteKategoriKegiatan(id: string) {
+  public deleteKategoriKegiatan = (input: IKategoriKegiatan) => {
     this.setState({ loading: true })
     this.kategoriKegiatanService
-      .delete(id)
-      .then(() => this.getKategoriKegiatan())
+      .delete(input._id)
+      .then(this.getKategoriKegiatan)
       .catch((error) => this.setState({ error, loading: false }))
   }
 
@@ -83,9 +83,9 @@ export default class KategoriKegiatan extends Component<{}, IState> {
           data={this.state.kategoriKegiatan}
           loading={this.state.loading}
           fields={fields}
-          onCreate={(input) => this.createKategoriKegiatan(input)}
-          onUpdate={(input) => this.updateKategoriKegiatan(input, input._id)}
-          onDelete={(input) => this.deleteKategoriKegiatan(input._id)}
+          onCreate={this.createKategoriKegiatan}
+          onUpdate={this.updateKategoriKegiatan}
+          onDelete={this.deleteKategoriKegiatan}
         />
       </Fragment>
     )
