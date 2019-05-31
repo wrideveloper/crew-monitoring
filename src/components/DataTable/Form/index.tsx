@@ -120,8 +120,8 @@ export default class Form extends Component<IProps, IState> {
   }
 
   public renderFormInputs() {
-    return this.props.fields.map((field, index) => (
-      <Grid.Column key={index}>
+    return this.props.fields.map((field) => (
+      <Grid.Column key={field.name}>
         <FormInput
           field={field}
           onChange={(value) => this.changeInput(field.name, value)}

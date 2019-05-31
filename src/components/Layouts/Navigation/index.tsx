@@ -24,16 +24,18 @@ class Navigation extends Component<RouteComponentProps, IState> {
   }
 
   public renderItems() {
-    return routes.map((route, index) => {
-      return route.hide ? null : (
-        <Link to={route.path} key={index}>
-          <Menu.Item
-            active={this.isActive(route)}
-            onClick={() => this.changeActiveItem(route.label!)}
-          >
-            <Header content={route.label} icon={route.icon} size="tiny" />
-          </Menu.Item>
-        </Link>
+    return routes.map((route) => {
+      return (
+        !route.hide && (
+          <Link to={route.path} key={route.label}>
+            <Menu.Item
+              active={this.isActive(route)}
+              onClick={() => this.changeActiveItem(route.label!)}
+            >
+              <Header content={route.label} icon={route.icon} size="tiny" />
+            </Menu.Item>
+          </Link>
+        )
       )
     })
   }

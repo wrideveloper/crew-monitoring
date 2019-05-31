@@ -18,9 +18,9 @@ export default class TableHeader extends Component<IProps> {
   }
 
   public renderHeaderCells() {
-    return this.props.fields.map((field, index) => (
+    return this.props.fields.map((field) => (
       <Table.HeaderCell
-        key={index}
+        key={field.name}
         sorted={this.isSorted(field.name)}
         onClick={() => this.props.onChangeSort(field.name)}
         content={field.label}
