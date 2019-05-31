@@ -33,23 +33,17 @@ class App extends Component {
   }
 
   public renderRoutes() {
-    return routes.map((route, index) =>
-      route.private ? (
-        <PrivateRoute
+    return routes.map((route) => {
+      const AppRoute = route.private ? PrivateRoute : Route
+      return (
+        <AppRoute
           path={route.path}
           component={route.component}
-          key={index}
           exact
+          key={route.path}
         />
-      ) : (
-        <Route
-          path={route.path}
-          component={route.component}
-          key={index}
-          exact
-        />
-      ),
-    )
+      )
+    })
   }
 
   public render() {
@@ -62,14 +56,14 @@ class App extends Component {
       <Provider value={providerValue}>
         <BrowserRouter basename="/pamdal">
           <Grid columns="2" style={styles.container}>
-            {this.isLoggedIn() ? (
+            {this.isLoggedIn() && (
               <Grid.Column width="3">
                 <Navigation />
               </Grid.Column>
-            ) : null}
+            )}
 
             <Grid.Column width="13">
-              {this.isLoggedIn() ? <Menubar /> : null}
+              {this.isLoggedIn() && <Menubar />}
               <div style={styles.pageContainer}>{this.renderRoutes()}</div>
             </Grid.Column>
           </Grid>

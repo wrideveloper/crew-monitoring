@@ -74,7 +74,7 @@ export default class Form extends Component<IProps, IState> {
 
   public validateInputs() {
     this.props.fields.forEach((field) => {
-      if (field.validations !== undefined)
+      if (field.validations)
         new FormValidator(field, this.state.input[field.name]).validate(
           this.addError,
         )
@@ -91,26 +91,30 @@ export default class Form extends Component<IProps, IState> {
   }
 
   public renderAdditionalAction() {
-    return this.props.additionalAction
-      ? this.props.additionalAction(this.state.input, this.props.isUpdateMode)
-      : null
+    return (
+      this.props.additionalAction &&
+      this.props.additionalAction(this.state.input, this.props.isUpdateMode)
+    )
   }
 
   public renderDeleteButton() {
-    return this.props.onDelete !== undefined && this.props.isUpdateMode ? (
-      <Button
-        content="Hapus"
-        color="red"
-        onClick={() => {
-          this.props.onDelete!(this.state.input)
-          this.props.onClose()
-        }}
-      />
-    ) : null
+    return (
+      this.props.onDelete &&
+      this.props.isUpdateMode && (
+        <Button
+          content="Hapus"
+          color="red"
+          onClick={() => {
+            this.props.onDelete!(this.state.input)
+            this.props.onClose()
+          }}
+        />
+      )
+    )
   }
 
   public renderSubmitButton() {
-    return this.props.onUpdate !== undefined || !this.props.isUpdateMode ? (
+    return this.props.onUpdate || !this.props.isUpdateMode ? (
       <Button color="green" content="Simpan" onClick={this.submit} />
     ) : null
   }
@@ -122,9 +126,7 @@ export default class Form extends Component<IProps, IState> {
           field={field}
           onChange={(value) => this.changeInput(field.name, value)}
           value={this.state.input[field.name]}
-          readOnly={
-            this.props.onUpdate === undefined && this.props.isUpdateMode
-          }
+          readOnly={!this.props.onUpdate && this.props.isUpdateMode}
         />
         <FormInputError errorMessage={this.state.inputErrors[field.name]} />
       </Grid.Column>

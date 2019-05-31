@@ -38,10 +38,14 @@ export default class FormValidator {
     this.field.validations!.forEach((validation) => {
       if (value !== "") {
         validators.forEach((validator) => {
-          if (validation === validator.validation && !validator.validator(value))
+          if (
+            validation === validator.validation &&
+            !validator.validator(value)
+          )
             onError(this.field.name, validator.message)
         })
-      } else if (validation === "required") onError(this.field.name, "wajib diisi ya")
+      } else if (validation === "required")
+        onError(this.field.name, "wajib diisi ya")
     })
   }
 

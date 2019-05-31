@@ -7,7 +7,7 @@ export default class PrivateRoute extends Component<RouteProps> {
     return (
       <Consumer>
         {(context) =>
-          context!.isLoggedIn() ? (
+          context.isLoggedIn() ? (
             <Route {...this.props} />
           ) : (
             <Redirect

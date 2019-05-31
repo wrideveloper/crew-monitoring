@@ -46,13 +46,15 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
   }
 
   public renderCreateButton() {
-    return this.props.onCreate !== undefined ? (
-      <Button
-        content="Tambah"
-        color="green"
-        onClick={() => this.openForm({}, false)}
-      />
-    ) : null
+    return (
+      this.props.onCreate && (
+        <Button
+          content="Tambah"
+          color="green"
+          onClick={() => this.openForm({}, false)}
+        />
+      )
+    )
   }
 
   public render() {
