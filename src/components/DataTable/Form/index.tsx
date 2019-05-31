@@ -8,6 +8,7 @@ interface IProps {
   open: boolean
   fields: IField[]
   initialInput: any
+  isUpdateMode: boolean
   onCreate?: (input: any) => void
   onUpdate?: (input: any) => void
   onDelete?: (input: any) => void
@@ -27,10 +28,6 @@ export default class Form extends Component<IProps, IState> {
   public state: IState = {
     input: {},
     inputErrors: {},
-  }
-
-  public isUpdateMode() {
-    return !(Object.keys(this.props.initialInput).length === 0)
   }
 
   public isModalOpen(nextProps: IProps) {
@@ -87,7 +84,7 @@ export default class Form extends Component<IProps, IState> {
   public submit = () => {
     this.validateInputs()
     if (this.isInputValid()) {
-      if (this.isUpdateMode()) this.props.onUpdate!(this.state.input)
+      if (this.props.isUpdateMode) this.props.onUpdate!(this.state.input)
       else this.props.onCreate!(this.state.input)
       this.props.onClose()
     }
@@ -95,12 +92,12 @@ export default class Form extends Component<IProps, IState> {
 
   public renderAdditionalAction() {
     return this.props.additionalAction
-      ? this.props.additionalAction(this.state.input, this.isUpdateMode())
+      ? this.props.additionalAction(this.state.input, this.props.isUpdateMode)
       : null
   }
 
   public renderDeleteButton() {
-    return this.props.onDelete !== undefined && this.isUpdateMode() ? (
+    return this.props.onDelete !== undefined && this.props.isUpdateMode ? (
       <Button
         content="Hapus"
         color="red"
@@ -113,7 +110,7 @@ export default class Form extends Component<IProps, IState> {
   }
 
   public renderSubmitButton() {
-    return this.props.onUpdate !== undefined || !this.isUpdateMode() ? (
+    return this.props.onUpdate !== undefined || !this.props.isUpdateMode ? (
       <Button color="green" content="Simpan" onClick={this.submit} />
     ) : null
   }
@@ -125,7 +122,9 @@ export default class Form extends Component<IProps, IState> {
           field={field}
           onChange={(value) => this.changeInput(field.name, value)}
           value={this.state.input[field.name]}
-          readOnly={this.props.onUpdate === undefined && this.isUpdateMode()}
+          readOnly={
+            this.props.onUpdate === undefined && this.props.isUpdateMode
+          }
         />
         <FormInputError errorMessage={this.state.inputErrors[field.name]} />
       </Grid.Column>
@@ -135,7 +134,9 @@ export default class Form extends Component<IProps, IState> {
   public render() {
     return (
       <Modal open={this.props.open} size="large" onClose={this.props.onClose}>
-        <Header content={this.isUpdateMode() ? "Ubah Data" : "Tambah Data"} />
+        <Header
+          content={this.props.isUpdateMode ? "Ubah Data" : "Tambah Data"}
+        />
         <Modal.Content>
           <Grid columns="2">{this.renderFormInputs()}</Grid>
         </Modal.Content>

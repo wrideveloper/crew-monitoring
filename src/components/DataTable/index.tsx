@@ -19,16 +19,18 @@ interface IProps<T> {
 interface IState {
   open: boolean
   selectedData: any
+  isUpdateMode: boolean
 }
 
 export default class DataTable<T> extends Component<IProps<T>, IState> {
   public state: IState = {
     open: false,
     selectedData: {},
+    isUpdateMode: false,
   }
 
-  public openForm = (selectedData: any) => {
-    this.setState({ open: true, selectedData })
+  public openForm = (selectedData: any, isUpdateMode: boolean) => {
+    this.setState({ open: true, selectedData, isUpdateMode })
   }
 
   public closeForm = () => {
@@ -48,7 +50,7 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
       <Button
         content="Tambah"
         color="green"
-        onClick={() => this.openForm({})}
+        onClick={() => this.openForm({}, false)}
       />
     ) : null
   }
@@ -61,6 +63,7 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
           open={this.state.open}
           fields={this.getFormFields()}
           initialInput={this.state.selectedData}
+          isUpdateMode={this.state.isUpdateMode}
           onCreate={this.props.onCreate}
           onUpdate={this.props.onUpdate}
           onDelete={this.props.onDelete}
@@ -71,7 +74,7 @@ export default class DataTable<T> extends Component<IProps<T>, IState> {
           data={this.props.data}
           loading={this.props.loading}
           fields={this.getTableFields()}
-          onRowClick={this.openForm}
+          onRowClick={(rowData) => this.openForm(rowData, true)}
         />
       </Fragment>
     )
