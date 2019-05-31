@@ -6,7 +6,12 @@ import Navigation from "./components/Layouts/Navigation"
 import PrivateRoute from "./components/PrivateRoute"
 import { routes } from "./config"
 
-const context = React.createContext<IAppContext | null>(null)
+const context = React.createContext<IAppContext>({
+  token: "",
+  setToken: () => undefined,
+  isLoggedIn: () => false,
+})
+
 const { Provider, Consumer } = context
 
 interface IState {

@@ -67,7 +67,7 @@ export default class Login extends Component<RouteComponentProps, IState> {
     return (
       <Consumer>
         {(context) => {
-          this.redirectIfAuthenticated(context!.isLoggedIn())
+          this.redirectIfAuthenticated(context.isLoggedIn())
           return (
             <div style={styles.container}>
               <Card>
@@ -107,7 +107,7 @@ export default class Login extends Component<RouteComponentProps, IState> {
                     color="green"
                     fluid
                     content={this.getLoginButtonText()}
-                    onClick={() => this.login(context!)}
+                    onClick={() => this.login(context)}
                   />
                 </Card.Content>
               </Card>

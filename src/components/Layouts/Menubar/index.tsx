@@ -20,7 +20,7 @@ class Menubar extends Component {
                   <Dropdown.Item
                     icon="sign-out"
                     text="Keluar"
-                    onClick={() => this.logout(context!)}
+                    onClick={() => this.logout(context)}
                   />
                 </Dropdown.Menu>
               </Dropdown>
