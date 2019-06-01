@@ -10,19 +10,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "nama",
-    label: "Nama Kategori",
-    validations: ["required"],
-  },
-  {
-    name: "keterangan",
-    label: "Keterangan",
-    validations: ["required"],
-  },
-]
-
 export default class KategoriKegiatan extends Component<{}, IState> {
   public state: IState = {
     kategoriKegiatan: [],
@@ -82,10 +69,21 @@ export default class KategoriKegiatan extends Component<{}, IState> {
         <DataTable<IKategoriKegiatan>
           data={this.state.kategoriKegiatan}
           loading={this.state.loading}
-          fields={fields}
           onCreate={this.createKategoriKegiatan}
           onUpdate={this.updateKategoriKegiatan}
           onDelete={this.deleteKategoriKegiatan}
+          fields={[
+            {
+              name: "nama",
+              label: "Nama Kategori",
+              validations: ["required"],
+            },
+            {
+              name: "keterangan",
+              label: "Keterangan",
+              validations: ["required"],
+            },
+          ]}
         />
       </Fragment>
     )

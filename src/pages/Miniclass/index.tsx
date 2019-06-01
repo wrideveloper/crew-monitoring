@@ -12,25 +12,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "nama",
-    label: "Nama Miniclass",
-    validations: ["required"],
-  },
-  {
-    name: "divisi",
-    label: "Divisi",
-    type: "option",
-    validations: ["required"],
-    optionData: {
-      data: [],
-      textKey: "nama",
-      valueKey: "_id",
-    },
-  },
-]
-
 export default class Miniclass extends Component<{}, IState> {
   public state: IState = {
     miniclass: [],
@@ -83,12 +64,7 @@ export default class Miniclass extends Component<{}, IState> {
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public setOptionsData() {
-    fields[1].optionData!.data = this.state.divisi
-  }
-
   public render() {
-    this.setOptionsData()
     return (
       <Fragment>
         <Header content="Miniclass" subheader="Kumpulan data miniclass" />
@@ -99,10 +75,27 @@ export default class Miniclass extends Component<{}, IState> {
         <DataTable<IMiniclass>
           data={this.state.miniclass}
           loading={this.state.loading}
-          fields={fields}
           onCreate={this.createAnggota}
           onUpdate={this.updateAnggota}
           onDelete={this.deleteAnggota}
+          fields={[
+            {
+              name: "nama",
+              label: "Nama Miniclass",
+              validations: ["required"],
+            },
+            {
+              name: "divisi",
+              label: "Divisi",
+              type: "option",
+              validations: ["required"],
+              optionData: {
+                data: this.state.divisi,
+                textKey: "nama",
+                valueKey: "_id",
+              },
+            },
+          ]}
         />
       </Fragment>
     )

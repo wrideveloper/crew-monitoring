@@ -14,17 +14,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "nama",
-    label: "Nama",
-  },
-  {
-    name: "hadir",
-    label: "Hadir",
-  },
-]
-
 export default class Checkin extends Component<RouteComponentProps, IState> {
   public state: IState = {
     presensi: JSON.parse(localStorage.getItem("presensi")!) as IPresensi,
@@ -111,10 +100,19 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
         <Grid columns="2">
           <Grid.Column width="10">
             <Table
-              fields={fields}
               loading={this.state.loading}
               data={this.getAnggotaMiniclass()}
               onRowClick={this.checkIn}
+              fields={[
+                {
+                  name: "nama",
+                  label: "Nama",
+                },
+                {
+                  name: "hadir",
+                  label: "Hadir",
+                },
+              ]}
             />
             <Button color="green" content="Simpan" onClick={this.submit} />
           </Grid.Column>

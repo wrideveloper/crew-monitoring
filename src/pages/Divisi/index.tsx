@@ -10,14 +10,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "nama",
-    label: "Nama Divisi",
-    validations: ["required"],
-  },
-]
-
 export default class Divisi extends Component<{}, IState> {
   public state: IState = {
     divisi: [],
@@ -74,10 +66,16 @@ export default class Divisi extends Component<{}, IState> {
         <DataTable<IDivisi>
           data={this.state.divisi}
           loading={this.state.loading}
-          fields={fields}
           onCreate={this.createDivisi}
           onUpdate={this.updateDivisi}
           onDelete={this.deleteDivisi}
+          fields={[
+            {
+              name: "nama",
+              label: "Nama Divisi",
+              validations: ["required"],
+            },
+          ]}
         />
       </Fragment>
     )

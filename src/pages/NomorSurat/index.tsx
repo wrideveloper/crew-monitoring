@@ -12,30 +12,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "nomor",
-    label: "Nomor Surat",
-    validations: ["required"],
-  },
-  {
-    name: "keperluan",
-    label: "Keperluan",
-    validations: ["required"],
-  },
-  {
-    name: "anggota",
-    label: "Pemohon",
-    type: "option",
-    validations: ["required"],
-    optionData: {
-      data: [],
-      textKey: "nama",
-      valueKey: "_id",
-    },
-  },
-]
-
 export default class NomorSurat extends Component<{}, IState> {
   public state: IState = {
     nomorSurat: [],
@@ -88,12 +64,7 @@ export default class NomorSurat extends Component<{}, IState> {
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public setOptionsData() {
-    fields[2].optionData!.data = this.state.anggota
-  }
-
   public render() {
-    this.setOptionsData()
     return (
       <Fragment>
         <Header
@@ -107,10 +78,32 @@ export default class NomorSurat extends Component<{}, IState> {
         <DataTable<INomorSurat>
           data={this.state.nomorSurat}
           loading={this.state.loading}
-          fields={fields}
           onCreate={this.createNomorSurat}
           onUpdate={this.updateNomorSurat}
           onDelete={this.deleteNomorSurat}
+          fields={[
+            {
+              name: "nomor",
+              label: "Nomor Surat",
+              validations: ["required"],
+            },
+            {
+              name: "keperluan",
+              label: "Keperluan",
+              validations: ["required"],
+            },
+            {
+              name: "anggota",
+              label: "Pemohon",
+              type: "option",
+              validations: ["required"],
+              optionData: {
+                data: this.state.anggota,
+                textKey: "nama",
+                valueKey: "_id",
+              },
+            },
+          ]}
         />
       </Fragment>
     )

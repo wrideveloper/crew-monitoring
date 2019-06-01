@@ -16,70 +16,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "nim",
-    label: "NIM",
-    validations: ["required", "numeric"],
-  },
-  {
-    name: "nama",
-    label: "Nama",
-    validations: ["required"],
-  },
-  {
-    name: "email",
-    label: "Email",
-    validations: ["email"],
-    hideOnTable: true,
-  },
-  {
-    name: "kontak",
-    label: "Kontak",
-    validations: ["numeric"],
-    hideOnTable: true,
-  },
-  {
-    name: "angkatan",
-    label: "Angkatan",
-    validations: ["required", "numeric"],
-  },
-  {
-    name: "jabatan",
-    label: "Jabatan",
-    hideOnTable: true,
-    validations: ["required"],
-    type: "option",
-    optionData: {
-      data: [],
-      textKey: "nama",
-      valueKey: "_id",
-    },
-  },
-  {
-    name: "divisi",
-    label: "Divisi",
-    validations: ["required"],
-    type: "option",
-    optionData: {
-      data: [],
-      textKey: "nama",
-      valueKey: "_id",
-    },
-  },
-  {
-    name: "miniclass",
-    label: "Miniclass",
-    validations: ["required"],
-    type: "option",
-    optionData: {
-      data: [],
-      textKey: "nama",
-      valueKey: "_id",
-    },
-  },
-]
-
 export default class Anggota extends Component<{}, IState> {
   public state: IState = {
     anggota: [],
@@ -146,14 +82,7 @@ export default class Anggota extends Component<{}, IState> {
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public setOptionsData() {
-    fields[5].optionData!.data = this.state.jabatan
-    fields[6].optionData!.data = this.state.divisi
-    fields[7].optionData!.data = this.state.miniclass
-  }
-
   public render() {
-    this.setOptionsData()
     return (
       <Fragment>
         <Header content="Anggota" subheader="Kumpulan data anggota crew" />
@@ -164,10 +93,72 @@ export default class Anggota extends Component<{}, IState> {
         <DataTable<IAnggota>
           data={this.state.anggota}
           loading={this.state.loading}
-          fields={fields}
           onCreate={this.createAnggota}
           onUpdate={this.updateAnggota}
           onDelete={this.deleteAnggota}
+          fields={[
+            {
+              name: "nim",
+              label: "NIM",
+              validations: ["required", "numeric"],
+            },
+            {
+              name: "nama",
+              label: "Nama",
+              validations: ["required"],
+            },
+            {
+              name: "email",
+              label: "Email",
+              validations: ["email"],
+              hideOnTable: true,
+            },
+            {
+              name: "kontak",
+              label: "Kontak",
+              validations: ["numeric"],
+              hideOnTable: true,
+            },
+            {
+              name: "angkatan",
+              label: "Angkatan",
+              validations: ["required", "numeric"],
+            },
+            {
+              name: "jabatan",
+              label: "Jabatan",
+              hideOnTable: true,
+              validations: ["required"],
+              type: "option",
+              optionData: {
+                data: this.state.jabatan,
+                textKey: "nama",
+                valueKey: "_id",
+              },
+            },
+            {
+              name: "divisi",
+              label: "Divisi",
+              validations: ["required"],
+              type: "option",
+              optionData: {
+                data: this.state.divisi,
+                textKey: "nama",
+                valueKey: "_id",
+              },
+            },
+            {
+              name: "miniclass",
+              label: "Miniclass",
+              validations: ["required"],
+              type: "option",
+              optionData: {
+                data: this.state.miniclass,
+                textKey: "nama",
+                valueKey: "_id",
+              },
+            },
+          ]}
         />
       </Fragment>
     )

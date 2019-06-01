@@ -13,36 +13,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "tanggal",
-    label: "Tanggal",
-    type: "date",
-    validations: ["required"],
-  },
-  {
-    name: "miniclass",
-    label: "Miniclass",
-    validations: ["required"],
-    type: "option",
-    optionData: {
-      data: [],
-      textKey: "nama",
-      valueKey: "_id",
-    },
-  },
-  {
-    name: "topik",
-    label: "Topik",
-    validations: ["required"],
-  },
-  {
-    name: "angkatan",
-    label: "Angkatan",
-    validations: ["required", "numeric"],
-  },
-]
-
 export default class Presensi extends Component<{}, IState> {
   public state: IState = {
     presensi: [],
@@ -112,12 +82,7 @@ export default class Presensi extends Component<{}, IState> {
     ) : null
   }
 
-  public setOptionsData() {
-    fields[1].optionData!.data = this.state.miniclass
-  }
-
   public render() {
-    this.setOptionsData()
     return (
       <Fragment>
         <Header
@@ -131,11 +96,39 @@ export default class Presensi extends Component<{}, IState> {
         <DataTable<IPresensi>
           data={this.state.presensi}
           loading={this.state.loading}
-          fields={fields}
           onCreate={this.createPresensi}
           onUpdate={this.updatePresensi}
           onDelete={this.deletePresensi}
           additionalAction={this.renderAdditionalAction}
+          fields={[
+            {
+              name: "tanggal",
+              label: "Tanggal",
+              type: "date",
+              validations: ["required"],
+            },
+            {
+              name: "miniclass",
+              label: "Miniclass",
+              validations: ["required"],
+              type: "option",
+              optionData: {
+                data: this.state.miniclass,
+                textKey: "nama",
+                valueKey: "_id",
+              },
+            },
+            {
+              name: "topik",
+              label: "Topik",
+              validations: ["required"],
+            },
+            {
+              name: "angkatan",
+              label: "Angkatan",
+              validations: ["required", "numeric"],
+            },
+          ]}
         />
       </Fragment>
     )

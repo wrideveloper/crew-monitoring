@@ -10,21 +10,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "username",
-    label: "Username",
-    validations: ["required"],
-  },
-  {
-    name: "password",
-    label: "Password",
-    type: "password",
-    hideOnTable: true,
-    validations: ["required"],
-  },
-]
-
 export default class Admin extends Component<{}, IState> {
   public state: IState = {
     admin: [],
@@ -73,9 +58,22 @@ export default class Admin extends Component<{}, IState> {
         <DataTable<IAdmin>
           data={this.state.admin}
           loading={this.state.loading}
-          fields={fields}
           onCreate={this.createAdmin}
           onDelete={this.deleteAdmin}
+          fields={[
+            {
+              name: "username",
+              label: "Username",
+              validations: ["required"],
+            },
+            {
+              name: "password",
+              label: "Password",
+              type: "password",
+              hideOnTable: true,
+              validations: ["required"],
+            },
+          ]}
         />
       </Fragment>
     )

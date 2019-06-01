@@ -13,41 +13,6 @@ interface IState {
   error?: Error
 }
 
-const fields: IField[] = [
-  {
-    name: "tanggal",
-    label: "Tanggal",
-    type: "date",
-    validations: ["required"],
-  },
-  {
-    name: "nama",
-    label: "Nama",
-    validations: ["required"],
-  },
-  {
-    name: "kategoriKegiatan",
-    label: "Kategori",
-    type: "option",
-    validations: ["required"],
-    optionData: {
-      data: [],
-      textKey: "nama",
-      valueKey: "_id",
-    },
-  },
-  {
-    name: "album",
-    label: "Album",
-    hideOnTable: true,
-  },
-  {
-    name: "laporan",
-    label: "Laporan",
-    hideOnTable: true,
-  },
-]
-
 export default class Kegiatan extends Component<{}, IState> {
   public state: IState = {
     kegiatan: [],
@@ -105,12 +70,7 @@ export default class Kegiatan extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public setOptionsData() {
-    fields[2].optionData!.data = this.state.kategoriKegiatan
-  }
-
   public render() {
-    this.setOptionsData()
     return (
       <Fragment>
         <Grid style={styles.headerContainer}>
@@ -131,10 +91,43 @@ export default class Kegiatan extends Component<{}, IState> {
         <DataTable<IKegiatan>
           data={this.state.kegiatan}
           loading={this.state.loading}
-          fields={fields}
           onCreate={this.createKegiatan}
           onUpdate={this.updateKegiatan}
           onDelete={this.deleteKegiatan}
+          fields={[
+            {
+              name: "tanggal",
+              label: "Tanggal",
+              type: "date",
+              validations: ["required"],
+            },
+            {
+              name: "nama",
+              label: "Nama",
+              validations: ["required"],
+            },
+            {
+              name: "kategoriKegiatan",
+              label: "Kategori",
+              type: "option",
+              validations: ["required"],
+              optionData: {
+                data: this.state.kategoriKegiatan,
+                textKey: "nama",
+                valueKey: "_id",
+              },
+            },
+            {
+              name: "album",
+              label: "Album",
+              hideOnTable: true,
+            },
+            {
+              name: "laporan",
+              label: "Laporan",
+              hideOnTable: true,
+            },
+          ]}
         />
       </Fragment>
     )
