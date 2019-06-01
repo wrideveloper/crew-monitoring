@@ -47,6 +47,7 @@ export default class Login extends Component<RouteComponentProps, IState> {
       this.setState({ loading: false })
       if (data.success) {
         context.setToken(data.token!)
+        context.setUser(data.user!)
         this.props.history.push("/")
       } else {
         this.resetValue()

@@ -9,6 +9,8 @@ import { routes } from "./config"
 const context = React.createContext<IAppContext>({
   token: "",
   setToken: () => undefined,
+  user: {} as IAdmin,
+  setUser: () => undefined,
   isLoggedIn: () => false,
 })
 
@@ -16,16 +18,23 @@ const { Provider, Consumer } = context
 
 interface IState {
   token: string
+  user: IAdmin
 }
 
 class App extends Component {
   public state: IState = {
     token: localStorage.getItem("authToken") || "",
+    user: JSON.parse(localStorage.getItem("authUser") || "{}"),
   }
 
   public setToken = (token: string) => {
     this.setState({ token })
     localStorage.setItem("authToken", token)
+  }
+
+  public setUser = (user: IAdmin) => {
+    this.setState({ user })
+    localStorage.setItem("authUser", JSON.stringify(user))
   }
 
   public isLoggedIn = () => {
@@ -50,6 +59,8 @@ class App extends Component {
     const providerValue = {
       token: this.state.token,
       setToken: this.setToken,
+      user: this.state.user,
+      setUser: this.setUser,
       isLoggedIn: this.isLoggedIn,
     }
     return (

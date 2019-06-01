@@ -90,10 +90,13 @@ declare interface IAdmin {
 declare interface IAppContext {
   token: string
   setToken: (token: string) => void
+  user: IAdmin
+  setUser: (user: IAdmin) => void
   isLoggedIn: () => boolean
 }
 
 interface ILogin {
   success: boolean
   token?: string
+  user?: IAdmin
 }
