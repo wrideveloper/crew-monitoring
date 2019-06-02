@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react"
-import { Header } from "semantic-ui-react"
+import { Link } from "react-router-dom"
+import { Button, Grid, Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AdminService } from "../../services/AdminService"
@@ -50,7 +51,17 @@ export default class Admin extends Component<{}, IState> {
   public render() {
     return (
       <Fragment>
-        <Header content="Admin" subheader="Kumpulan data admin" />
+        <Grid style={styles.headerContainer}>
+          <Grid.Column width="8">
+            <Header content="Admin" subheader="Kumpulan data admin" />
+          </Grid.Column>
+          <Grid.Column width="8" textAlign="right">
+            <Link to="/admin/level">
+              <Button content="Level Admin" color="blue" />
+            </Link>
+          </Grid.Column>
+        </Grid>
+
         <ErrorMessage
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
@@ -78,4 +89,10 @@ export default class Admin extends Component<{}, IState> {
       </Fragment>
     )
   }
+}
+
+const styles = {
+  headerContainer: {
+    marginBottom: 5,
+  },
 }

@@ -87,6 +87,12 @@ declare interface IAdmin {
   password: string
 }
 
+declare interface ILevel {
+  _id: string
+  nama: string
+  akses: string[]
+}
+
 declare interface IAppContext {
   token: string
   setToken: (token: string) => void

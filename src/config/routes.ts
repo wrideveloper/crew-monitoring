@@ -5,6 +5,7 @@ import Divisi from "../pages/Divisi"
 import Jabatan from "../pages/Jabatan"
 import KategoriKegiatan from "../pages/KategoriKegiatan"
 import Kegiatan from "../pages/Kegiatan"
+import Level from "../pages/Level"
 import Login from "../pages/Login"
 import Miniclass from "../pages/Miniclass"
 import NomorSurat from "../pages/NomorSurat"
@@ -77,6 +78,13 @@ const routes: IRoute[] = [
     label: "Admin",
     icon: "user outline",
     path: "/admin",
+    private: true,
+  },
+  {
+    component: Level,
+    label: "Level Admin",
+    path: "/admin/level",
+    hide: true,
     private: true,
   },
   {
