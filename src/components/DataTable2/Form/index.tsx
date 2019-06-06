@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Button, Grid, Header, Modal } from "semantic-ui-react"
-import { DataTableContext } from ".."
+import { DataTableContext } from "../DataTable"
 import FormInput from "./FormInput"
 import FormInputError from "./FormInputError"
 import FormValidator from "./FormValidator"

@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { Button } from "semantic-ui-react"
-import { DataTableContext } from "../index"
+import { DataTableContext } from "./DataTable"
 
 const CreateButton: React.FC = () => {
   const context = useContext(DataTableContext)

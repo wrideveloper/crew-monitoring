@@ -1,7 +1,7 @@
 import _ from "lodash"
 import React, { Fragment, useContext, useState } from "react"
 import { Card, Grid, Table } from "semantic-ui-react"
-import { DataTableContext } from "../index"
+import { DataTableContext } from "../DataTable"
 import TableBlank from "./TableBlank"
 import TableBody from "./TableBody"
 import TableHeader from "./TableHeader"

@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from "react"
-import { Button, Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable2"
-import Form from "../../components/DataTable2/Form"
-import CreateButton from "../../components/DataTable2/Form/CreateButton"
-import Table from "../../components/DataTable2/Table"
+import { Header } from "semantic-ui-react"
+import {
+  CreateButton,
+  DataTable,
+  Form,
+  Table,
+} from "../../components/DataTable2"
 import ErrorMessage from "../../components/ErrorMessage"
 import { DivisiService } from "../../services/DivisiService"
 
@@ -76,13 +78,13 @@ export default class Divisi extends Component<{}, IState> {
         />
 
         <DataTable fields={fields}>
+          <CreateButton />
+          <Table data={this.state.divisi} loading={this.state.loading} />
           <Form
             onCreate={this.createDivisi}
             onUpdate={this.updateDivisi}
             onDelete={this.deleteDivisi}
           />
-          <CreateButton />
-          <Table data={this.state.divisi} loading={this.state.loading} />
         </DataTable>
       </Fragment>
     )
