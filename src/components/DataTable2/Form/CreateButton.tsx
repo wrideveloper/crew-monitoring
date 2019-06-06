@@ -4,14 +4,13 @@ import { DataTableContext } from "../index"
 
 const CreateButton: React.FC = () => {
   const context = useContext(DataTableContext)
-
-  return context.onCreate ? (
+  return (
     <Button
       content="Tambah"
       color="green"
       onClick={() => context.openForm({}, false)}
     />
-  ) : null
+  )
 }
 
 export default CreateButton

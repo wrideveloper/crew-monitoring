@@ -5,7 +5,13 @@ import FormInput from "./FormInput"
 import FormInputError from "./FormInputError"
 import FormValidator from "./FormValidator"
 
-const Form: React.FC = () => {
+interface IProps {
+  onCreate?: (input: any) => void
+  onUpdate?: (input: any) => void
+  onDelete?: (input: any) => void
+}
+
+const Form: React.FC<IProps> = (props) => {
   const context = useContext(DataTableContext)
   const [input, setInput] = useState(context.selectedData)
   const [inputErrors, setInputErrors] = useState({} as any)
@@ -42,7 +48,7 @@ const Form: React.FC = () => {
           field={field}
           onChange={(value) => changeInput(field.name, value)}
           value={input[field.name]}
-          readOnly={!context.onUpdate && context.isUpdateMode}
+          readOnly={!props.onUpdate && context.isUpdateMode}
         />
         <FormInputError errorMessage={inputErrors[field.name]} />
       </Grid.Column>
@@ -71,27 +77,27 @@ const Form: React.FC = () => {
 
   function submit() {
     if (validateInputs()) {
-      if (context.isUpdateMode) context.onUpdate!(input)
-      else context.onCreate!(input)
+      if (context.isUpdateMode) props.onUpdate!(input)
+      else props.onCreate!(input)
       context.closeForm()
     }
   }
 
   function renderSubmitButton() {
-    return context.onUpdate || !context.isUpdateMode ? (
+    return props.onUpdate || !context.isUpdateMode ? (
       <Button color="green" content="Simpan" onClick={submit} />
     ) : null
   }
 
   function renderDeleteButton() {
     return (
-      context.onDelete &&
+      props.onDelete &&
       context.isUpdateMode && (
         <Button
           content="Hapus"
           color="red"
           onClick={() => {
-            context.onDelete!(input)
+            props.onDelete!(input)
             context.closeForm()
           }}
         />

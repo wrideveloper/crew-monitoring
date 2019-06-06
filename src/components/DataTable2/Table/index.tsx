@@ -10,7 +10,12 @@ import TableLoading from "./TableLoading"
 import TablePagination from "./TablePagination"
 import TableSearch from "./TableSearch"
 
-const CustomTable: React.FC = () => {
+interface IProps {
+  data: any[]
+  loading?: boolean
+}
+
+const CustomTable: React.FC<IProps> = (props) => {
   const context = useContext(DataTableContext)
   const [activePage, setActivePage] = useState(1)
   const [itemPerPage, setItemPerPage] = useState(10)
@@ -75,7 +80,7 @@ const CustomTable: React.FC = () => {
   }
 
   function getSearchedData() {
-    return context.data.filter((rowData) => {
+    return props.data.filter((rowData) => {
       const cellData = rowData[searchKey]
       const cellText = getCellText(cellData).toLowerCase()
       return cellText.search(searchValue.toLowerCase()) > -1
@@ -83,7 +88,7 @@ const CustomTable: React.FC = () => {
   }
 
   function renderTable() {
-    if (context.loading) {
+    if (props.loading) {
       return <TableLoading />
     } else if (getSearchedData().length === 0) {
       return <TableBlank />

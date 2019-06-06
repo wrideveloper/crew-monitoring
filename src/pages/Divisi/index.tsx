@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react"
-import { Header } from "semantic-ui-react"
+import { Button, Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable2"
 import Form from "../../components/DataTable2/Form"
 import CreateButton from "../../components/DataTable2/Form/CreateButton"
@@ -59,6 +59,14 @@ export default class Divisi extends Component<{}, IState> {
   }
 
   public render() {
+    const fields: IField[] = [
+      {
+        name: "nama",
+        label: "Nama Divisi",
+        validations: ["required"],
+      },
+    ]
+
     return (
       <Fragment>
         <Header content="Divisi" subheader="Kumpulan data divisi" />
@@ -66,23 +74,15 @@ export default class Divisi extends Component<{}, IState> {
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
         />
-        <DataTable<IDivisi>
-          data={this.state.divisi}
-          loading={this.state.loading}
-          onCreate={this.createDivisi}
-          onUpdate={this.updateDivisi}
-          onDelete={this.deleteDivisi}
-          fields={[
-            {
-              name: "nama",
-              label: "Nama Divisi",
-              validations: ["required"],
-            },
-          ]}
-        >
-          <Form />
+
+        <DataTable fields={fields}>
+          <Form
+            onCreate={this.createDivisi}
+            onUpdate={this.updateDivisi}
+            onDelete={this.deleteDivisi}
+          />
           <CreateButton />
-          <Table />
+          <Table data={this.state.divisi} loading={this.state.loading} />
         </DataTable>
       </Fragment>
     )

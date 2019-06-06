@@ -102,21 +102,13 @@ declare interface IAppContext {
 }
 
 declare interface IDataTableContext {
-  data: any[]
-  loading: boolean
   getTableFields: () => IField[]
   getFormFields: () => IField[]
-
-  onCreate?: (input: T) => void
-  onUpdate?: (input: T) => void
-  onDelete?: (input: T) => void
-
   open: boolean
+  selectedData: any
   isUpdateMode: boolean
   openForm: (selectedData: any, isUpdateMode: boolean) => void
   closeForm: () => void
-
-  selectedData: any
 }
 
 interface ILogin {

@@ -1,16 +1,7 @@
 import React, { Component, Fragment } from "react"
 
-interface IProps<T> {
-  data: T[]
+interface IProps {
   fields: IField[]
-  loading: boolean
-  onCreate?: (input: T) => void
-  onUpdate?: (input: T) => void
-  onDelete?: (input: T) => void
-  additionalAction?: (
-    formValues: T,
-    isUpdateMode: boolean,
-  ) => JSX.Element | null
 }
 
 interface IState {
@@ -20,13 +11,8 @@ interface IState {
 }
 
 export const DataTableContext = React.createContext<IDataTableContext>({
-  data: [],
-  loading: false,
   getTableFields: () => [],
   getFormFields: () => [],
-  onCreate: () => undefined,
-  onUpdate: () => undefined,
-  onDelete: () => undefined,
   open: false,
   isUpdateMode: false,
   openForm: () => undefined,
@@ -34,7 +20,7 @@ export const DataTableContext = React.createContext<IDataTableContext>({
   selectedData: {},
 })
 
-class DataTable<T> extends Component<IProps<T>, IState> {
+class DataTable extends Component<IProps, IState> {
   public state: IState = {
     open: false,
     selectedData: {},
@@ -59,13 +45,8 @@ class DataTable<T> extends Component<IProps<T>, IState> {
 
   public render() {
     const providerValue: IDataTableContext = {
-      data: this.props.data,
-      loading: this.props.loading,
       getTableFields: this.getTableFields,
       getFormFields: this.getFormFields,
-      onCreate: this.props.onCreate,
-      onUpdate: this.props.onUpdate,
-      onDelete: this.props.onDelete,
       open: this.state.open,
       isUpdateMode: this.state.isUpdateMode,
       openForm: this.openForm,
