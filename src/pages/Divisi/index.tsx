@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import DataTable from "../../components/DataTable2"
+import Form from "../../components/DataTable2/Form"
 import CreateButton from "../../components/DataTable2/Form/CreateButton"
 import Table from "../../components/DataTable2/Table"
 import ErrorMessage from "../../components/ErrorMessage"
@@ -79,6 +80,7 @@ export default class Divisi extends Component<{}, IState> {
             },
           ]}
         >
+          <Form />
           <CreateButton />
           <Table />
         </DataTable>

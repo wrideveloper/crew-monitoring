@@ -116,8 +116,7 @@ declare interface IDataTableContext {
   openForm: (selectedData: any, isUpdateMode: boolean) => void
   closeForm: () => void
 
-  formValues: any
-  changeFormValue: (name: string, value: any) => void
+  selectedData: any
 }
 
 interface ILogin {
