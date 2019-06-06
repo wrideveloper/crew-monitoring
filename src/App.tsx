@@ -56,7 +56,7 @@ class App extends Component {
   }
 
   public render() {
-    const providerValue = {
+    const providerValue: IAppContext = {
       token: this.state.token,
       setToken: this.setToken,
       user: this.state.user,

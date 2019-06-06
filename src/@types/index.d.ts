@@ -101,6 +101,25 @@ declare interface IAppContext {
   isLoggedIn: () => boolean
 }
 
+declare interface IDataTableContext {
+  data: any[]
+  loading: boolean
+  getTableFields: () => IField[]
+  getFormFields: () => IField[]
+
+  onCreate?: (input: T) => void
+  onUpdate?: (input: T) => void
+  onDelete?: (input: T) => void
+
+  open: boolean
+  isUpdateMode: boolean
+  openForm: (selectedData: any, isUpdateMode: boolean) => void
+  closeForm: () => void
+
+  formValues: any
+  changeFormValue: (name: string, value: any) => void
+}
+
 interface ILogin {
   success: boolean
   token?: string

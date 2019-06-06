@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable"
+import DataTable from "../../components/DataTable2"
+import CreateButton from "../../components/DataTable2/Form/CreateButton"
+import Table from "../../components/DataTable2/Table"
 import ErrorMessage from "../../components/ErrorMessage"
 import { DivisiService } from "../../services/DivisiService"
 
@@ -76,7 +78,10 @@ export default class Divisi extends Component<{}, IState> {
               validations: ["required"],
             },
           ]}
-        />
+        >
+          <CreateButton />
+          <Table />
+        </DataTable>
       </Fragment>
     )
   }
