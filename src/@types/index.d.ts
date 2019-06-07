@@ -101,16 +101,6 @@ declare interface IAppContext {
   isLoggedIn: () => boolean
 }
 
-declare interface IDataTableContext {
-  getTableFields: () => IField[]
-  getFormFields: () => IField[]
-  open: boolean
-  selectedData: any
-  isUpdateMode: boolean
-  openForm: (selectedData: any, isUpdateMode: boolean) => void
-  closeForm: () => void
-}
-
 interface ILogin {
   success: boolean
   token?: string

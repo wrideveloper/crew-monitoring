@@ -1,9 +1,9 @@
 import React, { useContext } from "react"
 import { Button } from "semantic-ui-react"
-import { DataTableContext } from "./DataTable"
+import { ContainerContext } from "./Container"
 
 const CreateButton: React.FC = () => {
-  const context = useContext(DataTableContext)
+  const context = useContext(ContainerContext)
   return (
     <Button
       content="Tambah"

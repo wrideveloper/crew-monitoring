@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Input } from "semantic-ui-react"
+import { IField } from "../types"
 import InputDropdown from "./InputDropdown"
 import InputImage from "./InputImage"
 

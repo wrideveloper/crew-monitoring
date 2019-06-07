@@ -1,4 +1,5 @@
 import validator from "validator"
+import { IField } from "../types"
 
 interface IValidator {
   validation: string

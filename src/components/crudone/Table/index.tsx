@@ -1,7 +1,7 @@
 import _ from "lodash"
 import React, { Fragment, useContext, useState } from "react"
 import { Card, Grid, Table } from "semantic-ui-react"
-import { DataTableContext } from "../DataTable"
+import { ContainerContext } from "../Container"
 import TableBlank from "./TableBlank"
 import TableBody from "./TableBody"
 import TableHeader from "./TableHeader"
@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const CustomTable: React.FC<IProps> = (props) => {
-  const context = useContext(DataTableContext)
+  const context = useContext(ContainerContext)
   const [activePage, setActivePage] = useState(1)
   const [itemPerPage, setItemPerPage] = useState(10)
   const [searchValue, setSearchValue] = useState("")

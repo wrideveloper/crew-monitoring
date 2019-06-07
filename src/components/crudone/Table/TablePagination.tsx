@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Pagination, Table } from "semantic-ui-react"
+import { Pagination } from "semantic-ui-react"
 
 interface IProps {
   activePage: number

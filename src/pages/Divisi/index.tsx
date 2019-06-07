@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
 import {
+  Container,
   CreateButton,
-  DataTable,
   Form,
+  ISchema,
   Table,
-} from "../../components/DataTable2"
+} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { DivisiService } from "../../services/DivisiService"
 
@@ -61,13 +62,12 @@ export default class Divisi extends Component<{}, IState> {
   }
 
   public render() {
-    const fields: IField[] = [
-      {
-        name: "nama",
+    const schema: ISchema = {
+      nama: {
         label: "Nama Divisi",
         validations: ["required"],
       },
-    ]
+    }
 
     return (
       <Fragment>
@@ -77,7 +77,7 @@ export default class Divisi extends Component<{}, IState> {
           onDismiss={() => this.setState({ error: undefined })}
         />
 
-        <DataTable fields={fields}>
+        <Container schema={schema}>
           <CreateButton />
           <Table data={this.state.divisi} loading={this.state.loading} />
           <Form
@@ -85,7 +85,7 @@ export default class Divisi extends Component<{}, IState> {
             onUpdate={this.updateDivisi}
             onDelete={this.deleteDivisi}
           />
-        </DataTable>
+        </Container>
       </Fragment>
     )
   }

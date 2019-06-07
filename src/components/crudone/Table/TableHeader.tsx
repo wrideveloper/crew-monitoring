@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Table } from "semantic-ui-react"
+import { IField } from "../types"
 
 interface IProps {
   fields: IField[]

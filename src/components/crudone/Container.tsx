@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
+import { IContainerContext, ISchema } from "./types"
 
 interface IProps {
-  fields: IField[]
+  schema: ISchema
 }
 
 interface IState {
@@ -10,7 +11,7 @@ interface IState {
   isUpdateMode: boolean
 }
 
-export const DataTableContext = React.createContext<IDataTableContext>({
+export const ContainerContext = React.createContext<IContainerContext>({
   getTableFields: () => [],
   getFormFields: () => [],
   open: false,
@@ -35,16 +36,23 @@ class DataTable extends Component<IProps, IState> {
     this.setState({ open: false })
   }
 
+  public getConvertedSchema = (): IField[] => {
+    return Object.keys(this.props.schema).map((key) => ({
+      name: key,
+      ...this.props.schema[key],
+    }))
+  }
+
   public getTableFields = () => {
-    return this.props.fields.filter((field) => !field.hideOnTable)
+    return this.getConvertedSchema().filter((field) => !field.hideOnTable)
   }
 
   public getFormFields = () => {
-    return this.props.fields.filter((field) => !field.hideOnForm)
+    return this.getConvertedSchema().filter((field) => !field.hideOnForm)
   }
 
   public render() {
-    const providerValue: IDataTableContext = {
+    const providerValue: IContainerContext = {
       getTableFields: this.getTableFields,
       getFormFields: this.getFormFields,
       open: this.state.open,
@@ -54,9 +62,9 @@ class DataTable extends Component<IProps, IState> {
       selectedData: this.state.selectedData,
     }
     return (
-      <DataTableContext.Provider value={providerValue}>
+      <ContainerContext.Provider value={providerValue}>
         {this.props.children}
-      </DataTableContext.Provider>
+      </ContainerContext.Provider>
     )
   }
 }
