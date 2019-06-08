@@ -89,6 +89,8 @@ export default class Divisi extends Component<{}, IState> {
             <Table.Display emptyText="Data Kosong" />
           </Table.Container>
           <Form
+            createTitle="Tambah Divisi"
+            updateTitle="Ubah Divisi"
             onCreate={this.createDivisi}
             onUpdate={this.updateDivisi}
             onDelete={this.deleteDivisi}

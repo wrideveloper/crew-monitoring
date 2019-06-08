@@ -6,9 +6,15 @@ import FormInputError from "./FormInputError"
 import FormValidator from "./FormValidator"
 
 interface IProps {
+  createTitle?: string
+  updateTitle?: string
   onCreate?: (input: any) => void
   onUpdate?: (input: any) => void
   onDelete?: (input: any) => void
+  additionalAction?: (
+    selectedData: any,
+    isUpdateMode: boolean,
+  ) => JSX.Element | null
 }
 
 const Form: React.FC<IProps> = (props) => {
@@ -83,6 +89,13 @@ const Form: React.FC<IProps> = (props) => {
     }
   }
 
+  function renderAdditionalAction() {
+    return (
+      props.additionalAction &&
+      props.additionalAction(input, context.isUpdateMode)
+    )
+  }
+
   function renderSubmitButton() {
     return props.onUpdate || !context.isUpdateMode ? (
       <Button color="green" content="Simpan" onClick={submit} />
@@ -105,13 +118,24 @@ const Form: React.FC<IProps> = (props) => {
     )
   }
 
+  function getCreateTitle() {
+    return props.createTitle || "Create New"
+  }
+
+  function getUpdateTitle() {
+    return props.updateTitle || "Update Data"
+  }
+
   return (
     <Modal open={context.open} size="large" onClose={context.closeForm}>
-      <Header content={context.isUpdateMode ? "Ubah Data" : "Tambah Data"} />
+      <Header
+        content={context.isUpdateMode ? getUpdateTitle() : getCreateTitle()}
+      />
       <Modal.Content>
         <Grid columns="2">{renderFormInputs()}</Grid>
       </Modal.Content>
       <Modal.Actions>
+        {renderAdditionalAction()}
         {renderDeleteButton()}
         {renderSubmitButton()}
       </Modal.Actions>
