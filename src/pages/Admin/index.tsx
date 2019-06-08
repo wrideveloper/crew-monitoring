@@ -1,7 +1,14 @@
 import React, { Component, Fragment } from "react"
 import { Link } from "react-router-dom"
 import { Button, Grid, Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable"
+import {
+  Container,
+  CreateButton,
+  Form,
+  ISchema,
+  Table,
+  Validation,
+} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AdminService } from "../../services/AdminService"
 
@@ -49,6 +56,19 @@ export default class Admin extends Component<{}, IState> {
   }
 
   public render() {
+    const schema: ISchema = {
+      username: {
+        label: "Username",
+        validations: [Validation.required],
+      },
+      password: {
+        label: "Password",
+        type: "password",
+        hideOnTable: true,
+        validations: [Validation.required],
+      },
+    }
+
     return (
       <Fragment>
         <Grid style={styles.headerContainer}>
@@ -66,26 +86,20 @@ export default class Admin extends Component<{}, IState> {
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
         />
-        <DataTable<IAdmin>
-          data={this.state.admin}
-          loading={this.state.loading}
-          onCreate={this.createAdmin}
-          onDelete={this.deleteAdmin}
-          fields={[
-            {
-              name: "username",
-              label: "Username",
-              validations: ["required"],
-            },
-            {
-              name: "password",
-              label: "Password",
-              type: "password",
-              hideOnTable: true,
-              validations: ["required"],
-            },
-          ]}
-        />
+        <Container schema={schema}>
+          <CreateButton text="Tambah" />
+          <Table.Container data={this.state.admin} loading={this.state.loading}>
+            <Table.Search placeholder="Pencarian" />
+            <Table.Limiter text="Item Per Halaman" />
+            <Table.Display emptyText="Data Kosong" />
+          </Table.Container>
+          <Form
+            createTitle="Tambah Admin"
+            updateTitle="Ubah Admin"
+            onCreate={this.createAdmin}
+            onDelete={this.deleteAdmin}
+          />
+        </Container>
       </Fragment>
     )
   }

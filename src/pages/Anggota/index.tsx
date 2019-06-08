@@ -1,6 +1,13 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable"
+import {
+  Container,
+  CreateButton,
+  Form,
+  ISchema,
+  Table,
+  Validation,
+} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AnggotaService } from "../../services/AnggotaService"
 import { DivisiService } from "../../services/DivisiService"
@@ -83,6 +90,59 @@ export default class Anggota extends Component<{}, IState> {
   }
 
   public render() {
+    const schema: ISchema = {
+      nim: {
+        label: "NIM",
+        validations: [Validation.required, Validation.numeric],
+      },
+      nama: {
+        label: "Nama",
+        validations: [Validation.required],
+      },
+      email: {
+        label: "Email",
+        validations: [Validation.email],
+        hideOnTable: true,
+      },
+      kontak: {
+        label: "Kontak",
+        validations: [Validation.numeric],
+        hideOnTable: true,
+      },
+      angkatan: {
+        label: "Angkatan",
+        validations: [Validation.required, Validation.numeric],
+      },
+      jabatan: {
+        label: "Jabatan",
+        hideOnTable: true,
+        type: "option",
+        optionData: {
+          data: this.state.jabatan,
+          textKey: "nama",
+          valueKey: "_id",
+        },
+      },
+      divisi: {
+        label: "Divisi",
+        type: "option",
+        optionData: {
+          data: this.state.divisi,
+          textKey: "nama",
+          valueKey: "_id",
+        },
+      },
+      miniclass: {
+        label: "Miniclass",
+        type: "option",
+        optionData: {
+          data: this.state.miniclass,
+          textKey: "nama",
+          valueKey: "_id",
+        },
+      },
+    }
+
     return (
       <Fragment>
         <Header content="Anggota" subheader="Kumpulan data anggota crew" />
@@ -90,76 +150,25 @@ export default class Anggota extends Component<{}, IState> {
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
         />
-        <DataTable<IAnggota>
-          data={this.state.anggota}
-          loading={this.state.loading}
-          onCreate={this.createAnggota}
-          onUpdate={this.updateAnggota}
-          onDelete={this.deleteAnggota}
-          fields={[
-            {
-              name: "nim",
-              label: "NIM",
-              validations: ["required", "numeric"],
-            },
-            {
-              name: "nama",
-              label: "Nama",
-              validations: ["required"],
-            },
-            {
-              name: "email",
-              label: "Email",
-              validations: ["email"],
-              hideOnTable: true,
-            },
-            {
-              name: "kontak",
-              label: "Kontak",
-              validations: ["numeric"],
-              hideOnTable: true,
-            },
-            {
-              name: "angkatan",
-              label: "Angkatan",
-              validations: ["required", "numeric"],
-            },
-            {
-              name: "jabatan",
-              label: "Jabatan",
-              hideOnTable: true,
-              validations: ["required"],
-              type: "option",
-              optionData: {
-                data: this.state.jabatan,
-                textKey: "nama",
-                valueKey: "_id",
-              },
-            },
-            {
-              name: "divisi",
-              label: "Divisi",
-              validations: ["required"],
-              type: "option",
-              optionData: {
-                data: this.state.divisi,
-                textKey: "nama",
-                valueKey: "_id",
-              },
-            },
-            {
-              name: "miniclass",
-              label: "Miniclass",
-              validations: ["required"],
-              type: "option",
-              optionData: {
-                data: this.state.miniclass,
-                textKey: "nama",
-                valueKey: "_id",
-              },
-            },
-          ]}
-        />
+
+        <Container schema={schema}>
+          <CreateButton text="Tambah" />
+          <Table.Container
+            data={this.state.anggota}
+            loading={this.state.loading}
+          >
+            <Table.Search placeholder="Pencarian" />
+            <Table.Limiter text="Item Per Halaman" />
+            <Table.Display emptyText="Data Kosong" />
+          </Table.Container>
+          <Form
+            createTitle="Tambah Anggota"
+            updateTitle="Ubah Anggota"
+            onCreate={this.createAnggota}
+            onUpdate={this.updateAnggota}
+            onDelete={this.deleteAnggota}
+          />
+        </Container>
       </Fragment>
     )
   }

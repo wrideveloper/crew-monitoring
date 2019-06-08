@@ -1,6 +1,13 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable"
+import {
+  Container,
+  CreateButton,
+  Form,
+  ISchema,
+  Table,
+  Validation,
+} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { JabatanService } from "../../services/JabatanService"
 
@@ -56,6 +63,13 @@ export default class Jabatan extends Component<{}, IState> {
   }
 
   public render() {
+    const schema: ISchema = {
+      nama: {
+        label: "Nama Jabatan",
+        validations: [Validation.required],
+      },
+    }
+
     return (
       <Fragment>
         <Header content="Jabatan" subheader="Kumpulan data jabatan" />
@@ -63,20 +77,25 @@ export default class Jabatan extends Component<{}, IState> {
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
         />
-        <DataTable
-          data={this.state.jabatan}
-          loading={this.state.loading}
-          onCreate={this.createJabatan}
-          onUpdate={this.updateJabatan}
-          onDelete={this.deleteJabatan}
-          fields={[
-            {
-              name: "nama",
-              label: "Nama Jabatan",
-              validations: ["required"],
-            },
-          ]}
-        />
+
+        <Container schema={schema}>
+          <CreateButton text="Tambah" />
+          <Table.Container
+            data={this.state.jabatan}
+            loading={this.state.loading}
+          >
+            <Table.Search placeholder="Pencarian" />
+            <Table.Limiter text="Item Per Halaman" />
+            <Table.Display emptyText="Data Kosong" />
+          </Table.Container>
+          <Form
+            createTitle="Tambah Jabatan"
+            updateTitle="Ubah Jabatan"
+            onCreate={this.createJabatan}
+            onUpdate={this.updateJabatan}
+            onDelete={this.deleteJabatan}
+          />
+        </Container>
       </Fragment>
     )
   }

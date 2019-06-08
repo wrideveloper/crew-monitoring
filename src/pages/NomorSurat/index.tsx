@@ -1,6 +1,12 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable"
+import {
+  Container,
+  CreateButton,
+  Form,
+  ISchema,
+  Table,
+} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AnggotaService } from "../../services/AnggotaService"
 import { NomorSuratService } from "../../services/NomorSuratService"
@@ -65,6 +71,27 @@ export default class NomorSurat extends Component<{}, IState> {
   }
 
   public render() {
+    const schema: ISchema = {
+      nomor: {
+        label: "Nomor Surat",
+        validations: ["required"],
+      },
+      keperluan: {
+        label: "Keperluan",
+        validations: ["required"],
+      },
+      anggota: {
+        label: "Pemohon",
+        type: "option",
+        validations: ["required"],
+        optionData: {
+          data: this.state.anggota,
+          textKey: "nama",
+          valueKey: "_id",
+        },
+      },
+    }
+
     return (
       <Fragment>
         <Header
@@ -75,36 +102,24 @@ export default class NomorSurat extends Component<{}, IState> {
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
         />
-        <DataTable<INomorSurat>
-          data={this.state.nomorSurat}
-          loading={this.state.loading}
-          onCreate={this.createNomorSurat}
-          onUpdate={this.updateNomorSurat}
-          onDelete={this.deleteNomorSurat}
-          fields={[
-            {
-              name: "nomor",
-              label: "Nomor Surat",
-              validations: ["required"],
-            },
-            {
-              name: "keperluan",
-              label: "Keperluan",
-              validations: ["required"],
-            },
-            {
-              name: "anggota",
-              label: "Pemohon",
-              type: "option",
-              validations: ["required"],
-              optionData: {
-                data: this.state.anggota,
-                textKey: "nama",
-                valueKey: "_id",
-              },
-            },
-          ]}
-        />
+        <Container schema={schema}>
+          <CreateButton text="Tambah" />
+          <Table.Container
+            data={this.state.nomorSurat}
+            loading={this.state.loading}
+          >
+            <Table.Search placeholder="Pencarian" />
+            <Table.Limiter text="Item Per Halaman" />
+            <Table.Display emptyText="Data Kosong" />
+          </Table.Container>
+          <Form
+            createTitle="Tambah Nomor Surat"
+            updateTitle="Ubah Nomor Surat"
+            onCreate={this.createNomorSurat}
+            onUpdate={this.updateNomorSurat}
+            onDelete={this.deleteNomorSurat}
+          />
+        </Container>
       </Fragment>
     )
   }

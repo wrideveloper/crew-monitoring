@@ -9,6 +9,7 @@ import TableLoading from "./TableLoading"
 import TablePagination from "./TablePagination"
 
 interface IProps {
+  onRowClick?: (rowData: any) => void
   emptyText?: string
 }
 
@@ -36,6 +37,7 @@ const TableDisplay: React.FC<IProps> = (props) => {
             startingNumber={tableContext.getOffset() + 1}
             onRowClick={(rowData: any) => {
               crudoneContext.openForm(Object.assign({}, rowData), true)
+              if (props.onRowClick) props.onRowClick(rowData)
             }}
           />
         </Table>

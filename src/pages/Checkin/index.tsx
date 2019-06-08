@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { RouteComponentProps } from "react-router"
 import { Button, Grid, Header } from "semantic-ui-react"
-import Table from "../../components/DataTable/Table"
+import { Container, ISchema, Table } from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AnggotaService } from "../../services/AnggotaService"
 import { PresensiService } from "../../services/PresensiService"
@@ -87,6 +87,14 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
   }
 
   public render() {
+    const schema: ISchema = {
+      nama: {
+        label: "Nama",
+      },
+      hadir: {
+        label: "Hadir",
+      },
+    }
     return (
       <Fragment>
         <Header
@@ -99,21 +107,17 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
         />
         <Grid columns="2">
           <Grid.Column width="10">
-            <Table
-              loading={this.state.loading}
-              data={this.getAnggotaMiniclass()}
-              onRowClick={this.checkIn}
-              fields={[
-                {
-                  name: "nama",
-                  label: "Nama",
-                },
-                {
-                  name: "hadir",
-                  label: "Hadir",
-                },
-              ]}
-            />
+            <Container schema={schema}>
+              <Table.Container
+                data={this.getAnggotaMiniclass()}
+                loading={this.state.loading}
+              >
+                <Table.Display
+                  emptyText="Data Kosong"
+                  onRowClick={this.checkIn}
+                />
+              </Table.Container>
+            </Container>
             <Button color="green" content="Simpan" onClick={this.submit} />
           </Grid.Column>
           <Grid.Column width="6">

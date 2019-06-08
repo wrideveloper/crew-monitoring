@@ -1,6 +1,13 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable"
+import {
+  Container,
+  CreateButton,
+  Form,
+  ISchema,
+  Table,
+  Validation,
+} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { KategoriKegiatanService } from "../../services/KategoriKegiatanService"
 
@@ -56,6 +63,17 @@ export default class KategoriKegiatan extends Component<{}, IState> {
   }
 
   public render() {
+    const schema: ISchema = {
+      nama: {
+        label: "Nama Kategori",
+        validations: [Validation.required],
+      },
+      keterangan: {
+        label: "Keterangan",
+        validations: [Validation.required],
+      },
+    }
+
     return (
       <Fragment>
         <Header
@@ -66,25 +84,25 @@ export default class KategoriKegiatan extends Component<{}, IState> {
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
         />
-        <DataTable<IKategoriKegiatan>
-          data={this.state.kategoriKegiatan}
-          loading={this.state.loading}
-          onCreate={this.createKategoriKegiatan}
-          onUpdate={this.updateKategoriKegiatan}
-          onDelete={this.deleteKategoriKegiatan}
-          fields={[
-            {
-              name: "nama",
-              label: "Nama Kategori",
-              validations: ["required"],
-            },
-            {
-              name: "keterangan",
-              label: "Keterangan",
-              validations: ["required"],
-            },
-          ]}
-        />
+
+        <Container schema={schema}>
+          <CreateButton text="Tambah" />
+          <Table.Container
+            data={this.state.kategoriKegiatan}
+            loading={this.state.loading}
+          >
+            <Table.Search placeholder="Pencarian" />
+            <Table.Limiter text="Item Per Halaman" />
+            <Table.Display emptyText="Data Kosong" />
+          </Table.Container>
+          <Form
+            createTitle="Tambah Kategori Kegiatan"
+            updateTitle="Ubah Kategori Kegiatan"
+            onCreate={this.createKategoriKegiatan}
+            onUpdate={this.updateKategoriKegiatan}
+            onDelete={this.deleteKategoriKegiatan}
+          />
+        </Container>
       </Fragment>
     )
   }

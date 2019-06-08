@@ -1,7 +1,13 @@
 import React, { Component, Fragment } from "react"
 import { Link } from "react-router-dom"
 import { Button, Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable"
+import {
+  Container,
+  CreateButton,
+  Form,
+  ISchema,
+  Table,
+} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { LevelService } from "../../services/LevelService"
 
@@ -57,6 +63,13 @@ export default class Level extends Component<{}, IState> {
   }
 
   public render() {
+    const schema: ISchema = {
+      nama: {
+        label: "Nama Level",
+        validations: ["required"],
+      },
+    }
+
     return (
       <Fragment>
         <Header content="Level Admin" subheader="Kumpulan data level admin" />
@@ -64,20 +77,21 @@ export default class Level extends Component<{}, IState> {
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
         />
-        <DataTable<ILevel>
-          data={this.state.level}
-          loading={this.state.loading}
-          onCreate={this.createLevel}
-          onUpdate={this.updateLevel}
-          onDelete={this.deleteLevel}
-          fields={[
-            {
-              name: "nama",
-              label: "Nama Level",
-              validations: ["required"],
-            },
-          ]}
-        />
+        <Container schema={schema}>
+          <CreateButton text="Tambah" />
+          <Table.Container data={this.state.level} loading={this.state.loading}>
+            <Table.Search placeholder="Pencarian" />
+            <Table.Limiter text="Item Per Halaman" />
+            <Table.Display emptyText="Data Kosong" />
+          </Table.Container>
+          <Form
+            createTitle="Tambah Level"
+            updateTitle="Ubah Level"
+            onCreate={this.createLevel}
+            onUpdate={this.updateLevel}
+            onDelete={this.deleteLevel}
+          />
+        </Container>
       </Fragment>
     )
   }

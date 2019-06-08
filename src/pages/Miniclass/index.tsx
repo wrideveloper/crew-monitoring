@@ -1,6 +1,12 @@
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
-import DataTable from "../../components/DataTable"
+import {
+  Container,
+  CreateButton,
+  Form,
+  ISchema,
+  Table,
+} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { DivisiService } from "../../services/DivisiService"
 import { MiniclassService } from "../../services/MiniclassService"
@@ -40,7 +46,7 @@ export default class Miniclass extends Component<{}, IState> {
       .finally(() => this.setState({ loading: false }))
   }
 
-  public createAnggota = (input: IMiniclass) => {
+  public createMiniclass = (input: IMiniclass) => {
     this.setState({ loading: true })
     this.miniclassService
       .create(input)
@@ -48,7 +54,7 @@ export default class Miniclass extends Component<{}, IState> {
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public updateAnggota = (input: IMiniclass) => {
+  public updateMiniclass = (input: IMiniclass) => {
     this.setState({ loading: true })
     this.miniclassService
       .update(input, input._id)
@@ -56,7 +62,7 @@ export default class Miniclass extends Component<{}, IState> {
       .catch((error) => this.setState({ error, loading: false }))
   }
 
-  public deleteAnggota = (input: IMiniclass) => {
+  public deleteMiniclass = (input: IMiniclass) => {
     this.setState({ loading: true })
     this.miniclassService
       .delete(input._id)
@@ -65,6 +71,23 @@ export default class Miniclass extends Component<{}, IState> {
   }
 
   public render() {
+    const schema: ISchema = {
+      nama: {
+        label: "Nama Miniclass",
+        validations: ["required"],
+      },
+      divisi: {
+        label: "Divisi",
+        type: "option",
+        validations: ["required"],
+        optionData: {
+          data: this.state.divisi,
+          textKey: "nama",
+          valueKey: "_id",
+        },
+      },
+    }
+
     return (
       <Fragment>
         <Header content="Miniclass" subheader="Kumpulan data miniclass" />
@@ -72,31 +95,24 @@ export default class Miniclass extends Component<{}, IState> {
           error={this.state.error}
           onDismiss={() => this.setState({ error: undefined })}
         />
-        <DataTable<IMiniclass>
-          data={this.state.miniclass}
-          loading={this.state.loading}
-          onCreate={this.createAnggota}
-          onUpdate={this.updateAnggota}
-          onDelete={this.deleteAnggota}
-          fields={[
-            {
-              name: "nama",
-              label: "Nama Miniclass",
-              validations: ["required"],
-            },
-            {
-              name: "divisi",
-              label: "Divisi",
-              type: "option",
-              validations: ["required"],
-              optionData: {
-                data: this.state.divisi,
-                textKey: "nama",
-                valueKey: "_id",
-              },
-            },
-          ]}
-        />
+        <Container schema={schema}>
+          <CreateButton text="Tambah" />
+          <Table.Container
+            data={this.state.miniclass}
+            loading={this.state.loading}
+          >
+            <Table.Search placeholder="Pencarian" />
+            <Table.Limiter text="Item Per Halaman" />
+            <Table.Display emptyText="Data Kosong" />
+          </Table.Container>
+          <Form
+            createTitle="Tambah Miniclass"
+            updateTitle="Ubah Miniclass"
+            onCreate={this.createMiniclass}
+            onUpdate={this.updateMiniclass}
+            onDelete={this.deleteMiniclass}
+          />
+        </Container>
       </Fragment>
     )
   }
