@@ -1,14 +1,20 @@
 import React, { Component } from "react"
 import { Card, Header, Icon } from "semantic-ui-react"
 
-export default class TableBlank extends Component {
+interface IProps {
+  emptyText?: string
+}
+
+export default class TableBlank extends Component<IProps> {
   public render() {
     return (
       <Card fluid style={styles.card}>
         <Card.Content>
           <Header size="huge" icon color="grey">
-            <Icon name="frown outline" />
-            <Header.Content>Data Tidak Ditemukan</Header.Content>
+            <Icon name="file outline" size="mini" />
+            <Header.Content>
+              {this.props.emptyText || "Data not found"}
+            </Header.Content>
           </Header>
         </Card.Content>
       </Card>

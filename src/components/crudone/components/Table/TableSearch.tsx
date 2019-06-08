@@ -3,7 +3,11 @@ import { Dropdown, Input } from "semantic-ui-react"
 import { CrudoneContext } from "../../contexts/CrudoneContext"
 import { TableContext } from "../../contexts/TableContext"
 
-const TableSearch: React.FC = () => {
+interface IProps {
+  placeholder?: string
+}
+
+const TableSearch: React.FC<IProps> = (props) => {
   const crudoneContext = useContext(CrudoneContext)
   const tableContext = useContext(TableContext)
 
@@ -28,7 +32,7 @@ const TableSearch: React.FC = () => {
       }
       icon="search"
       iconPosition="left"
-      placeholder="Cari dalam tabel"
+      placeholder={props.placeholder || "Search"}
       value={tableContext.searchValue}
       onChange={(event) => tableContext.changeSearchValue(event.target.value)}
       style={styles.input}

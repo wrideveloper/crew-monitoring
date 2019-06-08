@@ -8,14 +8,18 @@ import TableHeader from "./TableHeader"
 import TableLoading from "./TableLoading"
 import TablePagination from "./TablePagination"
 
-const TableDisplay: React.FC = () => {
+interface IProps {
+  emptyText?: string
+}
+
+const TableDisplay: React.FC<IProps> = (props) => {
   const tableContext = useContext(TableContext)
   const crudoneContext = useContext(CrudoneContext)
 
   if (tableContext.loading) {
     return <TableLoading />
   } else if (tableContext.getSearchedData().length === 0) {
-    return <TableBlank />
+    return <TableBlank emptyText={props.emptyText} />
   } else {
     return (
       <>
