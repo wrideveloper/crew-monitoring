@@ -4,7 +4,7 @@ import { Card, Placeholder } from "semantic-ui-react"
 export default class TableLoading extends Component {
   public render() {
     return (
-      <Card fluid>
+      <Card fluid style={styles.card}>
         <Card.Content>
           <Placeholder fluid>
             <Placeholder.Line length="full" style={styles.line} />
@@ -20,6 +20,9 @@ export default class TableLoading extends Component {
 }
 
 const styles = {
+  card: {
+    margin: 5,
+  },
   line: {
     fontSize: 30,
   },

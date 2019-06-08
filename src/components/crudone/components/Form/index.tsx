@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Button, Grid, Header, Modal } from "semantic-ui-react"
-import { ContainerContext } from "../Container"
+import { CrudoneContext } from "../../contexts/CrudoneContext"
 import FormInput from "./FormInput"
 import FormInputError from "./FormInputError"
 import FormValidator from "./FormValidator"
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const Form: React.FC<IProps> = (props) => {
-  const context = useContext(ContainerContext)
+  const context = useContext(CrudoneContext)
   const [input, setInput] = useState(context.selectedData)
   const [inputErrors, setInputErrors] = useState({} as any)
 

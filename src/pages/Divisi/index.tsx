@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react"
-import { Header } from "semantic-ui-react"
+import { GridColumn, GridRow, Header } from "semantic-ui-react"
 import {
   Container,
   CreateButton,
@@ -80,7 +80,14 @@ export default class Divisi extends Component<{}, IState> {
 
         <Container schema={schema}>
           <CreateButton />
-          <Table data={this.state.divisi} loading={this.state.loading} />
+          <Table.Container
+            data={this.state.divisi}
+            loading={this.state.loading}
+          >
+            <Table.Search />
+            <Table.Limiter />
+            <Table.Display />
+          </Table.Container>
           <Form
             onCreate={this.createDivisi}
             onUpdate={this.updateDivisi}

@@ -1,5 +1,6 @@
 import React, { Component } from "react"
-import { IContainerContext, ISchema } from "./types"
+import { CrudoneContext } from "../contexts/CrudoneContext"
+import { ICrudoneContext, ISchema } from "../types"
 
 interface IProps {
   schema: ISchema
@@ -11,17 +12,7 @@ interface IState {
   isUpdateMode: boolean
 }
 
-export const ContainerContext = React.createContext<IContainerContext>({
-  getTableFields: () => [],
-  getFormFields: () => [],
-  open: false,
-  isUpdateMode: false,
-  openForm: () => undefined,
-  closeForm: () => undefined,
-  selectedData: {},
-})
-
-class DataTable extends Component<IProps, IState> {
+class CrudoneContainer extends Component<IProps, IState> {
   public state: IState = {
     open: false,
     selectedData: {},
@@ -36,7 +27,7 @@ class DataTable extends Component<IProps, IState> {
     this.setState({ open: false })
   }
 
-  public getConvertedSchema = (): IField[] => {
+  public mapSchemaToFields = (): IField[] => {
     return Object.keys(this.props.schema).map((key) => ({
       name: key,
       ...this.props.schema[key],
@@ -44,15 +35,15 @@ class DataTable extends Component<IProps, IState> {
   }
 
   public getTableFields = () => {
-    return this.getConvertedSchema().filter((field) => !field.hideOnTable)
+    return this.mapSchemaToFields().filter((field) => !field.hideOnTable)
   }
 
   public getFormFields = () => {
-    return this.getConvertedSchema().filter((field) => !field.hideOnForm)
+    return this.mapSchemaToFields().filter((field) => !field.hideOnForm)
   }
 
   public render() {
-    const providerValue: IContainerContext = {
+    const providerValue: ICrudoneContext = {
       getTableFields: this.getTableFields,
       getFormFields: this.getFormFields,
       open: this.state.open,
@@ -62,11 +53,11 @@ class DataTable extends Component<IProps, IState> {
       selectedData: this.state.selectedData,
     }
     return (
-      <ContainerContext.Provider value={providerValue}>
+      <CrudoneContext.Provider value={providerValue}>
         {this.props.children}
-      </ContainerContext.Provider>
+      </CrudoneContext.Provider>
     )
   }
 }
 
-export default DataTable
+export default CrudoneContainer

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
 import { Button, Dropdown, DropdownItemProps, Label } from "semantic-ui-react"
-import { IField } from "../types"
+import { IField } from "../../types"
 
 interface IProps {
   field: IField

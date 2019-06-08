@@ -1,4 +1,4 @@
-export interface IContainerContext {
+export interface ICrudoneContext {
   getTableFields: () => IField[]
   getFormFields: () => IField[]
   open: boolean
@@ -6,6 +6,30 @@ export interface IContainerContext {
   isUpdateMode: boolean
   openForm: (selectedData: any, isUpdateMode: boolean) => void
   closeForm: () => void
+}
+
+export interface ITableContext {
+  loading: boolean | undefined
+
+  searchValue: string
+  changeSearchValue: (value: string) => void
+
+  searchKey: string
+  changeSearchKey: (key: string) => void
+
+  sortKey: string
+  isDescending: boolean
+  changeSort: (fieldName: string) => void
+
+  getPaginatedData: () => any[]
+  getOffset: () => number
+  getSearchedData: () => any[]
+
+  itemPerPage: number
+  changeLimit: (limit: number) => void
+
+  activePage: number
+  changePage: (page: number) => void
 }
 
 export interface IOptionData {

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Image, Input } from "semantic-ui-react"
-import { api } from "../../../config"
-import { IField } from "../types"
+import { api } from "../../../../config"
+import { IField } from "../../types"
 
 interface IProps {
   field: IField

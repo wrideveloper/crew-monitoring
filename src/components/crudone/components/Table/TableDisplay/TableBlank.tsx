@@ -18,6 +18,7 @@ export default class TableBlank extends Component {
 
 const styles = {
   card: {
+    margin: 5,
     paddingTop: 50,
     paddingBottom: 50,
   },

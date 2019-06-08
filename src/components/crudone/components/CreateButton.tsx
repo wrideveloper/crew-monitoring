@@ -1,9 +1,9 @@
 import React, { useContext } from "react"
 import { Button } from "semantic-ui-react"
-import { ContainerContext } from "./Container"
+import { CrudoneContext } from "../contexts/CrudoneContext"
 
 const CreateButton: React.FC = () => {
-  const context = useContext(ContainerContext)
+  const context = useContext(CrudoneContext)
   return (
     <Button
       content="Tambah"
