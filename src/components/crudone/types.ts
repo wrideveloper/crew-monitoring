@@ -14,6 +14,13 @@ export interface IOptionData {
   valueKey: string
 }
 
+export enum Validation {
+  required = "required",
+  email = "email",
+  alpha = "alpha",
+  numeric = "numeric",
+}
+
 export interface ISchema {
   [s: string]: ISchemaItem
 }

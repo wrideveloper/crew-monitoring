@@ -6,6 +6,7 @@ import {
   Form,
   ISchema,
   Table,
+  Validation,
 } from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { DivisiService } from "../../services/DivisiService"
@@ -65,7 +66,7 @@ export default class Divisi extends Component<{}, IState> {
     const schema: ISchema = {
       nama: {
         label: "Nama Divisi",
-        validations: ["required"],
+        validations: [Validation.required, Validation.alpha],
       },
     }
 
