@@ -62,6 +62,18 @@ export default class Level extends Component<{}, IState> {
       .catch((error) => this.setState({ error, loading: false }))
   }
 
+  public renderAdditionalAction(level: ILevel, isUpdateMode: boolean) {
+    return isUpdateMode ? (
+      <Link to={`/admin/level/hakAkses`}>
+        <Button
+          content="Hak Akses"
+          color="orange"
+          onClick={() => localStorage.setItem("level", JSON.stringify(level))}
+        />
+      </Link>
+    ) : null
+  }
+
   public render() {
     const schema: ISchema = {
       nama: {
@@ -90,6 +102,7 @@ export default class Level extends Component<{}, IState> {
             onCreate={this.createLevel}
             onUpdate={this.updateLevel}
             onDelete={this.deleteLevel}
+            additionalAction={this.renderAdditionalAction}
           />
         </Container>
       </Fragment>

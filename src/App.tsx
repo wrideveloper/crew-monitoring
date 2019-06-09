@@ -46,6 +46,7 @@ class App extends Component {
       const AppRoute = route.private ? PrivateRoute : Route
       return (
         <AppRoute
+          name={route.name}
           path={route.path}
           component={route.component}
           exact

@@ -2,6 +2,7 @@ import Admin from "../pages/Admin"
 import Anggota from "../pages/Anggota"
 import Checkin from "../pages/Checkin"
 import Divisi from "../pages/Divisi"
+import HakAkses from "../pages/HakAkses"
 import Jabatan from "../pages/Jabatan"
 import KategoriKegiatan from "../pages/KategoriKegiatan"
 import Kegiatan from "../pages/Kegiatan"
@@ -13,6 +14,7 @@ import Presensi from "../pages/Presensi"
 
 const routes: IRoute[] = [
   {
+    name: "anggota",
     component: Anggota,
     label: "Anggota",
     icon: "address card outline",
@@ -20,6 +22,7 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "divisi",
     component: Divisi,
     label: "Divisi",
     icon: "building outline",
@@ -27,6 +30,7 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "jabatan",
     component: Jabatan,
     label: "Jabatan",
     icon: "handshake outline",
@@ -34,6 +38,7 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "kegiatan",
     component: Kegiatan,
     label: "Kegiatan",
     icon: "calendar alternate outline",
@@ -41,12 +46,15 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "kategoriKegiatan",
     component: KategoriKegiatan,
+    label: "Kategori Kegiatan",
     path: "/kegiatan/kategori",
     hide: true,
     private: true,
   },
   {
+    name: "miniclass",
     component: Miniclass,
     label: "Miniclass",
     icon: "lightbulb outline",
@@ -54,6 +62,7 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "presensi",
     component: Presensi,
     label: "Presensi",
     icon: "edit outline",
@@ -61,12 +70,15 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "checkin",
     component: Checkin,
+    label: "Checkin",
     path: "/presensi/checkin",
     hide: true,
     private: true,
   },
   {
+    name: "nomorSurat",
     component: NomorSurat,
     label: "Nomor Surat",
     icon: "envelope outline",
@@ -74,6 +86,7 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "admin",
     component: Admin,
     label: "Admin",
     icon: "user outline",
@@ -81,6 +94,7 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "level",
     component: Level,
     label: "Level Admin",
     path: "/admin/level",
@@ -88,6 +102,15 @@ const routes: IRoute[] = [
     private: true,
   },
   {
+    name: "hakAkses",
+    component: HakAkses,
+    label: "Hak Akses",
+    path: "/admin/level/hakAkses",
+    hide: true,
+    private: true,
+  },
+  {
+    name: "login",
     component: Login,
     path: "/login",
     hide: true,

@@ -1,4 +1,5 @@
 declare interface IRoute {
+  name: string
   label?: string
   icon?: string
   path: string
@@ -85,12 +86,13 @@ declare interface IAdmin {
   _id: string
   username: string
   password: string
+  level: ILevel
 }
 
 declare interface ILevel {
   _id: string
   nama: string
-  akses: string[]
+  hakAkses: string[]
 }
 
 declare interface IAppContext {

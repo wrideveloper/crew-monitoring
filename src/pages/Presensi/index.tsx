@@ -8,7 +8,6 @@ import {
   ISchema,
   Table,
 } from "../../components/crudone"
-import DataTable from "../../components/DataTable"
 import ErrorMessage from "../../components/ErrorMessage"
 import { MiniclassService } from "../../services/MiniclassService"
 import { PresensiService } from "../../services/PresensiService"

@@ -11,9 +11,11 @@ import {
 } from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AdminService } from "../../services/AdminService"
+import { LevelService } from "../../services/LevelService"
 
 interface IState {
   admin: IAdmin[]
+  level: ILevel[]
   loading: boolean
   error?: Error
 }
@@ -21,13 +23,20 @@ interface IState {
 export default class Admin extends Component<{}, IState> {
   public state: IState = {
     admin: [],
+    level: [],
     loading: false,
   }
 
   public adminService = new AdminService()
+  public levelService = new LevelService()
 
   public componentDidMount() {
+    this.getLevel()
     this.getAdmin()
+  }
+
+  public getLevel = () => {
+    this.levelService.get().then((level) => this.setState({ level }))
   }
 
   public getAdmin = () => {
@@ -43,6 +52,14 @@ export default class Admin extends Component<{}, IState> {
     this.setState({ loading: true })
     this.adminService
       .create(input)
+      .then(this.getAdmin)
+      .catch((error) => this.setState({ error, loading: false }))
+  }
+
+  public updateAdmin = (input: IAdmin) => {
+    this.setState({ loading: true })
+    this.adminService
+      .update(input, input._id)
       .then(this.getAdmin)
       .catch((error) => this.setState({ error, loading: false }))
   }
@@ -66,6 +83,15 @@ export default class Admin extends Component<{}, IState> {
         type: "password",
         hideOnTable: true,
         validations: [Validation.required],
+      },
+      level: {
+        label: "Level",
+        type: "option",
+        optionData: {
+          data: this.state.level,
+          textKey: "nama",
+          valueKey: "_id",
+        },
       },
     }
 
@@ -97,6 +123,7 @@ export default class Admin extends Component<{}, IState> {
             createTitle="Tambah Admin"
             updateTitle="Ubah Admin"
             onCreate={this.createAdmin}
+            onUpdate={this.updateAdmin}
             onDelete={this.deleteAdmin}
           />
         </Container>

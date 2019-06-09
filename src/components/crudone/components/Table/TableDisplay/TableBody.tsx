@@ -12,13 +12,16 @@ interface IProps {
 export default class TableBody extends Component<IProps> {
   public getCellText(rowData: any, field: IField) {
     const cellData = rowData[field.name]
-    if (field.type === "option") {
-      return cellData[field.optionData!.textKey]
-    } else if (field.type === "date") {
-      return new Date(cellData).toLocaleDateString("id")
-    } else {
-      return cellData
+    if (cellData !== undefined) {
+      if (field.type === "option") {
+        return cellData[field.optionData!.textKey]
+      } else if (field.type === "date") {
+        return new Date(cellData).toLocaleDateString("id")
+      } else {
+        return cellData
+      }
     }
+    return ""
   }
 
   public renderCell(row: any) {

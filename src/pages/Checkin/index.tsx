@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router"
 import { Button, Grid, Header } from "semantic-ui-react"
 import { Container, ISchema, Table } from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
-import { AnggotaService } from "../../services/AnggotaService"
+import { MiniclassService } from "../../services/MiniclassService"
 import { PresensiService } from "../../services/PresensiService"
 import CardInfo from "./CardInfo"
 
@@ -22,19 +22,19 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
   }
 
   public presensiService = new PresensiService()
-  public anggotaService = new AnggotaService()
-
-  public getAnggota() {
-    this.setState({ loading: true })
-    this.anggotaService
-      .get()
-      .then((anggota) => this.setState({ anggota }))
-      .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }))
-  }
+  public miniclassService = new MiniclassService()
 
   public componentDidMount() {
     this.getAnggota()
+  }
+
+  public getAnggota() {
+    this.setState({ loading: true })
+    this.miniclassService
+      .getAnggota(this.state.presensi.miniclass._id)
+      .then((anggota) => this.setState({ anggota }))
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
   public submit = () => {
@@ -72,18 +72,13 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
     )
   }
 
-  public isAngkatanMatch(anggota: IAnggota) {
-    return anggota.angkatan === this.state.presensi.angkatan
-  }
-
-  public isMiniclassMatch(anggota: IAnggota) {
-    return anggota.miniclass!._id === this.state.presensi.miniclass._id
-  }
-
   public getAnggotaMiniclass() {
     return this.state.anggota
-      .filter((item) => this.isMiniclassMatch(item) && this.isAngkatanMatch(item))
-      .map((item) => ({ ...item, hadir: this.isAttend(item) ? "Ya" : "Tidak" }))
+      .filter((item) => item.angkatan === this.state.presensi.angkatan)
+      .map((item) => ({
+        ...item,
+        hadir: this.isAttend(item) ? "Ya" : "Tidak",
+      }))
   }
 
   public render() {
