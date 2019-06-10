@@ -46,9 +46,9 @@ export default class Login extends Component<RouteComponentProps, IState> {
     this.loginService.login(username, password).then((data) => {
       this.setState({ loading: false })
       if (data.success) {
-        context.setToken(data.token!)
-        context.setUser(data.user!)
-        this.props.history.push("/")
+        context.login(data.token!, data.user!, () => {
+          this.props.history.push("/")
+        })
       } else {
         this.resetValue()
         alert("username atau password salah")

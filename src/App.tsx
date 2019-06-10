@@ -8,9 +8,9 @@ import { routes } from "./config"
 
 const context = React.createContext<IAppContext>({
   token: "",
-  setToken: () => undefined,
   user: {} as IAdmin,
-  setUser: () => undefined,
+  login: () => undefined,
+  logout: () => undefined,
   isLoggedIn: () => false,
 })
 
@@ -27,14 +27,19 @@ class App extends Component {
     user: JSON.parse(localStorage.getItem("authUser") || "{}"),
   }
 
-  public setToken = (token: string) => {
-    this.setState({ token })
-    localStorage.setItem("authToken", token)
+  public login = (token: string, user: IAdmin, callback: () => void) => {
+    this.setState({ token, user }, () => {
+      localStorage.setItem("authToken", token)
+      localStorage.setItem("authUser", JSON.stringify(user))
+      callback()
+    })
   }
 
-  public setUser = (user: IAdmin) => {
-    this.setState({ user })
-    localStorage.setItem("authUser", JSON.stringify(user))
+  public logout = () => {
+    localStorage.removeItem("authToken")
+    localStorage.removeItem("authUser")
+    this.setState({ token: undefined, user: undefined })
+    window.location.href = "/"
   }
 
   public isLoggedIn = () => {
@@ -59,9 +64,9 @@ class App extends Component {
   public render() {
     const providerValue: IAppContext = {
       token: this.state.token,
-      setToken: this.setToken,
       user: this.state.user,
-      setUser: this.setUser,
+      login: this.login,
+      logout: this.logout,
       isLoggedIn: this.isLoggedIn,
     }
     return (

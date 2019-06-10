@@ -4,10 +4,6 @@ import { Consumer } from "../../../App"
 import AppTitle from "./AppTitle"
 
 class Menubar extends Component {
-  public logout(context: IAppContext) {
-    context.setToken("")
-  }
-
   public render() {
     return (
       <Consumer>
@@ -20,7 +16,7 @@ class Menubar extends Component {
                   <Dropdown.Item
                     icon="sign-out"
                     text="Keluar"
-                    onClick={() => this.logout(context)}
+                    onClick={() => context.logout()}
                   />
                 </Dropdown.Menu>
               </Dropdown>

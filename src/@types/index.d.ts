@@ -97,9 +97,9 @@ declare interface ILevel {
 
 declare interface IAppContext {
   token: string
-  setToken: (token: string) => void
   user: IAdmin
-  setUser: (user: IAdmin) => void
+  login: (token: string, user: IAdmin, callback: () => void) => void
+  logout: () => void
   isLoggedIn: () => boolean
 }
 
