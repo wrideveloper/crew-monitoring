@@ -7,6 +7,10 @@ interface IProps {
   placeholder?: string
 }
 
+const defaultProps: IProps = {
+  placeholder: "Search",
+}
+
 const TableSearch: React.FC<IProps> = (props) => {
   const crudoneContext = useContext(CrudoneContext)
   const tableContext = useContext(TableContext)
@@ -32,13 +36,15 @@ const TableSearch: React.FC<IProps> = (props) => {
       }
       icon="search"
       iconPosition="left"
-      placeholder={props.placeholder || "Search"}
+      placeholder={props.placeholder}
       value={tableContext.searchValue}
       onChange={(event) => tableContext.changeSearchValue(event.target.value)}
       style={styles.input}
     />
   )
 }
+
+TableSearch.defaultProps = defaultProps
 
 const styles = {
   input: {

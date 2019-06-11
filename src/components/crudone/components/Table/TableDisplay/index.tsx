@@ -13,6 +13,10 @@ interface IProps {
   emptyText?: string
 }
 
+const defaultProps: IProps = {
+  emptyText: "Data not found",
+}
+
 const TableDisplay: React.FC<IProps> = (props) => {
   const tableContext = useContext(TableContext)
   const crudoneContext = useContext(CrudoneContext)
@@ -52,6 +56,8 @@ const TableDisplay: React.FC<IProps> = (props) => {
     )
   }
 }
+
+TableDisplay.defaultProps = defaultProps
 
 const styles = {
   table: {

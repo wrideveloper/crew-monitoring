@@ -7,6 +7,11 @@ interface IProps {
   text?: string
 }
 
+const defaultProps: IProps = {
+  limits: [10, 25, 50],
+  text: "Item Per Page",
+}
+
 const TableLimiter: React.FC<IProps> = (props) => {
   const tableContext = useContext(TableContext)
 
@@ -16,17 +21,12 @@ const TableLimiter: React.FC<IProps> = (props) => {
   )
 
   function mapPropsToDropdownItem(): DropdownItemProps[] {
-    const limits = props.limits || [10, 25, 50]
-    return limits.map((limit) => ({ text: limit, value: limit }))
+    return props.limits!.map((limit) => ({ text: limit, value: limit }))
   }
 
   return (
     <Button.Group style={styles.container}>
-      <Label
-        size="large"
-        content={props.text || "Item Per Page"}
-        style={styles.label}
-      />
+      <Label size="large" content={props.text} style={styles.label} />
       <Dropdown
         basic
         selection
@@ -58,5 +58,7 @@ const styles = {
     borderBottomLeftRadius: 0,
   },
 }
+
+TableLimiter.defaultProps = defaultProps
 
 export default TableLimiter

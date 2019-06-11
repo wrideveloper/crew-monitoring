@@ -17,6 +17,11 @@ interface IProps {
   ) => JSX.Element | null
 }
 
+const defaultProps: IProps = {
+  createTitle: "Create New",
+  updateTitle: "Update Data",
+}
+
 const Form: React.FC<IProps> = (props) => {
   const context = useContext(CrudoneContext)
   const [input, setInput] = useState(context.selectedData)
@@ -118,18 +123,10 @@ const Form: React.FC<IProps> = (props) => {
     )
   }
 
-  function getCreateTitle() {
-    return props.createTitle || "Create New"
-  }
-
-  function getUpdateTitle() {
-    return props.updateTitle || "Update Data"
-  }
-
   return (
     <Modal open={context.open} size="large" onClose={context.closeForm}>
       <Header
-        content={context.isUpdateMode ? getUpdateTitle() : getCreateTitle()}
+        content={context.isUpdateMode ? props.updateTitle : props.createTitle}
       />
       <Modal.Content>
         <Grid columns="2">{renderFormInputs()}</Grid>
@@ -142,5 +139,7 @@ const Form: React.FC<IProps> = (props) => {
     </Modal>
   )
 }
+
+Form.defaultProps = defaultProps
 
 export default Form

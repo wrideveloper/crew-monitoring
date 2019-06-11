@@ -12,9 +12,7 @@ export default class TableBlank extends Component<IProps> {
         <Card.Content>
           <Header size="huge" icon color="grey">
             <Icon name="file outline" size="mini" />
-            <Header.Content>
-              {this.props.emptyText || "Data not found"}
-            </Header.Content>
+            <Header.Content>{this.props.emptyText}</Header.Content>
           </Header>
         </Card.Content>
       </Card>

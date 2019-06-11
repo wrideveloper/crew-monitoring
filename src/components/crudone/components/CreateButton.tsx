@@ -6,15 +6,21 @@ interface IProps {
   text?: string
 }
 
+const defaultProps: IProps = {
+  text: "Add New",
+}
+
 const CreateButton: React.FC<IProps> = (props) => {
   const context = useContext(CrudoneContext)
   return (
     <Button
-      content={props.text || "Add New"}
+      content={props.text}
       color="green"
       onClick={() => context.openForm({}, false)}
     />
   )
 }
+
+CreateButton.defaultProps = defaultProps
 
 export default CreateButton
