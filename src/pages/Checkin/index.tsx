@@ -29,12 +29,20 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
   }
 
   public getAnggota() {
+    const { miniclass, angkatan } = this.state.presensi
     this.setState({ loading: true })
     this.miniclassService
-      .getAnggota(this.state.presensi.miniclass._id)
-      .then((anggota) => this.setState({ anggota }))
+      .getAnggota(miniclass._id, angkatan)
+      .then((anggota) => this.setState({ anggota: this.mapAnggota(anggota) }))
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }))
+  }
+
+  public mapAnggota(anggota: IAnggota[]) {
+    return anggota.map((item) => ({
+      ...item,
+      hadir: this.isAttend(item) ? "Ya" : "Tidak",
+    }))
   }
 
   public submit = () => {
@@ -72,15 +80,6 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
     )
   }
 
-  public getAnggotaMiniclass() {
-    return this.state.anggota
-      .filter((item) => item.angkatan === this.state.presensi.angkatan)
-      .map((item) => ({
-        ...item,
-        hadir: this.isAttend(item) ? "Ya" : "Tidak",
-      }))
-  }
-
   public render() {
     const schema: ISchema = {
       nama: {
@@ -104,7 +103,7 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
           <Grid.Column width="10">
             <Container schema={schema}>
               <Table.Container
-                data={this.getAnggotaMiniclass()}
+                data={this.state.anggota}
                 loading={this.state.loading}
               >
                 <Table.Display
