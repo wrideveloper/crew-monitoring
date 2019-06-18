@@ -50,6 +50,7 @@ export default class InputDropdown extends Component<IProps> {
             placeholder={"Pilih " + this.props.field.label}
             basic
             selection
+            search
             button
             floating
             options={this.getOptions()}
