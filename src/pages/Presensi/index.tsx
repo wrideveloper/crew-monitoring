@@ -76,14 +76,8 @@ export default class Presensi extends Component<{}, IState> {
 
   public renderAdditionalAction(presensi: IPresensi, isUpdateMode: boolean) {
     return isUpdateMode ? (
-      <Link to={`/presensi/checkin`}>
-        <Button
-          content="Checkin"
-          color="orange"
-          onClick={() =>
-            localStorage.setItem("presensi", JSON.stringify(presensi))
-          }
-        />
+      <Link to={{ pathname: "/presensi/checkin", state: presensi }}>
+        <Button content="Checkin" color="orange" />
       </Link>
     ) : null
   }

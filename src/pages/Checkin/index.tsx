@@ -16,7 +16,7 @@ interface IState {
 
 export default class Checkin extends Component<RouteComponentProps, IState> {
   public state: IState = {
-    presensi: JSON.parse(localStorage.getItem("presensi")!) as IPresensi,
+    presensi: this.props.location.state,
     anggota: [],
     loading: false,
   }

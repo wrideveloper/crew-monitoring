@@ -64,12 +64,8 @@ export default class Level extends Component<{}, IState> {
 
   public renderAdditionalAction(level: ILevel, isUpdateMode: boolean) {
     return isUpdateMode ? (
-      <Link to={`/admin/level/hakAkses`}>
-        <Button
-          content="Hak Akses"
-          color="orange"
-          onClick={() => localStorage.setItem("level", JSON.stringify(level))}
-        />
+      <Link to={{ pathname: "/admin/level/hakAkses", state: level }}>
+        <Button content="Hak Akses" color="orange" />
       </Link>
     ) : null
   }

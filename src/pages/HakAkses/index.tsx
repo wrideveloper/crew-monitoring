@@ -15,7 +15,7 @@ interface IState {
 
 export default class HakAkses extends Component<RouteComponentProps, IState> {
   public state: IState = {
-    level: JSON.parse(localStorage.getItem("level")!) as ILevel,
+    level: this.props.location.state,
     routes,
     loading: false,
   }
