@@ -8,22 +8,6 @@ declare interface IRoute {
   private?: boolean
 }
 
-declare interface IField {
-  name: string
-  label: string
-  type?: "text" | "password" | "option" | "image" | "date"
-  validations?: string[]
-  optionData?: IOptionData
-  hideOnTable?: boolean
-  hideOnForm?: boolean
-}
-
-declare interface IOptionData {
-  data: any[]
-  textKey: string
-  valueKey: string
-}
-
 declare interface IAnggota {
   _id: string
   nim: number
