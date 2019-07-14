@@ -1,5 +1,3 @@
-import React, { Component, Fragment } from "react"
-import { Header } from "semantic-ui-react"
 import {
   Container,
   CreateButton,
@@ -7,7 +5,9 @@ import {
   ISchema,
   Table,
   Validation,
-} from "../../components/crudone"
+} from "crudone"
+import React, { Component, Fragment } from "react"
+import { Header } from "semantic-ui-react"
 import ErrorMessage from "../../components/ErrorMessage"
 import { KategoriKegiatanService } from "../../services/KategoriKegiatanService"
 

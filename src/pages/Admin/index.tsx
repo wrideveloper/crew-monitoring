@@ -1,6 +1,3 @@
-import React, { Component, Fragment } from "react"
-import { Link } from "react-router-dom"
-import { Button, Grid, Header } from "semantic-ui-react"
 import {
   Container,
   CreateButton,
@@ -8,7 +5,10 @@ import {
   ISchema,
   Table,
   Validation,
-} from "../../components/crudone"
+} from "crudone"
+import React, { Component, Fragment } from "react"
+import { Link } from "react-router-dom"
+import { Button, Grid, Header } from "semantic-ui-react"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AdminService } from "../../services/AdminService"
 import { LevelService } from "../../services/LevelService"

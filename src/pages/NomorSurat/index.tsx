@@ -1,12 +1,6 @@
+import { Container, CreateButton, Form, ISchema, Table } from "crudone"
 import React, { Component, Fragment } from "react"
 import { Header } from "semantic-ui-react"
-import {
-  Container,
-  CreateButton,
-  Form,
-  ISchema,
-  Table,
-} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { AnggotaService } from "../../services/AnggotaService"
 import { NomorSuratService } from "../../services/NomorSuratService"

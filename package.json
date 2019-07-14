@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/validator": "^10.9.0",
     "axios": "^0.18.0",
+    "crudone": "^1.0.2",
     "lodash": "^4.17.11",
     "react": "next",
     "react-dom": "next",

@@ -1,13 +1,7 @@
+import { Container, CreateButton, Form, ISchema, Table } from "crudone"
 import React, { Component, Fragment } from "react"
 import { Link } from "react-router-dom"
 import { Button, Header } from "semantic-ui-react"
-import {
-  Container,
-  CreateButton,
-  Form,
-  ISchema,
-  Table,
-} from "../../components/crudone"
 import ErrorMessage from "../../components/ErrorMessage"
 import { MiniclassService } from "../../services/MiniclassService"
 import { PresensiService } from "../../services/PresensiService"
