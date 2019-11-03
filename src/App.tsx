@@ -71,7 +71,7 @@ class App extends Component {
     }
     return (
       <Provider value={providerValue}>
-        <BrowserRouter basename="/pamdal">
+        <BrowserRouter>
           <Grid columns="2" style={styles.container}>
             {this.isLoggedIn() && (
               <Grid.Column width="3">

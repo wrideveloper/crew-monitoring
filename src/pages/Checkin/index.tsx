@@ -55,21 +55,18 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
   }
 
   public addPeserta(anggota: IAnggota) {
-    console.log("add peserta")
     const { presensi } = this.state
     presensi.peserta.push(anggota._id)
     this.setState({ presensi })
   }
 
   public removePeserta(anggota: IAnggota) {
-    console.log("remove peserta")
     const { presensi } = this.state
     presensi.peserta = presensi.peserta.filter((id) => id !== anggota._id)
     this.setState({ presensi })
   }
 
   public checkIn = (anggota: IAnggota) => {
-    console.log(anggota)
     if (this.isAttend(anggota)) {
       this.removePeserta(anggota)
     } else {
