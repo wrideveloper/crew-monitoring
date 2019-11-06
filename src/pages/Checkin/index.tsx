@@ -106,6 +106,7 @@ export default class Checkin extends Component<RouteComponentProps, IState> {
                 data={this.mapAnggota(this.state.anggota)}
                 loading={this.state.loading}
               >
+                <Table.Search placeholder="Pencarian" />
                 <Table.Display
                   emptyText="Data Kosong"
                   onRowClick={this.checkIn}
